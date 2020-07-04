@@ -1,0 +1,34 @@
+{
+  "name": "movies-to-watch-app",
+  "version": "1.0.0",
+  "description": "Keep track of movies you want to watch",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/babel src --out-dir lib && browserify lib/index.js -o dist/bundle.js",
+    "bundle": "browserify lib/index.js -o dist/bundle.js",
+    "compile": "./node_modules/.bin/babel src --out-dir lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashr1/movies-to-watch-app.git"
+  },
+  "author": "Ashr",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/polyfill": "^7.10.4",
+    "browserify": "^16.5.1",
+    "live-server": "^1.2.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4"
+  },
+  "bugs": {
+    "url": "https://github.com/ashr1/movies-to-watch-app/issues"
+  },
+  "homepage": "https://github.com/ashr1/movies-to-watch-app#readme"
+}
