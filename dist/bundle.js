@@ -7,33 +7,34 @@ var _reactDom = _interopRequireDefault(require("react-dom"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const API_KEY = "";
+const API_KEY = "45fc49f2";
 const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&");
 
 const fetchMovies = title => {
-  const URL = url + 't=' + title;
+  const URL = url + "t=" + title;
   fetch(URL).then(response => response.json()).then(parsedResponse => console.log(parsedResponse));
-}; // fetchMovies('hellboy')
+}; // fetchMovies('spiderman')
 
 
 const movieContainerStyle = {
-  color: 'black',
-  fontFamily: 'monospace'
+  color: "black",
+  fontFamily: "monospace",
+  maxWidth: '310px'
 };
 const imageStyle = {
-  width: '150px',
-  height: 'auto'
+  width: "150px",
+  height: "auto"
 };
 const titleStyle = {
-  textAlign: 'left',
-  fontSize: '23px',
-  marginBottom: '2px'
+  textAlign: "left",
+  fontSize: "23px",
+  marginBottom: "2px"
 };
 const titleSubStyle = {
-  fontSize: '14px'
+  fontSize: "14px"
 };
 const titleAssistStyle = {
-  marginTop: '2px'
+  marginTop: "2px"
 }; // title releasedYear length
 // rated and genre
 
@@ -57,13 +58,35 @@ const MovieDisplay = () => {
     style: titleAssistStyle
   }, " ", /*#__PURE__*/_react.default.createElement("span", {
     style: titleSubStyle
-  }, released), " ", runtime, " ", /*#__PURE__*/_react.default.createElement("span", null, rated)), imgSrc && /*#__PURE__*/_react.default.createElement("img", {
+  }, released), " ", runtime, " ", /*#__PURE__*/_react.default.createElement("span", null, rated)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
     src: imgSrc,
     style: imageStyle
-  }), director && /*#__PURE__*/_react.default.createElement("p", null, "Directed by ", director), actors && /*#__PURE__*/_react.default.createElement("p", null, "Actors: ", actors), genre && /*#__PURE__*/_react.default.createElement("p", null, genre), plot && /*#__PURE__*/_react.default.createElement("p", null, plot), imdbRating && /*#__PURE__*/_react.default.createElement("p", null, "imdbRating: ", /*#__PURE__*/_react.default.createElement("span", null, imdbRating)));
+  }))), /*#__PURE__*/_react.default.createElement("div", null, genre && /*#__PURE__*/_react.default.createElement("p", {
+    style: {
+      fontWeight: 'bold'
+    }
+  }, genre), plot && /*#__PURE__*/_react.default.createElement("p", null, plot)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, director && /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: 'bold'
+    }
+  }, "Directed By:"), " ", director), actors && /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: 'bold'
+    }
+  }, "Actors:"), " ", actors))), /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      display: 'inline-block',
+      marginTop: '10px'
+    }
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      display: 'block',
+      fontSize: '25px'
+    }
+  }, imdbRating), /*#__PURE__*/_react.default.createElement("span", null, "imdbRating")));
 };
 
-_reactDom.default.render( /*#__PURE__*/_react.default.createElement(MovieDisplay, null), document.getElementById('root')); // Actors: "Ron Perlman, John Hurt, Selma Blair, Rupert Evans"
+_reactDom.default.render( /*#__PURE__*/_react.default.createElement(MovieDisplay, null), document.getElementById("root")); // Actors: "Ron Perlman, John Hurt, Selma Blair, Rupert Evans"
 // Awards: "3 wins & 23 nominations."
 // BoxOffice: "$59,035,104"
 // Country: "USA"
