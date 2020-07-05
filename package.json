@@ -4,6 +4,7 @@
   "description": "Keep track of movies you want to watch",
   "main": "index.js",
   "scripts": {
+    "serve": "live-server",
     "build": "./node_modules/.bin/babel src --out-dir lib && browserify lib/index.js -o dist/bundle.js",
     "bundle": "browserify lib/index.js -o dist/bundle.js",
     "compile": "./node_modules/.bin/babel src --out-dir lib"
