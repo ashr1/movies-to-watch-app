@@ -44,24 +44,92 @@ const byTitleOrId = {
   v: 1,
 };
 
+const SelectStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  width: '300px',
+  margin: '10px'
+}
+
+const Input = ({ name, value, handleChange, type, ...rest }) => {
+  return (
+    <div>
+      <input 
+        name={name}
+        type={type}
+        value={value}
+        onChange={handleChange}
+        {...rest}
+      />
+    </div>
+  )
+}
+//check notebook
+const TextInputStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  width: '300px',
+  margin: '10px',
+  backgroundImage: 'initial',
+  backgroundColor: 'transparent'
+}
+
+const TextInput = (props) => <Input {...props} style={TextInputStyle} />
+
+const ButtonStyle = {
+  padding: '8px 12px',
+  backgroundColor: 'rgb(233,197,166)',
+  color: '#584f4f',
+  borderStyle: 'none',
+  fontFamily: 'monospace',
+  margin: '10px',
+  outline: 'none'
+}
+
+const Button = ({ text, handleClick, ...rest }) => {
+  return (
+    <div>
+      <button onClick={handleClick} {...rest} >{text}</button>
+    </div>
+  )
+}
+
+const PrimaryButton = (props) => (
+  <Button 
+    {...props}
+    style={ButtonStyle}
+  />
+)
+
+// const Select = ({ options, id, name, label, options, requiredOptions }) => {
+//   return (
+//     <div>
+//       <label htmlFor={id}>{label}</label>
+//       <select>
+//         {}
+//       </select>
+//     </div>
+//   )
+// }
+
+
 const fetchMovies = (title, select) => {
   const URL = url + `${select}=` + encodeURIComponent(title);
   console.log(URL);
   return fetch(URL).then((response) => response.json());
 };
 
-// fetchMovies('like water for chocolate')
-
-// {movie && select === 't' && <MovieDisplay {...movie} />}
-//       {movie && select === 's' && (
-//         movie["Search"].map(movie => <MoviePreviewDisplay {...movie} />)
-//       ) }
-
 const App = () => {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState(null);
-  const [select, setSelect] = useState("")
+  const [select, setSelect] = useState("t")
   const [result, setResult] = useState(null)
 //TODO: build search parameters based on input
   const makeMovieRequest = () => {
@@ -72,7 +140,11 @@ const App = () => {
       setMovie(movie);
       setResult(prevState => movieItemToDisplay(movie))
     });
-    }
+    } 
+    //TODO: add message for field missing
+    // else {
+    //   setResult(<p>Please input missing fields.</p>)
+    // }
   };
 
   const movieItemToDisplay = (result) => {
@@ -94,33 +166,25 @@ const App = () => {
 
   return (
     <div>
-      <div>
-        <label htmlFor={title}>Title: </label>
-        <input
-          id="title"
-          type="text"
-          value={title}
-          onChange={(e) => {
-            console.log(e.target.value);
-            setTitle(e.target.value);
-          }}
-          placeholder={"Enter the title of the movie"}
-        />
-      </div>
+      <TextInput 
+        type="text" 
+        id="title" 
+        value={title} 
+        onChange={(e) => {
+          console.log(e.target.value);
+          setTitle(e.target.value);
+        }}
+        placeholder={"Enter the title of the movie"}
+      />
       <div>
         <label>Parameter:</label>
         <select value={select} onChange={handleSelect}>
-          <option value="" disabled={true}>---</option>
           <option value="t">t</option>
           <option value="s">s</option>
         </select>
       </div>
 
-      <div>
-        <button id="search" onClick={() => makeMovieRequest(title)}>
-          Search
-        </button>
-      </div>
+      <PrimaryButton text="Search" handleClick={() => makeMovieRequest(title)}/>
 
       {loading && (
         <div

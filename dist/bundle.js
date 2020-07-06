@@ -11,6 +11,12 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
 const API_KEY = "45fc49f2";
 const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&"); // query builder:
 
@@ -51,6 +57,85 @@ const byTitleOrId = {
   callback: "",
   v: 1
 };
+const SelectStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  width: '300px',
+  margin: '10px'
+};
+
+const Input = (_ref) => {
+  let {
+    name,
+    value,
+    handleChange,
+    type
+  } = _ref,
+      rest = _objectWithoutProperties(_ref, ["name", "value", "handleChange", "type"]);
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", _extends({
+    name: name,
+    type: type,
+    value: value,
+    onChange: handleChange
+  }, rest)));
+}; //check notebook
+
+
+const TextInputStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  width: '300px',
+  margin: '10px',
+  backgroundImage: 'initial',
+  backgroundColor: 'transparent'
+};
+
+const TextInput = props => /*#__PURE__*/_react.default.createElement(Input, _extends({}, props, {
+  style: TextInputStyle
+}));
+
+const ButtonStyle = {
+  padding: '8px 12px',
+  backgroundColor: 'rgb(233,197,166)',
+  color: '#584f4f',
+  borderStyle: 'none',
+  fontFamily: 'monospace',
+  margin: '10px',
+  outline: 'none'
+};
+
+const Button = (_ref2) => {
+  let {
+    text,
+    handleClick
+  } = _ref2,
+      rest = _objectWithoutProperties(_ref2, ["text", "handleClick"]);
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", _extends({
+    onClick: handleClick
+  }, rest), text));
+};
+
+const PrimaryButton = props => /*#__PURE__*/_react.default.createElement(Button, _extends({}, props, {
+  style: ButtonStyle
+})); // const Select = ({ options, id, name, label, options, requiredOptions }) => {
+//   return (
+//     <div>
+//       <label htmlFor={id}>{label}</label>
+//       <select>
+//         {}
+//       </select>
+//     </div>
+//   )
+// }
+
 
 const fetchMovies = (title, select) => {
   const URL = url + "".concat(select, "=") + encodeURIComponent(title);
@@ -67,7 +152,7 @@ const App = () => {
   const [title, setTitle] = (0, _react.useState)("");
   const [loading, setLoading] = (0, _react.useState)(false);
   const [movie, setMovie] = (0, _react.useState)(null);
-  const [select, setSelect] = (0, _react.useState)("");
+  const [select, setSelect] = (0, _react.useState)("t");
   const [result, setResult] = (0, _react.useState)(null); //TODO: build search parameters based on input
 
   const makeMovieRequest = () => {
@@ -78,7 +163,10 @@ const App = () => {
         setMovie(movie);
         setResult(prevState => movieItemToDisplay(movie));
       });
-    }
+    } //TODO: add message for field missing
+    else {
+        setResult( /*#__PURE__*/_react.default.createElement("p", null, "Please input missing fields."));
+      }
   };
 
   const movieItemToDisplay = result => {
@@ -96,33 +184,48 @@ const App = () => {
   const handleSelect = e => {
     console.log(e.target.value);
     setSelect(e.target.value);
-  };
+  }; //   <div>
+  //   <label htmlFor={title}>Title: </label>
+  //   <input
+  //     id="title"
+  //     type="text"
+  //     value={title}
+  //     onChange={(e) => {
+  //       console.log(e.target.value);
+  //       setTitle(e.target.value);
+  //     }}
+  //     placeholder={"Enter the title of the movie"}
+  //   />
+  // </div>
 
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: title
-  }, "Title: "), /*#__PURE__*/_react.default.createElement("input", {
-    id: "title",
+
+  {
+    /* <div>
+           <button id="search" onClick={() => makeMovieRequest(title)}>
+             Search
+           </button>
+         </div> */
+  }
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TextInput, {
     type: "text",
+    id: "title",
     value: title,
     onChange: e => {
       console.log(e.target.value);
       setTitle(e.target.value);
     },
     placeholder: "Enter the title of the movie"
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", null, "Parameter:"), /*#__PURE__*/_react.default.createElement("select", {
+  }), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", null, "Parameter:"), /*#__PURE__*/_react.default.createElement("select", {
     value: select,
     onChange: handleSelect
   }, /*#__PURE__*/_react.default.createElement("option", {
-    value: "",
-    disabled: true
-  }, "---"), /*#__PURE__*/_react.default.createElement("option", {
     value: "t"
   }, "t"), /*#__PURE__*/_react.default.createElement("option", {
     value: "s"
-  }, "s"))), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
-    id: "search",
-    onClick: () => makeMovieRequest(title)
-  }, "Search")), loading && /*#__PURE__*/_react.default.createElement("div", {
+  }, "s"))), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
+    text: "Search",
+    handleClick: () => makeMovieRequest(title)
+  }), loading && /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: "40px",
       height: "40px",
@@ -157,14 +260,14 @@ const titleAssistStyle = {
 
 const omdbNACheck = v => v !== "N/A";
 
-const MoviePreviewDisplay = (_ref) => {
+const MoviePreviewDisplay = (_ref3) => {
   let {
     Poster,
     Title,
     Type,
     Year,
     imdbID
-  } = _ref;
+  } = _ref3;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -185,7 +288,7 @@ const MoviePreviewDisplay = (_ref) => {
   }, "imdbID:"), " ", imdbID));
 };
 
-const MovieDisplay = (_ref2) => {
+const MovieDisplay = (_ref4) => {
   let {
     Poster,
     Title: title,
@@ -197,7 +300,7 @@ const MovieDisplay = (_ref2) => {
     Released,
     imdbRating,
     Plot: plot
-  } = _ref2;
+  } = _ref4;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   const released = omdbNACheck(Released) ? Released.slice(-4) : Released;
