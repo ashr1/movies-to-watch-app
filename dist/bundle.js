@@ -12,26 +12,90 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const API_KEY = "45fc49f2";
-const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&"); // encodeURIComponent(title)
+const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&"); // query builder:
 
-const fetchMovies = title => {
-  const URL = url + "t=" + encodeURIComponent(title);
+const bySearch = {
+  s: "",
+  type: {
+    val: "",
+    options: ["movie", "series", "episode"]
+  },
+  y: "",
+  r: {
+    val: "json",
+    options: ["json", "xml"]
+  },
+  callback: "",
+  v: 1,
+  page: {
+    val: 1,
+    options: [1, 100]
+  }
+};
+const byTitleOrId = {
+  i: "",
+  t: "",
+  type: {
+    val: "",
+    options: ["movie", "series", "episode"]
+  },
+  y: "",
+  plot: {
+    value: "short",
+    options: ["short", "full"]
+  },
+  r: {
+    val: "json",
+    options: ["json", "xml"]
+  },
+  callback: "",
+  v: 1
+};
+
+const fetchMovies = (title, select) => {
+  const URL = url + "".concat(select, "=") + encodeURIComponent(title);
   console.log(URL);
   return fetch(URL).then(response => response.json());
 }; // fetchMovies('like water for chocolate')
+// {movie && select === 't' && <MovieDisplay {...movie} />}
+//       {movie && select === 's' && (
+//         movie["Search"].map(movie => <MoviePreviewDisplay {...movie} />)
+//       ) }
 
 
 const App = () => {
-  const [title, setTitle] = (0, _react.useState)('');
+  const [title, setTitle] = (0, _react.useState)("");
   const [loading, setLoading] = (0, _react.useState)(false);
   const [movie, setMovie] = (0, _react.useState)(null);
+  const [select, setSelect] = (0, _react.useState)("");
+  const [result, setResult] = (0, _react.useState)(null); //TODO: build search parameters based on input
 
   const makeMovieRequest = () => {
-    setLoading(true);
-    fetchMovies(title).then(movie => {
-      setLoading(false);
-      setMovie(movie);
-    });
+    if (select && title) {
+      setLoading(true);
+      fetchMovies(title, select).then(movie => {
+        setLoading(false);
+        setMovie(movie);
+        setResult(prevState => movieItemToDisplay(movie));
+      });
+    }
+  };
+
+  const movieItemToDisplay = result => {
+    if (result["Response"] === 'True') {
+      if (select === 't') {
+        return /*#__PURE__*/_react.default.createElement(MovieDisplay, result);
+      } else {
+        return result["Search"].map(result => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, result));
+      }
+    } else {
+      return /*#__PURE__*/_react.default.createElement("p", null, "We couldn't find a proper match. Please try again.");
+    }
+  };
+
+  const handleSelect = e => {
+    console.log(e.target.value);
+    setSelect(e.target.value);
   };
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", {
@@ -45,25 +109,35 @@ const App = () => {
       setTitle(e.target.value);
     },
     placeholder: "Enter the title of the movie"
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", null, "Parameter:"), /*#__PURE__*/_react.default.createElement("select", {
+    value: select,
+    onChange: handleSelect
+  }, /*#__PURE__*/_react.default.createElement("option", {
+    value: "",
+    disabled: true
+  }, "---"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "t"
+  }, "t"), /*#__PURE__*/_react.default.createElement("option", {
+    value: "s"
+  }, "s"))), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
     id: "search",
     onClick: () => makeMovieRequest(title)
   }, "Search")), loading && /*#__PURE__*/_react.default.createElement("div", {
     style: {
-      width: '40px',
-      height: '40px',
-      border: '5px solid',
-      borderColor: 'white #525a63 #525a63 #525a63',
-      borderRadius: '50%',
-      animation: 'spin 1s linear infinite'
+      width: "40px",
+      height: "40px",
+      border: "5px solid",
+      borderColor: "white #525a63 #525a63 #525a63",
+      borderRadius: "50%",
+      animation: "spin 1s linear infinite"
     }
-  }), movie && /*#__PURE__*/_react.default.createElement(MovieDisplay, movie), /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        "));
+  }), result && result, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        "));
 };
 
 const movieContainerStyle = {
   color: "black",
   fontFamily: "monospace",
-  maxWidth: '310px'
+  maxWidth: "310px"
 };
 const imageStyle = {
   width: "150px",
@@ -79,126 +153,92 @@ const titleSubStyle = {
 };
 const titleAssistStyle = {
   marginTop: "2px"
-}; // title releasedYear length
-// rated and genre
+};
 
-const MovieDisplay = (_ref) => {
+const omdbNACheck = v => v !== "N/A";
+
+const MoviePreviewDisplay = (_ref) => {
   let {
-    Poster: imgSrc,
+    Poster,
+    Title,
+    Type,
+    Year,
+    imdbID
+  } = _ref;
+  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
+  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: movieContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    style: titleStyle
+  }, Title), /*#__PURE__*/_react.default.createElement("p", {
+    style: titleAssistStyle
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    style: titleSubStyle
+  }, Year, " "), /*#__PURE__*/_react.default.createElement("span", null, Type, " ")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
+    src: imgSrc,
+    style: imageStyle
+  })), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: "bold"
+    }
+  }, "imdbID:"), " ", imdbID));
+};
+
+const MovieDisplay = (_ref2) => {
+  let {
+    Poster,
     Title: title,
     Actors: actors,
     Director: director,
     Genre: genre,
     Runtime: runtime,
     Rated: rated,
-    Released: released,
+    Released,
     imdbRating,
     Plot: plot
-  } = _ref;
-  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster"; // const title = "Hellboy";
-  // const actors = "Ron Perlman, John Hurt, Selma Blair, Rupert Evans";
-  // const director = "Guillermo del Toro";
-  // const genre = "Action, Fantasy, Horror";
-  // const runtime = "122 min";
-  // const rated = "PG-13";
-  // const released = "02 Apr 2004".slice(-4);
-  // const imdbRating = "6.8";
-  // const plot =
-  //   "A demon, raised from infancy after being conjured by and rescued from the Nazis, grows up to become a defender against the forces of darkness.";
-
+  } = _ref2;
+  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
+  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
+  const released = omdbNACheck(Released) ? Released.slice(-4) : Released;
   return /*#__PURE__*/_react.default.createElement("div", {
     style: movieContainerStyle
-  }, title && /*#__PURE__*/_react.default.createElement("p", {
+  }, /*#__PURE__*/_react.default.createElement("p", {
     style: titleStyle
-  }, title), rated && /*#__PURE__*/_react.default.createElement("p", {
+  }, title), /*#__PURE__*/_react.default.createElement("p", {
     style: titleAssistStyle
-  }, " ", /*#__PURE__*/_react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     style: titleSubStyle
-  }, released.slice(-4)), " ", runtime, " ", /*#__PURE__*/_react.default.createElement("span", null, rated)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
-    src: imgSrc ? imgSrc : altImgSrc,
+  }, released, " "), /*#__PURE__*/_react.default.createElement("span", null, runtime, " "), /*#__PURE__*/_react.default.createElement("span", null, rated)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
+    src: imgSrc,
     style: imageStyle
-  }))), /*#__PURE__*/_react.default.createElement("div", null, genre && /*#__PURE__*/_react.default.createElement("p", {
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", {
     style: {
-      fontWeight: 'bold'
+      fontWeight: "bold"
     }
-  }, genre), plot && /*#__PURE__*/_react.default.createElement("p", null, plot)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, director && /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+  }, genre), /*#__PURE__*/_react.default.createElement("p", null, plot)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
     style: {
-      fontWeight: 'bold'
+      fontWeight: "bold"
     }
-  }, "Directed By:"), " ", director), actors && /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+  }, "Directed By:"), " ", director), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
     style: {
-      fontWeight: 'bold'
+      fontWeight: "bold"
     }
-  }, "Actors:"), " ", actors))), /*#__PURE__*/_react.default.createElement("div", {
+  }, "Actors:"), " ", actors)), /*#__PURE__*/_react.default.createElement("div", {
     style: {
-      display: 'inline-block',
-      marginTop: '10px'
+      display: "inline-block",
+      marginTop: "10px"
     }
   }, /*#__PURE__*/_react.default.createElement("span", {
     style: {
-      display: 'block',
-      fontSize: '25px'
+      display: "block",
+      fontSize: "25px"
     }
   }, imdbRating), /*#__PURE__*/_react.default.createElement("span", null, "imdbRating")));
 }; //<MovieDisplay {...{ Poster: "https://m.media-amazon.com/images/M/MV5BNTc1ZWY0ZTEtZTVmNi00MTg0LTg4NmQtZTI4OWNiMmQ0MWZkXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg"}}/>
 
 
-_reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root")); // Actors: "Min-sik Choi, Ji-Tae Yoo, Hye-jeong Kang, Dae-han Ji"
-// Awards: "40 wins & 18 nominations."
-// BoxOffice: "$637,778"
-// Country: "South Korea"
-// DVD: "23 Aug 2005"
-// Director: "Chan-wook Park"
-// Genre: "Action, Drama, Mystery, Thriller"
-// Language: "Korean"
-// Metascore: "77"
-// Plot: "After being kidnapped and imprisoned for fifteen years, Oh Dae-Su is released, only to find that he must find his captor in five days."
-// Poster: "https://m.media-amazon.com/images/M/MV5BMTI3NTQyMzU5M15BMl5BanBnXkFtZTcwMTM2MjgyMQ@@._V1_SX300.jpg"
-// Production: "Tartan Films"
-// Rated: "R"
-// Ratings: Array(3)
-// 0: {Source: "Internet Movie Database", Value: "8.4/10"}
-// 1: {Source: "Rotten Tomatoes", Value: "82%"}
-// 2: {Source: "Metacritic", Value: "77/100"}
-// length: 3
-// __proto__: Array(0)
-// Released: "21 Nov 2003"
-// Response: "True"
-// Runtime: "120 min"
-// Title: "Oldboy"
-// Type: "movie"
-// Website: "N/A"
-// Writer: "Garon Tsuchiya (story), Nobuaki Minegishi (comic), Chan-wook Park (character created by: Oldboy,  Vengeance Trilogy), Chan-wook Park (screenplay), Joon-hyung Lim (screenplay), Jo-yun Hwang (screenplay)"
-// Year: "2003"
-// imdbID: "tt0364569"
-// imdbRating: "8.4"
-// imdbVotes: "495,869"
-// Actors: "Ron Perlman, John Hurt, Selma Blair, Rupert Evans"
-// Awards: "3 wins & 23 nominations."
-// BoxOffice: "$59,035,104"
-// Country: "USA"
-// DVD: "27 Jul 2004"
-// Director: "Guillermo del Toro"
-// Genre: "Action, Fantasy, Horror"
-// Language: "English, Russian"
-// Metascore: "72"
-// Plot: "A demon, raised from infancy after being conjured by and rescued from the Nazis, grows up to become a defender against the forces of darkness."
-// Poster: "https://m.media-amazon.com/images/M/MV5BNTc1ZWY0ZTEtZTVmNi00MTg0LTg4NmQtZTI4OWNiMmQ0MWZkXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg"
-// Production: "Sony Pictures"
-// Rated: "PG-13"
-// Ratings: (3) [{…}, {…}, {…}]
-// Released: "02 Apr 2004"
-// Response: "True"
-// Runtime: "122 min"
-// Title: "Hellboy"
-// Type: "movie"
-// Website: "N/A"
-// Writer: "Guillermo del Toro (screenplay), Guillermo del Toro (screen story), Peter Briggs (screen story), Mike Mignola (comic books)"
-// Year: "2004"
-// imdbID: "tt0167190"
-// imdbRating: "6.8"
-// imdbVotes: "301,177"
-// __proto__: Object
+_reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root"));
 },{"react":11,"react-dom":8}],2:[function(require,module,exports){
 /*
 object-assign
