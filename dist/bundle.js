@@ -57,15 +57,6 @@ const byTitleOrId = {
   callback: "",
   v: 1
 };
-const SelectStyle = {
-  borderWidth: '0 0 1px 0',
-  fontFamily: 'monospace',
-  borderColor: '#cdd7e5',
-  color: '#584f4f',
-  outline: 'none',
-  width: '300px',
-  margin: '10px'
-};
 
 const Input = (_ref) => {
   let {
@@ -82,7 +73,10 @@ const Input = (_ref) => {
     value: value,
     onChange: handleChange
   }, rest)));
-}; //check notebook
+}; // preventing the default input background highlight:
+// add !important to color
+// add background-image: initial !important
+// add background-color: transparent !important
 
 
 const TextInputStyle = {
@@ -124,35 +118,58 @@ const Button = (_ref2) => {
 };
 
 const PrimaryButton = props => /*#__PURE__*/_react.default.createElement(Button, _extends({}, props, {
-  style: ButtonStyle
-})); // const Select = ({ options, id, name, label, options, requiredOptions }) => {
-//   return (
-//     <div>
-//       <label htmlFor={id}>{label}</label>
-//       <select>
-//         {}
-//       </select>
-//     </div>
-//   )
-// }
+  style: ButtonStyle,
+  className: "primary-button"
+}));
 
+{
+  /* <div>
+         <label>Parameter:</label>
+         <select value={select} onChange={handleSelect}>
+           <option value="t">t</option>
+           <option value="s">s</option>
+         </select>
+       </div> */
+}
+const SelectStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  width: '300px',
+  margin: '10px'
+};
+
+const Select = (_ref3) => {
+  let {
+    options,
+    value,
+    handleSelect
+  } = _ref3;
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("select", {
+    value: value,
+    onChange: handleSelect,
+    style: SelectStyle
+  }, options.map((option, index) => /*#__PURE__*/_react.default.createElement("option", {
+    key: index,
+    value: option.value,
+    selected: !option.value,
+    disabled: !option.value
+  }, option.text))));
+};
 
 const fetchMovies = (title, select) => {
   const URL = url + "".concat(select, "=") + encodeURIComponent(title);
   console.log(URL);
   return fetch(URL).then(response => response.json());
-}; // fetchMovies('like water for chocolate')
-// {movie && select === 't' && <MovieDisplay {...movie} />}
-//       {movie && select === 's' && (
-//         movie["Search"].map(movie => <MoviePreviewDisplay {...movie} />)
-//       ) }
-
+};
 
 const App = () => {
   const [title, setTitle] = (0, _react.useState)("");
   const [loading, setLoading] = (0, _react.useState)(false);
   const [movie, setMovie] = (0, _react.useState)(null);
-  const [select, setSelect] = (0, _react.useState)("t");
+  const [select, setSelect] = (0, _react.useState)('');
   const [result, setResult] = (0, _react.useState)(null); //TODO: build search parameters based on input
 
   const makeMovieRequest = () => {
@@ -164,9 +181,10 @@ const App = () => {
         setResult(prevState => movieItemToDisplay(movie));
       });
     } //TODO: add message for field missing
-    else {
-        setResult( /*#__PURE__*/_react.default.createElement("p", null, "Please input missing fields."));
-      }
+    // else {
+    //   setResult(<p>Please input missing fields.</p>)
+    // }
+
   };
 
   const movieItemToDisplay = result => {
@@ -184,28 +202,8 @@ const App = () => {
   const handleSelect = e => {
     console.log(e.target.value);
     setSelect(e.target.value);
-  }; //   <div>
-  //   <label htmlFor={title}>Title: </label>
-  //   <input
-  //     id="title"
-  //     type="text"
-  //     value={title}
-  //     onChange={(e) => {
-  //       console.log(e.target.value);
-  //       setTitle(e.target.value);
-  //     }}
-  //     placeholder={"Enter the title of the movie"}
-  //   />
-  // </div>
+  };
 
-
-  {
-    /* <div>
-           <button id="search" onClick={() => makeMovieRequest(title)}>
-             Search
-           </button>
-         </div> */
-  }
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TextInput, {
     type: "text",
     id: "title",
@@ -215,14 +213,19 @@ const App = () => {
       setTitle(e.target.value);
     },
     placeholder: "Enter the title of the movie"
-  }), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("label", null, "Parameter:"), /*#__PURE__*/_react.default.createElement("select", {
-    value: select,
-    onChange: handleSelect
-  }, /*#__PURE__*/_react.default.createElement("option", {
-    value: "t"
-  }, "t"), /*#__PURE__*/_react.default.createElement("option", {
-    value: "s"
-  }, "s"))), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
+  }), /*#__PURE__*/_react.default.createElement(Select, {
+    options: [{
+      value: '',
+      text: 'Search By...'
+    }, {
+      value: 't',
+      text: 'Title'
+    }, {
+      value: 's',
+      text: 'Search'
+    }],
+    handleSelect: handleSelect
+  }), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
     text: "Search",
     handleClick: () => makeMovieRequest(title)
   }), loading && /*#__PURE__*/_react.default.createElement("div", {
@@ -234,7 +237,7 @@ const App = () => {
       borderRadius: "50%",
       animation: "spin 1s linear infinite"
     }
-  }), result && result, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        "));
+  }), result && result, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n          .primary-button:hover: {\n            background-color: 'blue';\n          }\n        "));
 };
 
 const movieContainerStyle = {
@@ -260,14 +263,14 @@ const titleAssistStyle = {
 
 const omdbNACheck = v => v !== "N/A";
 
-const MoviePreviewDisplay = (_ref3) => {
+const MoviePreviewDisplay = (_ref4) => {
   let {
     Poster,
     Title,
     Type,
     Year,
     imdbID
-  } = _ref3;
+  } = _ref4;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -288,7 +291,7 @@ const MoviePreviewDisplay = (_ref3) => {
   }, "imdbID:"), " ", imdbID));
 };
 
-const MovieDisplay = (_ref4) => {
+const MovieDisplay = (_ref5) => {
   let {
     Poster,
     Title: title,
@@ -300,7 +303,7 @@ const MovieDisplay = (_ref4) => {
     Released,
     imdbRating,
     Plot: plot
-  } = _ref4;
+  } = _ref5;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   const released = omdbNACheck(Released) ? Released.slice(-4) : Released;

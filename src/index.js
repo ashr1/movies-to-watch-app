@@ -44,16 +44,6 @@ const byTitleOrId = {
   v: 1,
 };
 
-const SelectStyle = {
-  borderWidth: '0 0 1px 0',
-  fontFamily: 'monospace',
-  borderColor: '#cdd7e5',
-  color: '#584f4f',
-  outline: 'none',
-  width: '300px',
-  margin: '10px'
-}
-
 const Input = ({ name, value, handleChange, type, ...rest }) => {
   return (
     <div>
@@ -67,7 +57,11 @@ const Input = ({ name, value, handleChange, type, ...rest }) => {
     </div>
   )
 }
-//check notebook
+
+// preventing the default input background highlight:
+// add !important to color
+// add background-image: initial !important
+// add background-color: transparent !important
 const TextInputStyle = {
   borderWidth: '0 0 1px 0',
   fontFamily: 'monospace',
@@ -99,7 +93,7 @@ const Button = ({ text, handleClick, ...rest }) => {
     </div>
   )
 }
-
+//TODO: add hover background color
 const PrimaryButton = (props) => (
   <Button 
     {...props}
@@ -107,17 +101,35 @@ const PrimaryButton = (props) => (
   />
 )
 
-// const Select = ({ options, id, name, label, options, requiredOptions }) => {
-//   return (
-//     <div>
-//       <label htmlFor={id}>{label}</label>
-//       <select>
-//         {}
-//       </select>
-//     </div>
-//   )
-// }
+{/* <div>
+        <label>Parameter:</label>
+        <select value={select} onChange={handleSelect}>
+          <option value="t">t</option>
+          <option value="s">s</option>
+        </select>
+      </div> */}
 
+const SelectStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  width: '300px',
+  margin: '10px'
+}
+
+const Select = ({ options, value, handleSelect }) => {
+  return (
+    <div>
+      <select value={value} onChange={handleSelect} style={SelectStyle}>
+        {
+          options.map((option, index) => <option key={index} value={option.value} selected={!option.value} disabled={!option.value}>{option.text}</option>)
+        }
+      </select>
+    </div>
+  )
+}
 
 const fetchMovies = (title, select) => {
   const URL = url + `${select}=` + encodeURIComponent(title);
@@ -129,7 +141,7 @@ const App = () => {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState(null);
-  const [select, setSelect] = useState("t")
+  const [select, setSelect] = useState('')
   const [result, setResult] = useState(null)
 //TODO: build search parameters based on input
   const makeMovieRequest = () => {
@@ -176,13 +188,24 @@ const App = () => {
         }}
         placeholder={"Enter the title of the movie"}
       />
-      <div>
-        <label>Parameter:</label>
-        <select value={select} onChange={handleSelect}>
-          <option value="t">t</option>
-          <option value="s">s</option>
-        </select>
-      </div>
+
+      <Select
+        options={[
+          {
+            value: '',
+            text: 'Search By...'
+          },
+          {
+            value: 't',
+            text: 'Title'
+          },
+          {
+            value: 's',
+            text: 'Search'
+          }
+        ]}
+        handleSelect={handleSelect}
+      />
 
       <PrimaryButton text="Search" handleClick={() => makeMovieRequest(title)}/>
 
