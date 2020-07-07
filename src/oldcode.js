@@ -1,3 +1,116 @@
+// const fetchMovies = (title, select) => {
+//   const URL = url + `${select}=` + encodeURIComponent(title);
+//   console.log(URL);
+//   return fetch(URL).then((response) => response.json());
+// };
+
+// const App = () => {
+//   const [title, setTitle] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [movie, setMovie] = useState(null);
+//   const [select, setSelect] = useState('t')
+//   const [result, setResult] = useState(null)
+// //TODO: build search parameters based on input
+//   const makeMovieRequest = () => {
+//     if(select && title) {
+//       setLoading(true);
+//     fetchMovies(title, select).then((movie) => {
+//       setLoading(false);
+//       setMovie(movie);
+//       setResult(prevState => movieItemToDisplay(movie))
+//     });
+//     } 
+//     //TODO: add message for field missing
+//     // else {
+//     //   setResult(<p>Please input missing fields.</p>)
+//     // }
+//   };
+
+//   const movieItemToDisplay = (result) => {
+//     if(result["Response"] === 'True') {
+//       if(select === 't') {
+//         return <MovieDisplay {...result} />
+//       } else {
+//         return result["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />)
+//       }
+//     } else {
+//       return <p>We couldn't find a proper match. Please try again.</p>
+//     }
+//   }
+
+//   const handleSelect = (e) => {
+//     console.log(e.target.value)
+//     setSelect(e.target.value)
+//   }
+
+//   return (
+//     <div>
+//       <TextInput 
+//         type="text" 
+//         id="title" 
+//         value={title} 
+//         onChange={(e) => {
+//           console.log(e.target.value);
+//           setTitle(e.target.value);
+//         }}
+//         placeholder={"Enter the title of the movie"}
+//       />
+
+//       <Select
+//         id='searchByMethod'
+//         label='Search By: '
+//         options={[
+//           {
+//             value: 't',
+//             text: 'Title'
+//           },
+//           {
+//             value: 's',
+//             text: 'Search'
+//           }
+//         ]}
+//         value={select}
+//         handleSelect={handleSelect}
+//       />
+
+//       <PrimaryButton text="Search" handleClick={() => makeMovieRequest(title)}/>
+
+//       {loading && (
+//         <div
+//           style={{
+//             width: "40px",
+//             height: "40px",
+//             border: "5px solid",
+//             borderColor: "white #525a63 #525a63 #525a63",
+//             borderRadius: "50%",
+//             animation: "spin 1s linear infinite",
+//           }}
+//         ></div>
+//       )}
+
+//       <h1>Specific Movie Form</h1>
+//       <SpecificMovieForm />
+
+//       {result && result}
+
+//       <style>
+//         {`
+//           @keyframes spin{
+//             0%{
+//               transform: rotate(0deg);
+//             }
+//             100%{
+//               transform: rotate(360deg);
+//             }
+//           }
+//         `}
+//       </style>
+//     </div>
+//   );
+// };
+ 
+ 
+ 
  {/* <TextInput 
         id='year'
         value={year} 

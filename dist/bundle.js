@@ -11,11 +11,11 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 const API_KEY = "45fc49f2";
 const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&"); // query builder:
@@ -79,6 +79,123 @@ const Loading = (_ref) => {
       animation: "spin 1s linear infinite"
     }
   }, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        ")) : null;
+};
+
+const GeneralMovieSearch = () => {
+  const [s, setS] = (0, _react.useState)('');
+  const [type, setType] = (0, _react.useState)('');
+  const [year, setYear] = (0, _react.useState)('');
+  const [page, setPage] = (0, _react.useState)(1);
+  const [error, setError] = (0, _react.useState)('');
+  const [loading, setLoading] = (0, _react.useState)(false);
+  const [movieData, setMovieData] = (0, _react.useState)(null);
+
+  const submitForRequest = () => {
+    if (s) {
+      const queryParams = {
+        s,
+        type,
+        y: year,
+        page
+      };
+      setLoading(true);
+      fetchMoviesFullQuery(queryParams).then(movie => {
+        setLoading(false);
+        displayResult(movie); // display the result of request
+      }).catch(err => setError('Something went wrong making a request.'));
+    } else {
+      setError('You must specify the title.');
+    } // form validation
+
+  };
+
+  const displayResult = incMovieData => {
+    if (incMovieData['Response'] === 'True') {
+      setMovieData(incMovieData);
+      setError(''); // all parameters were right, but maybe network connection failed
+    } else {
+      setError(incMovieData['Error']);
+    }
+  };
+
+  const handleInput = e => {
+    setError('');
+
+    switch (e.target.id) {
+      case 's':
+        console.log(e.target.id);
+        setS(e.target.value);
+        break;
+
+      case 'type':
+        console.log(e.target.id);
+        setType(e.target.value);
+        break;
+
+      case 'page':
+        console.log(e.target.id);
+        setPage(e.target.value);
+        break;
+
+      case 'year':
+        console.log(e.target.id);
+        setYear(e.target.value);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TextInput, {
+    id: "s",
+    value: s,
+    handleChange: handleInput,
+    placeholder: "Enter the title of the movie"
+  }), /*#__PURE__*/_react.default.createElement(Select, {
+    id: "type",
+    label: "Search By: ",
+    options: [{
+      value: '',
+      text: 'Default'
+    }, {
+      value: 'movie',
+      text: 'Movie'
+    }, {
+      value: 'series',
+      text: 'Series'
+    }, {
+      value: 'episode',
+      text: 'Episode'
+    }],
+    value: type,
+    handleSelect: handleInput
+  }), /*#__PURE__*/_react.default.createElement(YearInput, {
+    id: "year",
+    label: "Year: ",
+    value: year,
+    min: 1000,
+    max: 3000,
+    step: 200,
+    handleChange: handleInput
+  }), /*#__PURE__*/_react.default.createElement(YearInput, {
+    id: "page",
+    label: "Page: ",
+    value: page,
+    min: 1,
+    max: 100,
+    step: 1,
+    handleChange: handleInput
+  }), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
+    text: "Search",
+    handleClick: () => submitForRequest()
+  }), error && /*#__PURE__*/_react.default.createElement("p", {
+    style: ErrorMsgStyle
+  }, error), /*#__PURE__*/_react.default.createElement(Loading, {
+    loading: false
+  }), movieData && movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, _extends({
+    key: index
+  }, result))));
 };
 
 const SpecificMovieForm = () => {
@@ -380,89 +497,6 @@ const Select = (_ref6) => {
   }, option.text))));
 };
 
-const fetchMovies = (title, select) => {
-  const URL = url + "".concat(select, "=") + encodeURIComponent(title);
-  console.log(URL);
-  return fetch(URL).then(response => response.json());
-};
-
-const App = () => {
-  const [title, setTitle] = (0, _react.useState)("");
-  const [loading, setLoading] = (0, _react.useState)(false);
-  const [movie, setMovie] = (0, _react.useState)(null);
-  const [select, setSelect] = (0, _react.useState)('t');
-  const [result, setResult] = (0, _react.useState)(null); //TODO: build search parameters based on input
-
-  const makeMovieRequest = () => {
-    if (select && title) {
-      setLoading(true);
-      fetchMovies(title, select).then(movie => {
-        setLoading(false);
-        setMovie(movie);
-        setResult(prevState => movieItemToDisplay(movie));
-      });
-    } //TODO: add message for field missing
-    // else {
-    //   setResult(<p>Please input missing fields.</p>)
-    // }
-
-  };
-
-  const movieItemToDisplay = result => {
-    if (result["Response"] === 'True') {
-      if (select === 't') {
-        return /*#__PURE__*/_react.default.createElement(MovieDisplay, result);
-      } else {
-        return result["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, _extends({
-          key: index
-        }, result)));
-      }
-    } else {
-      return /*#__PURE__*/_react.default.createElement("p", null, "We couldn't find a proper match. Please try again.");
-    }
-  };
-
-  const handleSelect = e => {
-    console.log(e.target.value);
-    setSelect(e.target.value);
-  };
-
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TextInput, {
-    type: "text",
-    id: "title",
-    value: title,
-    onChange: e => {
-      console.log(e.target.value);
-      setTitle(e.target.value);
-    },
-    placeholder: "Enter the title of the movie"
-  }), /*#__PURE__*/_react.default.createElement(Select, {
-    id: "searchByMethod",
-    label: "Search By: ",
-    options: [{
-      value: 't',
-      text: 'Title'
-    }, {
-      value: 's',
-      text: 'Search'
-    }],
-    value: select,
-    handleSelect: handleSelect
-  }), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
-    text: "Search",
-    handleClick: () => makeMovieRequest(title)
-  }), loading && /*#__PURE__*/_react.default.createElement("div", {
-    style: {
-      width: "40px",
-      height: "40px",
-      border: "5px solid",
-      borderColor: "white #525a63 #525a63 #525a63",
-      borderRadius: "50%",
-      animation: "spin 1s linear infinite"
-    }
-  }), /*#__PURE__*/_react.default.createElement("h1", null, "Specific Movie Form"), /*#__PURE__*/_react.default.createElement(SpecificMovieForm, null), result && result, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        "));
-};
-
 const movieContainerStyle = {
   color: "black",
   fontFamily: "monospace",
@@ -564,6 +598,10 @@ const MovieDisplay = (_ref8) => {
       fontSize: "25px"
     }
   }, imdbRating), /*#__PURE__*/_react.default.createElement("span", null, "imdbRating")));
+};
+
+const App = () => {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(SpecificMovieForm, null), /*#__PURE__*/_react.default.createElement(GeneralMovieSearch, null));
 }; //<MovieDisplay {...{ Poster: "https://m.media-amazon.com/images/M/MV5BNTc1ZWY0ZTEtZTVmNi00MTg0LTg4NmQtZTI4OWNiMmQ0MWZkXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg"}}/>
 
 

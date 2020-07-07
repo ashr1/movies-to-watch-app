@@ -80,6 +80,129 @@ const Loading = ({ loading }) =>
     </div>
   ) : null;
 
+  const GeneralMovieSearch = () => {
+    const [s, setS] = useState('')
+    const [type, setType] = useState('')
+    const [year, setYear] = useState('')
+    const [page, setPage] = useState(1)
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [movieData, setMovieData] = useState(null)
+  
+    const submitForRequest = () => {
+      if(s) {
+        const queryParams = {
+          s,
+          type,
+          y: year,
+          page
+        }
+        setLoading(true)
+        fetchMoviesFullQuery(queryParams)
+          .then(movie => {
+            setLoading(false)
+            displayResult(movie) // display the result of request
+          })
+          .catch(err => setError('Something went wrong making a request.'))
+      } else {
+        setError('You must specify the title.')
+      } // form validation
+    }
+  
+    const displayResult = (incMovieData) => {
+      if(incMovieData['Response'] === 'True') {
+        setMovieData(incMovieData)
+        setError('') // all parameters were right, but maybe network connection failed
+      } else {
+        setError(incMovieData['Error'])
+      }
+    }
+  
+    const handleInput = (e) => {
+      setError('')
+      switch(e.target.id) {
+        case 's':
+          console.log(e.target.id);
+          setS(e.target.value);
+          break;
+        case 'type':
+          console.log(e.target.id);
+          setType(e.target.value);
+          break;
+        case 'page':
+          console.log(e.target.id);
+          setPage(e.target.value);
+          break;
+        case 'year':
+          console.log(e.target.id);
+          setYear(e.target.value);
+          break;
+        default:
+          break;
+      }
+    }
+  
+    return (
+      <div>
+        <TextInput 
+          id="s" 
+          value={s} 
+          handleChange={handleInput}
+          placeholder={"Enter the title of the movie"}
+        />
+        <Select
+          id='type'
+          label='Search By: '
+          options={[
+            {
+              value: '',
+              text: 'Default'
+            },
+            {
+              value: 'movie',
+              text: 'Movie'
+            },
+            {
+              value: 'series',
+              text: 'Series'
+            },
+            {
+              value: 'episode',
+              text: 'Episode'
+            }
+          ]}
+          value={type}
+          handleSelect={handleInput}
+        />
+        
+        <YearInput 
+          id='year'
+          label='Year: '
+          value={year}
+          min={1000} 
+          max={3000} 
+          step={200}
+          handleChange={handleInput}
+        />
+
+        <YearInput 
+          id='page'
+          label='Page: '
+          value={page}
+          min={1} 
+          max={100} 
+          step={1}
+          handleChange={handleInput}
+        />
+
+        <PrimaryButton text="Search" handleClick={() => submitForRequest()}/>
+        { error && <p style={ErrorMsgStyle}>{error}</p>}
+        <Loading loading={false} />
+        { movieData && movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />) }
+      </div>
+    )
+  }
+
 const SpecificMovieForm = () => {
   const [i, setI] = useState('')
   const [t, setT] = useState('')
@@ -357,117 +480,6 @@ const Select = ({ id, label, options, value, handleSelect }) => {
   )
 }
 
-const fetchMovies = (title, select) => {
-  const URL = url + `${select}=` + encodeURIComponent(title);
-  console.log(URL);
-  return fetch(URL).then((response) => response.json());
-};
-
-const App = () => {
-  const [title, setTitle] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [movie, setMovie] = useState(null);
-  const [select, setSelect] = useState('t')
-  const [result, setResult] = useState(null)
-//TODO: build search parameters based on input
-  const makeMovieRequest = () => {
-    if(select && title) {
-      setLoading(true);
-    fetchMovies(title, select).then((movie) => {
-      setLoading(false);
-      setMovie(movie);
-      setResult(prevState => movieItemToDisplay(movie))
-    });
-    } 
-    //TODO: add message for field missing
-    // else {
-    //   setResult(<p>Please input missing fields.</p>)
-    // }
-  };
-
-  const movieItemToDisplay = (result) => {
-    if(result["Response"] === 'True') {
-      if(select === 't') {
-        return <MovieDisplay {...result} />
-      } else {
-        return result["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />)
-      }
-    } else {
-      return <p>We couldn't find a proper match. Please try again.</p>
-    }
-  }
-
-  const handleSelect = (e) => {
-    console.log(e.target.value)
-    setSelect(e.target.value)
-  }
-
-  return (
-    <div>
-      <TextInput 
-        type="text" 
-        id="title" 
-        value={title} 
-        onChange={(e) => {
-          console.log(e.target.value);
-          setTitle(e.target.value);
-        }}
-        placeholder={"Enter the title of the movie"}
-      />
-
-      <Select
-        id='searchByMethod'
-        label='Search By: '
-        options={[
-          {
-            value: 't',
-            text: 'Title'
-          },
-          {
-            value: 's',
-            text: 'Search'
-          }
-        ]}
-        value={select}
-        handleSelect={handleSelect}
-      />
-
-      <PrimaryButton text="Search" handleClick={() => makeMovieRequest(title)}/>
-
-      {loading && (
-        <div
-          style={{
-            width: "40px",
-            height: "40px",
-            border: "5px solid",
-            borderColor: "white #525a63 #525a63 #525a63",
-            borderRadius: "50%",
-            animation: "spin 1s linear infinite",
-          }}
-        ></div>
-      )}
-
-      <h1>Specific Movie Form</h1>
-      <SpecificMovieForm />
-
-      {result && result}
-
-      <style>
-        {`
-          @keyframes spin{
-            0%{
-              transform: rotate(0deg);
-            }
-            100%{
-              transform: rotate(360deg);
-            }
-          }
-        `}
-      </style>
-    </div>
-  );
-};
-
 const movieContainerStyle = {
   color: "black",
   fontFamily: "monospace",
@@ -574,6 +586,15 @@ const MovieDisplay = ({
     </div>
   );
 };
+
+const App = () => {
+  return (
+    <>
+      <SpecificMovieForm />
+      <GeneralMovieSearch />
+    </>
+  )
+}
 
 //<MovieDisplay {...{ Poster: "https://m.media-amazon.com/images/M/MV5BNTc1ZWY0ZTEtZTVmNi00MTg0LTg4NmQtZTI4OWNiMmQ0MWZkXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg"}}/>
 ReactDOM.render(<App />, document.getElementById("root"));
