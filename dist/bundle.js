@@ -58,6 +58,106 @@ const byTitleOrId = {
   v: 1
 };
 
+const SpecificMovieForm = () => {
+  const [i, setI] = (0, _react.useState)('');
+  const [t, setT] = (0, _react.useState)('');
+  const [type, setType] = (0, _react.useState)('');
+  const [year, setYear] = (0, _react.useState)('');
+  const [plot, setPlot] = (0, _react.useState)('short');
+  const [error, setError] = (0, _react.useState)('');
+
+  const submitForRequest = () => {
+    if (!i || !t) {
+      console.log('You must specify either an id or title. Both are not required.');
+    }
+  };
+
+  const handleInput = e => {
+    switch (e.target.id) {
+      case 't':
+        console.log(e.target.id);
+        setT(e.target.value);
+        break;
+
+      case 'i':
+        console.log(e.target.id);
+        setI(e.target.value);
+        break;
+
+      case 'type':
+        console.log(e.target.id);
+        setType(e.target.value);
+        break;
+
+      case 'plot':
+        console.log(e.target.id);
+        setPlot(e.target.value);
+        break;
+
+      case 'year':
+        console.log(e.target.id);
+        setYear(e.target.value);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TextInput, {
+    id: "t",
+    value: t,
+    handleChange: handleInput,
+    placeholder: "Enter the title of the movie"
+  }), /*#__PURE__*/_react.default.createElement(TextInput, {
+    id: "i",
+    value: i,
+    handleChange: handleInput,
+    placeholder: "Enter the imdbID of the movie"
+  }), /*#__PURE__*/_react.default.createElement(Select, {
+    id: "type",
+    label: "Search By: ",
+    options: [{
+      value: '',
+      text: 'Default'
+    }, {
+      value: 'movie',
+      text: 'Movie'
+    }, {
+      value: 'series',
+      text: 'Series'
+    }, {
+      value: 'episode',
+      text: 'Episode'
+    }],
+    value: type,
+    handleSelect: handleInput
+  }), /*#__PURE__*/_react.default.createElement(YearInput, {
+    id: "year",
+    label: "Year: ",
+    value: year,
+    min: 1000,
+    max: 3000,
+    step: 200,
+    handleChange: handleInput
+  }), /*#__PURE__*/_react.default.createElement(Select, {
+    id: "plot",
+    label: "Plot: ",
+    options: [{
+      value: 'short',
+      text: 'Short'
+    }, {
+      value: 'full',
+      text: 'Full'
+    }],
+    value: plot,
+    handleSelect: handleInput
+  }), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
+    text: "Search",
+    handleClick: () => submitForRequest()
+  }));
+};
+
 const Input = (_ref) => {
   let {
     name,
@@ -92,8 +192,73 @@ const TextInputStyle = {
 };
 
 const TextInput = props => /*#__PURE__*/_react.default.createElement(Input, _extends({}, props, {
+  type: "text",
   style: TextInputStyle
 }));
+
+const NumberInput = (_ref2) => {
+  let {
+    max,
+    min,
+    step
+  } = _ref2,
+      rest = _objectWithoutProperties(_ref2, ["max", "min", "step"]);
+
+  return /*#__PURE__*/_react.default.createElement(Input, _extends({}, rest, {
+    max: max,
+    min: min,
+    step: step ? step : 1,
+    type: "number",
+    style: TextInputStyle
+  }));
+};
+
+{
+  /* <NumberInput value={someVariable} min={0} max={100} handleChange={e => console.log(e.target.value)}/> */
+}
+const YearInputContainerStyle = {
+  width: '300px',
+  fontFamily: 'monospace',
+  color: '#584f4f',
+  margin: '10px'
+};
+const YearInputStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  backgroundImage: 'initial',
+  backgroundColor: 'transparent'
+};
+
+const YearInput = (_ref3) => {
+  let {
+    name,
+    value,
+    handleChange,
+    label,
+    id,
+    max,
+    min,
+    step
+  } = _ref3;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: YearInputContainerStyle
+  }, label && /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: id
+  }, label), /*#__PURE__*/_react.default.createElement("input", {
+    name: name,
+    id: id,
+    type: "number",
+    value: value,
+    max: max,
+    min: min,
+    step: step,
+    onChange: handleChange,
+    style: YearInputStyle
+  }));
+};
 
 const ButtonStyle = {
   padding: '8px 12px',
@@ -105,57 +270,56 @@ const ButtonStyle = {
   outline: 'none'
 };
 
-const Button = (_ref2) => {
+const Button = (_ref4) => {
   let {
     text,
     handleClick
-  } = _ref2,
-      rest = _objectWithoutProperties(_ref2, ["text", "handleClick"]);
+  } = _ref4,
+      rest = _objectWithoutProperties(_ref4, ["text", "handleClick"]);
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", _extends({
     onClick: handleClick
   }, rest), text));
-};
+}; //TODO: add hover background color
+
 
 const PrimaryButton = props => /*#__PURE__*/_react.default.createElement(Button, _extends({}, props, {
-  style: ButtonStyle,
-  className: "primary-button"
+  style: ButtonStyle
 }));
 
-{
-  /* <div>
-         <label>Parameter:</label>
-         <select value={select} onChange={handleSelect}>
-           <option value="t">t</option>
-           <option value="s">s</option>
-         </select>
-       </div> */
-}
 const SelectStyle = {
   borderWidth: '0 0 1px 0',
-  fontFamily: 'monospace',
   borderColor: '#cdd7e5',
-  color: '#584f4f',
   outline: 'none',
+  color: '#584f4f'
+};
+const SelectContainer = {
   width: '300px',
+  fontFamily: 'monospace',
+  color: '#584f4f',
   margin: '10px'
 };
 
-const Select = (_ref3) => {
+const Select = (_ref5) => {
   let {
+    id,
+    label,
     options,
     value,
     handleSelect
-  } = _ref3;
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("select", {
+  } = _ref5;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: SelectContainer
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: id
+  }, label, " "), /*#__PURE__*/_react.default.createElement("select", {
+    id: id,
     value: value,
     onChange: handleSelect,
     style: SelectStyle
   }, options.map((option, index) => /*#__PURE__*/_react.default.createElement("option", {
     key: index,
-    value: option.value,
-    selected: !option.value,
-    disabled: !option.value
+    value: option.value
   }, option.text))));
 };
 
@@ -169,7 +333,7 @@ const App = () => {
   const [title, setTitle] = (0, _react.useState)("");
   const [loading, setLoading] = (0, _react.useState)(false);
   const [movie, setMovie] = (0, _react.useState)(null);
-  const [select, setSelect] = (0, _react.useState)('');
+  const [select, setSelect] = (0, _react.useState)('t');
   const [result, setResult] = (0, _react.useState)(null); //TODO: build search parameters based on input
 
   const makeMovieRequest = () => {
@@ -192,7 +356,9 @@ const App = () => {
       if (select === 't') {
         return /*#__PURE__*/_react.default.createElement(MovieDisplay, result);
       } else {
-        return result["Search"].map(result => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, result));
+        return result["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, _extends({
+          key: index
+        }, result)));
       }
     } else {
       return /*#__PURE__*/_react.default.createElement("p", null, "We couldn't find a proper match. Please try again.");
@@ -214,16 +380,16 @@ const App = () => {
     },
     placeholder: "Enter the title of the movie"
   }), /*#__PURE__*/_react.default.createElement(Select, {
+    id: "searchByMethod",
+    label: "Search By: ",
     options: [{
-      value: '',
-      text: 'Search By...'
-    }, {
       value: 't',
       text: 'Title'
     }, {
       value: 's',
       text: 'Search'
     }],
+    value: select,
     handleSelect: handleSelect
   }), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
     text: "Search",
@@ -237,7 +403,7 @@ const App = () => {
       borderRadius: "50%",
       animation: "spin 1s linear infinite"
     }
-  }), result && result, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n          .primary-button:hover: {\n            background-color: 'blue';\n          }\n        "));
+  }), /*#__PURE__*/_react.default.createElement("h1", null, "Specific Movie Form"), /*#__PURE__*/_react.default.createElement(SpecificMovieForm, null), result && result, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        "));
 };
 
 const movieContainerStyle = {
@@ -263,14 +429,14 @@ const titleAssistStyle = {
 
 const omdbNACheck = v => v !== "N/A";
 
-const MoviePreviewDisplay = (_ref4) => {
+const MoviePreviewDisplay = (_ref6) => {
   let {
     Poster,
     Title,
     Type,
     Year,
     imdbID
-  } = _ref4;
+  } = _ref6;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -291,7 +457,7 @@ const MoviePreviewDisplay = (_ref4) => {
   }, "imdbID:"), " ", imdbID));
 };
 
-const MovieDisplay = (_ref5) => {
+const MovieDisplay = (_ref7) => {
   let {
     Poster,
     Title: title,
@@ -303,7 +469,7 @@ const MovieDisplay = (_ref5) => {
     Released,
     imdbRating,
     Plot: plot
-  } = _ref5;
+  } = _ref7;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   const released = omdbNACheck(Released) ? Released.slice(-4) : Released;

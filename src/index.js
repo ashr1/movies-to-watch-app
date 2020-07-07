@@ -44,6 +44,121 @@ const byTitleOrId = {
   v: 1,
 };
 
+const SpecificMovieForm = () => {
+  const [i, setI] = useState('')
+  const [t, setT] = useState('')
+  const [type, setType] = useState('')
+  const [year, setYear] = useState('')
+  const [plot, setPlot] = useState('short')
+  const [error, setError] = useState('')
+
+  const submitForRequest = () => {
+    if(!i || !t) {
+      console.log('You must specify either an id or title. Both are not required.')
+    }
+  }
+
+  const handleInput = (e) => {
+    switch(e.target.id) {
+      case 't':
+        console.log(e.target.id);
+        setT(e.target.value);
+        break;
+      case 'i':
+        console.log(e.target.id);
+        setI(e.target.value);
+        break;
+      case 'type':
+        console.log(e.target.id);
+        setType(e.target.value);
+        break;
+      case 'plot':
+        console.log(e.target.id);
+        setPlot(e.target.value);
+        break;
+      case 'year':
+        console.log(e.target.id);
+        setYear(e.target.value);
+        break;
+      default:
+        break;
+    }
+  }
+
+  return (
+    <div>
+      <TextInput 
+        id="t" 
+        value={t} 
+        handleChange={handleInput}
+        placeholder={"Enter the title of the movie"}
+      />
+      <TextInput 
+        id="i" 
+        value={i} 
+        handleChange={handleInput}
+        placeholder={"Enter the imdbID of the movie"}
+      />
+      <Select
+        id='type'
+        label='Search By: '
+        options={[
+          {
+            value: '',
+            text: 'Default'
+          },
+          {
+            value: 'movie',
+            text: 'Movie'
+          },
+          {
+            value: 'series',
+            text: 'Series'
+          },
+          {
+            value: 'episode',
+            text: 'Episode'
+          }
+        ]}
+        value={type}
+        handleSelect={handleInput}
+      />
+      {/* <TextInput 
+        id='year'
+        value={year} 
+        placeholder={'Enter the year (Optional)'} 
+        handleChange={handleInput}
+      /> */}
+      <YearInput 
+        id='year'
+        label='Year: '
+        value={year}
+        min={1000} 
+        max={3000} 
+        step={200}
+        handleChange={handleInput}
+      />
+      <Select
+        id='plot'
+        label='Plot: '
+        options={[
+          {
+            value: 'short',
+            text: 'Short'
+          },
+          {
+            value: 'full',
+            text: 'Full'
+          },
+        ]}
+        value={plot}
+        handleSelect={handleInput}
+      />
+      <PrimaryButton text="Search" handleClick={() => submitForRequest()}/>
+    </div>
+  )
+}
+
 const Input = ({ name, value, handleChange, type, ...rest }) => {
   return (
     <div>
@@ -74,7 +189,53 @@ const TextInputStyle = {
   backgroundColor: 'transparent'
 }
 
-const TextInput = (props) => <Input {...props} style={TextInputStyle} />
+const TextInput = (props) => <Input {...props} type="text" style={TextInputStyle} />
+const NumberInput = ({ max, min, step, ...rest  }) => <Input {...rest} max={max} min={min} step={step ? step : 1} type="number" style={TextInputStyle} />
+
+const YearInputContainerStyle = {
+  width: '300px',
+  fontFamily: 'monospace',
+  color: '#584f4f',
+  margin: '10px',
+}
+
+const YearInputStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  backgroundImage: 'initial',
+  backgroundColor: 'transparent'
+}
+
+const YearInput = ({ 
+  name, 
+  value, 
+  handleChange, 
+  label, 
+  id, 
+  max,
+  min,
+  step,
+}) => {
+  return (
+    <div style={YearInputContainerStyle}>
+      {label && <label htmlFor={id}>{label}</label>}
+      <input 
+        name={name}
+        id={id}
+        type='number'
+        value={value}
+        max={max}
+        min={min}
+        step={step}
+        onChange={handleChange}
+        style={YearInputStyle}
+      />
+    </div>
+  )
+}
 
 const ButtonStyle = {
   padding: '8px 12px',
@@ -101,30 +262,28 @@ const PrimaryButton = (props) => (
   />
 )
 
-{/* <div>
-        <label>Parameter:</label>
-        <select value={select} onChange={handleSelect}>
-          <option value="t">t</option>
-          <option value="s">s</option>
-        </select>
-      </div> */}
-
 const SelectStyle = {
   borderWidth: '0 0 1px 0',
-  fontFamily: 'monospace',
   borderColor: '#cdd7e5',
-  color: '#584f4f',
   outline: 'none',
-  width: '300px',
-  margin: '10px'
+  
+  color: '#584f4f'
 }
 
-const Select = ({ options, value, handleSelect }) => {
+const SelectContainer = {
+  width: '300px',
+  fontFamily: 'monospace',
+  color: '#584f4f',
+  margin: '10px',
+}
+
+const Select = ({ id, label, options, value, handleSelect }) => {
   return (
-    <div>
-      <select value={value} onChange={handleSelect} style={SelectStyle}>
+    <div style={SelectContainer}>
+      <label htmlFor={id}>{label} </label>
+      <select id={id} value={value} onChange={handleSelect} style={SelectStyle}>
         {
-          options.map((option, index) => <option key={index} value={option.value} selected={!option.value} disabled={!option.value}>{option.text}</option>)
+          options.map((option, index) => <option key={index} value={option.value}>{option.text}</option>)
         }
       </select>
     </div>
@@ -141,7 +300,7 @@ const App = () => {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState(null);
-  const [select, setSelect] = useState('')
+  const [select, setSelect] = useState('t')
   const [result, setResult] = useState(null)
 //TODO: build search parameters based on input
   const makeMovieRequest = () => {
@@ -164,7 +323,7 @@ const App = () => {
       if(select === 't') {
         return <MovieDisplay {...result} />
       } else {
-        return result["Search"].map(result => <MoviePreviewDisplay {...result} />)
+        return result["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />)
       }
     } else {
       return <p>We couldn't find a proper match. Please try again.</p>
@@ -190,11 +349,9 @@ const App = () => {
       />
 
       <Select
+        id='searchByMethod'
+        label='Search By: '
         options={[
-          {
-            value: '',
-            text: 'Search By...'
-          },
           {
             value: 't',
             text: 'Title'
@@ -204,6 +361,7 @@ const App = () => {
             text: 'Search'
           }
         ]}
+        value={select}
         handleSelect={handleSelect}
       />
 
@@ -221,6 +379,9 @@ const App = () => {
           }}
         ></div>
       )}
+
+      <h1>Specific Movie Form</h1>
+      <SpecificMovieForm />
 
       {result && result}
 
