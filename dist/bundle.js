@@ -58,6 +58,29 @@ const byTitleOrId = {
   v: 1
 };
 
+const fetchMoviesFullQuery = queryParams => {
+  let paramsSection = Object.keys(queryParams).map(q => queryParams[q] ? "".concat(q, "=").concat(encodeURIComponent(queryParams[q]), "&") : '').join('');
+  paramsSection = /&$/.test(paramsSection) ? paramsSection.slice(0, -1) : paramsSection;
+  const URL = url + paramsSection;
+  return fetch(URL).then(response => response.json());
+};
+
+const Loading = (_ref) => {
+  let {
+    loading
+  } = _ref;
+  return loading ? /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      width: "40px",
+      height: "40px",
+      border: "5px solid",
+      borderColor: "white rgb(141,135,130) rgb(141,135,130) rgb(141,135,130)",
+      borderRadius: "50%",
+      animation: "spin 1s linear infinite"
+    }
+  }, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        ")) : null;
+};
+
 const SpecificMovieForm = () => {
   const [i, setI] = (0, _react.useState)('');
   const [t, setT] = (0, _react.useState)('');
@@ -65,14 +88,41 @@ const SpecificMovieForm = () => {
   const [year, setYear] = (0, _react.useState)('');
   const [plot, setPlot] = (0, _react.useState)('short');
   const [error, setError] = (0, _react.useState)('');
+  const [loading, setLoading] = (0, _react.useState)(false);
+  const [movieData, setMovieData] = (0, _react.useState)(null);
 
   const submitForRequest = () => {
-    if (!i || !t) {
-      console.log('You must specify either an id or title. Both are not required.');
+    if (i || t) {
+      const queryParams = {
+        i,
+        t,
+        type,
+        y: year,
+        plot
+      };
+      setLoading(true);
+      fetchMoviesFullQuery(queryParams).then(movie => {
+        setLoading(false);
+        displayResult(movie); // display the result of request
+      }).catch(err => setError('Something went wrong making a request.'));
+    } else {
+      setError('You must specify either an id or title. Both are not required.');
+    } // form validation
+
+  };
+
+  const displayResult = incMovieData => {
+    if (incMovieData['Response'] === 'True') {
+      setMovieData(incMovieData);
+      setError(''); // all parameters were right, but maybe network connection failed
+    } else {
+      setError(incMovieData['Error']);
     }
   };
 
   const handleInput = e => {
+    setError('');
+
     switch (e.target.id) {
       case 't':
         console.log(e.target.id);
@@ -155,17 +205,27 @@ const SpecificMovieForm = () => {
   }), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
     text: "Search",
     handleClick: () => submitForRequest()
-  }));
+  }), error && /*#__PURE__*/_react.default.createElement("p", {
+    style: ErrorMsgStyle
+  }, error), /*#__PURE__*/_react.default.createElement(Loading, {
+    loading: false
+  }), movieData && /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData));
 };
 
-const Input = (_ref) => {
+const ErrorMsgStyle = {
+  color: '#ff4d66',
+  fontFamily: 'monospace',
+  margin: '5px'
+};
+
+const Input = (_ref2) => {
   let {
     name,
     value,
     handleChange,
     type
-  } = _ref,
-      rest = _objectWithoutProperties(_ref, ["name", "value", "handleChange", "type"]);
+  } = _ref2,
+      rest = _objectWithoutProperties(_ref2, ["name", "value", "handleChange", "type"]);
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", _extends({
     name: name,
@@ -196,13 +256,13 @@ const TextInput = props => /*#__PURE__*/_react.default.createElement(Input, _ext
   style: TextInputStyle
 }));
 
-const NumberInput = (_ref2) => {
+const NumberInput = (_ref3) => {
   let {
     max,
     min,
     step
-  } = _ref2,
-      rest = _objectWithoutProperties(_ref2, ["max", "min", "step"]);
+  } = _ref3,
+      rest = _objectWithoutProperties(_ref3, ["max", "min", "step"]);
 
   return /*#__PURE__*/_react.default.createElement(Input, _extends({}, rest, {
     max: max,
@@ -213,9 +273,6 @@ const NumberInput = (_ref2) => {
   }));
 };
 
-{
-  /* <NumberInput value={someVariable} min={0} max={100} handleChange={e => console.log(e.target.value)}/> */
-}
 const YearInputContainerStyle = {
   width: '300px',
   fontFamily: 'monospace',
@@ -232,7 +289,7 @@ const YearInputStyle = {
   backgroundColor: 'transparent'
 };
 
-const YearInput = (_ref3) => {
+const YearInput = (_ref4) => {
   let {
     name,
     value,
@@ -242,7 +299,7 @@ const YearInput = (_ref3) => {
     max,
     min,
     step
-  } = _ref3;
+  } = _ref4;
   return /*#__PURE__*/_react.default.createElement("div", {
     style: YearInputContainerStyle
   }, label && /*#__PURE__*/_react.default.createElement("label", {
@@ -270,12 +327,12 @@ const ButtonStyle = {
   outline: 'none'
 };
 
-const Button = (_ref4) => {
+const Button = (_ref5) => {
   let {
     text,
     handleClick
-  } = _ref4,
-      rest = _objectWithoutProperties(_ref4, ["text", "handleClick"]);
+  } = _ref5,
+      rest = _objectWithoutProperties(_ref5, ["text", "handleClick"]);
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", _extends({
     onClick: handleClick
@@ -300,14 +357,14 @@ const SelectContainer = {
   margin: '10px'
 };
 
-const Select = (_ref5) => {
+const Select = (_ref6) => {
   let {
     id,
     label,
     options,
     value,
     handleSelect
-  } = _ref5;
+  } = _ref6;
   return /*#__PURE__*/_react.default.createElement("div", {
     style: SelectContainer
   }, /*#__PURE__*/_react.default.createElement("label", {
@@ -429,14 +486,14 @@ const titleAssistStyle = {
 
 const omdbNACheck = v => v !== "N/A";
 
-const MoviePreviewDisplay = (_ref6) => {
+const MoviePreviewDisplay = (_ref7) => {
   let {
     Poster,
     Title,
     Type,
     Year,
     imdbID
-  } = _ref6;
+  } = _ref7;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -457,7 +514,7 @@ const MoviePreviewDisplay = (_ref6) => {
   }, "imdbID:"), " ", imdbID));
 };
 
-const MovieDisplay = (_ref7) => {
+const MovieDisplay = (_ref8) => {
   let {
     Poster,
     Title: title,
@@ -469,7 +526,7 @@ const MovieDisplay = (_ref7) => {
     Released,
     imdbRating,
     Plot: plot
-  } = _ref7;
+  } = _ref8;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   const released = omdbNACheck(Released) ? Released.slice(-4) : Released;

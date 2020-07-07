@@ -1,4 +1,11 @@
-  {/* <NumberInput value={someVariable} min={0} max={100} handleChange={e => console.log(e.target.value)}/> */}
+ {/* <TextInput 
+        id='year'
+        value={year} 
+        placeholder={'Enter the year (Optional)'} 
+        handleChange={handleInput}
+      /> */}
+ 
+ {/* <NumberInput value={someVariable} min={0} max={100} handleChange={e => console.log(e.target.value)}/> */}
   
   // const handleSelect = (e) => {
   //   switch(e.target.id) {

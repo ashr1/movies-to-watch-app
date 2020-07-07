@@ -44,6 +44,42 @@ const byTitleOrId = {
   v: 1,
 };
 
+const fetchMoviesFullQuery = (queryParams) => {
+  let paramsSection = Object.keys(queryParams)
+                              .map(q => queryParams[q] ? `${q}=${encodeURIComponent(queryParams[q])}&` : '')
+                              .join('')
+  paramsSection = /&$/.test(paramsSection) ? paramsSection.slice(0,-1) : paramsSection
+  const URL = url + paramsSection;
+  return fetch(URL).then((response) => response.json());
+};
+
+const Loading = ({ loading }) =>
+  loading ? (
+    <div
+      style={{
+        width: "40px",
+        height: "40px",
+        border: "5px solid",
+        borderColor: "white rgb(141,135,130) rgb(141,135,130) rgb(141,135,130)",
+        borderRadius: "50%",
+        animation: "spin 1s linear infinite",
+      }}
+    >
+      <style>
+        {`
+          @keyframes spin{
+            0%{
+              transform: rotate(0deg);
+            }
+            100%{
+              transform: rotate(360deg);
+            }
+          }
+        `}
+      </style>
+    </div>
+  ) : null;
+
 const SpecificMovieForm = () => {
   const [i, setI] = useState('')
   const [t, setT] = useState('')
@@ -51,14 +87,41 @@ const SpecificMovieForm = () => {
   const [year, setYear] = useState('')
   const [plot, setPlot] = useState('short')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [movieData, setMovieData] = useState(null)
 
   const submitForRequest = () => {
-    if(!i || !t) {
-      console.log('You must specify either an id or title. Both are not required.')
+    if(i || t) {
+      const queryParams = {
+        i,
+        t,
+        type,
+        y: year,
+        plot
+      }
+      setLoading(true)
+      fetchMoviesFullQuery(queryParams)
+        .then(movie => {
+          setLoading(false)
+          displayResult(movie) // display the result of request
+        })
+        .catch(err => setError('Something went wrong making a request.'))
+    } else {
+      setError('You must specify either an id or title. Both are not required.')
+    } // form validation
+  }
+
+  const displayResult = (incMovieData) => {
+    if(incMovieData['Response'] === 'True') {
+      setMovieData(incMovieData)
+      setError('') // all parameters were right, but maybe network connection failed
+    } else {
+      setError(incMovieData['Error'])
     }
   }
 
   const handleInput = (e) => {
+    setError('')
     switch(e.target.id) {
       case 't':
         console.log(e.target.id);
@@ -123,12 +186,7 @@ const SpecificMovieForm = () => {
         value={type}
         handleSelect={handleInput}
       />
-      {/* <TextInput 
-        id='year'
-        value={year} 
-        placeholder={'Enter the year (Optional)'} 
-        handleChange={handleInput}
-      /> */}
+      
       <YearInput 
         id='year'
         label='Year: '
@@ -155,8 +213,17 @@ const SpecificMovieForm = () => {
         handleSelect={handleInput}
       />
       <PrimaryButton text="Search" handleClick={() => submitForRequest()}/>
+      { error && <p style={ErrorMsgStyle}>{error}</p>}
+      <Loading loading={false} />
+      { movieData && <MovieDisplay {...movieData} /> }
     </div>
   )
+}
+
+const ErrorMsgStyle = { 
+  color: '#ff4d66', 
+  fontFamily: 'monospace',
+  margin: '5px' 
 }
 
 const Input = ({ name, value, handleChange, type, ...rest }) => {
