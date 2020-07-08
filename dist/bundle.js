@@ -198,15 +198,18 @@ const GeneralMovieSearch = () => {
   }, result))));
 };
 
-const SpecificMovieForm = () => {
+const SpecificMovieForm = (_ref2) => {
+  let {
+    handleSubmit,
+    onFormChange
+  } = _ref2;
   const [i, setI] = (0, _react.useState)('');
   const [t, setT] = (0, _react.useState)('');
   const [type, setType] = (0, _react.useState)('');
   const [year, setYear] = (0, _react.useState)('');
   const [plot, setPlot] = (0, _react.useState)('short');
-  const [error, setError] = (0, _react.useState)('');
-  const [loading, setLoading] = (0, _react.useState)(false);
-  const [movieData, setMovieData] = (0, _react.useState)(null);
+  const [error, setError] = (0, _react.useState)(''); //const [loading, setLoading] = useState(false)
+  // const [movieData, setMovieData] = useState(null)
 
   const submitForRequest = () => {
     if (i || t) {
@@ -217,28 +220,16 @@ const SpecificMovieForm = () => {
         y: year,
         plot
       };
-      setLoading(true);
-      fetchMoviesFullQuery(queryParams).then(movie => {
-        setLoading(false);
-        displayResult(movie); // display the result of request
-      }).catch(err => setError('Something went wrong making a request.'));
+      handleSubmit(queryParams);
     } else {
       setError('You must specify either an id or title. Both are not required.');
     } // form validation
 
   };
 
-  const displayResult = incMovieData => {
-    if (incMovieData['Response'] === 'True') {
-      setMovieData(incMovieData);
-      setError(''); // all parameters were right, but maybe network connection failed
-    } else {
-      setError(incMovieData['Error']);
-    }
-  };
-
   const handleInput = e => {
     setError('');
+    onFormChange();
 
     switch (e.target.id) {
       case 't':
@@ -324,9 +315,7 @@ const SpecificMovieForm = () => {
     handleClick: () => submitForRequest()
   }), error && /*#__PURE__*/_react.default.createElement("p", {
     style: ErrorMsgStyle
-  }, error), /*#__PURE__*/_react.default.createElement(Loading, {
-    loading: false
-  }), movieData && /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData));
+  }, error));
 };
 
 const ErrorMsgStyle = {
@@ -335,14 +324,14 @@ const ErrorMsgStyle = {
   margin: '5px'
 };
 
-const Input = (_ref2) => {
+const Input = (_ref3) => {
   let {
     name,
     value,
     handleChange,
     type
-  } = _ref2,
-      rest = _objectWithoutProperties(_ref2, ["name", "value", "handleChange", "type"]);
+  } = _ref3,
+      rest = _objectWithoutProperties(_ref3, ["name", "value", "handleChange", "type"]);
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", _extends({
     name: name,
@@ -373,13 +362,13 @@ const TextInput = props => /*#__PURE__*/_react.default.createElement(Input, _ext
   style: TextInputStyle
 }));
 
-const NumberInput = (_ref3) => {
+const NumberInput = (_ref4) => {
   let {
     max,
     min,
     step
-  } = _ref3,
-      rest = _objectWithoutProperties(_ref3, ["max", "min", "step"]);
+  } = _ref4,
+      rest = _objectWithoutProperties(_ref4, ["max", "min", "step"]);
 
   return /*#__PURE__*/_react.default.createElement(Input, _extends({}, rest, {
     max: max,
@@ -406,7 +395,7 @@ const YearInputStyle = {
   backgroundColor: 'transparent'
 };
 
-const YearInput = (_ref4) => {
+const YearInput = (_ref5) => {
   let {
     name,
     value,
@@ -416,7 +405,7 @@ const YearInput = (_ref4) => {
     max,
     min,
     step
-  } = _ref4;
+  } = _ref5;
   return /*#__PURE__*/_react.default.createElement("div", {
     style: YearInputContainerStyle
   }, label && /*#__PURE__*/_react.default.createElement("label", {
@@ -444,12 +433,12 @@ const ButtonStyle = {
   outline: 'none'
 };
 
-const Button = (_ref5) => {
+const Button = (_ref6) => {
   let {
     text,
     handleClick
-  } = _ref5,
-      rest = _objectWithoutProperties(_ref5, ["text", "handleClick"]);
+  } = _ref6,
+      rest = _objectWithoutProperties(_ref6, ["text", "handleClick"]);
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", _extends({
     onClick: handleClick
@@ -474,14 +463,14 @@ const SelectContainer = {
   margin: '10px'
 };
 
-const Select = (_ref6) => {
+const Select = (_ref7) => {
   let {
     id,
     label,
     options,
     value,
     handleSelect
-  } = _ref6;
+  } = _ref7;
   return /*#__PURE__*/_react.default.createElement("div", {
     style: SelectContainer
   }, /*#__PURE__*/_react.default.createElement("label", {
@@ -520,14 +509,14 @@ const titleAssistStyle = {
 
 const omdbNACheck = v => v !== "N/A";
 
-const MoviePreviewDisplay = (_ref7) => {
+const MoviePreviewDisplay = (_ref8) => {
   let {
     Poster,
     Title,
     Type,
     Year,
     imdbID
-  } = _ref7;
+  } = _ref8;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -548,7 +537,7 @@ const MoviePreviewDisplay = (_ref7) => {
   }, "imdbID:"), " ", imdbID));
 };
 
-const MovieDisplay = (_ref8) => {
+const MovieDisplay = (_ref9) => {
   let {
     Poster,
     Title: title,
@@ -560,7 +549,7 @@ const MovieDisplay = (_ref8) => {
     Released,
     imdbRating,
     Plot: plot
-  } = _ref8;
+  } = _ref9;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   const released = omdbNACheck(Released) ? Released.slice(-4) : Released;
@@ -601,7 +590,56 @@ const MovieDisplay = (_ref8) => {
 };
 
 const App = () => {
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(SpecificMovieForm, null), /*#__PURE__*/_react.default.createElement(GeneralMovieSearch, null));
+  const [specificMovie, setSpecificMovie] = (0, _react.useState)(true);
+  const [movieData, setMovieData] = (0, _react.useState)(null);
+  const [loading, setLoading] = (0, _react.useState)(false);
+  const [error, setError] = (0, _react.useState)(''); // ways to clear error: successful display result or change in form choice...not great for user
+  // this problem was avoided in forms by the change...but nothing to really reset here.
+
+  const makeMovieRequest = queryParams => {
+    setLoading(true);
+    fetchMoviesFullQuery(queryParams).then(movie => {
+      setLoading(false);
+      displayResult(movie);
+    }).catch(err => {
+      setLoading(false);
+      setError('Something went wrong making a request.');
+    });
+  };
+
+  const displayResult = incMovieData => {
+    if (incMovieData['Response'] === 'True') {
+      setMovieData(incMovieData);
+      setError(''); // all parameters were right, but maybe network connection failed
+    } else {
+      setError(incMovieData['Error']);
+    }
+  };
+
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", {
+    type: "radio",
+    id: "specMovieForm",
+    name: "movieForm",
+    checked: specificMovie,
+    onChange: () => setSpecificMovie(true)
+  }), /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "specMovieForm"
+  }, "Specific Movie"), /*#__PURE__*/_react.default.createElement("input", {
+    type: "radio",
+    id: "generalMovieForm",
+    name: "movieForm",
+    checked: !specificMovie,
+    onChange: () => setSpecificMovie(false)
+  }), /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "generalMovieForm"
+  }, "General Movies")), specificMovie ? /*#__PURE__*/_react.default.createElement(SpecificMovieForm, {
+    handleSubmit: makeMovieRequest,
+    onFormChange: () => setError('')
+  }) : /*#__PURE__*/_react.default.createElement(GeneralMovieSearch, null), error && /*#__PURE__*/_react.default.createElement("p", {
+    style: ErrorMsgStyle
+  }, error), /*#__PURE__*/_react.default.createElement(Loading, {
+    loading: loading
+  }), movieData && /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData));
 }; //<MovieDisplay {...{ Poster: "https://m.media-amazon.com/images/M/MV5BNTc1ZWY0ZTEtZTVmNi00MTg0LTg4NmQtZTI4OWNiMmQ0MWZkXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg"}}/>
 
 
