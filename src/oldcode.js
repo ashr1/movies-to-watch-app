@@ -1,3 +1,6 @@
+// { movieData && movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />) }
+
+//<MovieDisplay {...{ Poster: "https://m.media-amazon.com/images/M/MV5BNTc1ZWY0ZTEtZTVmNi00MTg0LTg4NmQtZTI4OWNiMmQ0MWZkXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg"}}/>
 // const fetchMovies = (title, select) => {
 //   const URL = url + `${select}=` + encodeURIComponent(title);
 //   console.log(URL);

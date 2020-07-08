@@ -80,14 +80,14 @@ const Loading = ({ loading }) =>
     </div>
   ) : null;
 
-  const GeneralMovieSearch = () => {
+  const GeneralMovieSearch = ({ handleSubmit, onFormChange }) => {
     const [s, setS] = useState('')
     const [type, setType] = useState('')
     const [year, setYear] = useState('')
     const [page, setPage] = useState(1)
     const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
-    const [movieData, setMovieData] = useState(null)
+    // const [loading, setLoading] = useState(false)
+    // const [movieData, setMovieData] = useState(null)
   
     const submitForRequest = () => {
       if(s) {
@@ -97,29 +97,15 @@ const Loading = ({ loading }) =>
           y: year,
           page
         }
-        setLoading(true)
-        fetchMoviesFullQuery(queryParams)
-          .then(movie => {
-            setLoading(false)
-            displayResult(movie) // display the result of request
-          })
-          .catch(err => setError('Something went wrong making a request.'))
+        handleSubmit(queryParams)
       } else {
         setError('You must specify the title.')
       } // form validation
     }
   
-    const displayResult = (incMovieData) => {
-      if(incMovieData['Response'] === 'True') {
-        setMovieData(incMovieData)
-        setError('') // all parameters were right, but maybe network connection failed
-      } else {
-        setError(incMovieData['Error'])
-      }
-    }
-  
     const handleInput = (e) => {
       setError('')
+      onFormChange()
       switch(e.target.id) {
         case 's':
           console.log(e.target.id);
@@ -197,8 +183,7 @@ const Loading = ({ loading }) =>
 
         <PrimaryButton text="Search" handleClick={() => submitForRequest()}/>
         { error && <p style={ErrorMsgStyle}>{error}</p>}
-        <Loading loading={false} />
-        { movieData && movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />) }
+
       </div>
     )
   }
@@ -577,9 +562,6 @@ const App = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-// ways to clear error: successful display result or change in form choice...not great for user
-// this problem was avoided in forms by the change...but nothing to really reset here.
-
   const makeMovieRequest = (queryParams) => {
     setLoading(true)
     fetchMoviesFullQuery(queryParams)
@@ -602,6 +584,10 @@ const App = () => {
     }
   }
 
+  const displayMovieType = () => {
+    return !movieData["Search"] ?  <MovieDisplay {...movieData} /> : movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />)
+  }
+
   return (
     <>
       <div>
@@ -611,18 +597,28 @@ const App = () => {
         <label htmlFor="generalMovieForm">General Movies</label>
       </div>
 
-      { specificMovie ? <SpecificMovieForm handleSubmit={makeMovieRequest} onFormChange={() => setError('')} /> : <GeneralMovieSearch /> }
+      { 
+        specificMovie ? (
+          <SpecificMovieForm 
+            handleSubmit={makeMovieRequest} 
+            onFormChange={() => setError('')} 
+          />) : (
+            <GeneralMovieSearch
+              handleSubmit={makeMovieRequest} 
+              onFormChange={() => setError('')}
+            />
+          ) 
+      }
 
       { error && <p style={ErrorMsgStyle}>{error}</p>}
 
       <Loading loading={loading} />
 
-      { movieData && <MovieDisplay {...movieData} /> }
+      { movieData && displayMovieType() }
     </>
   )
 }
 
-//<MovieDisplay {...{ Poster: "https://m.media-amazon.com/images/M/MV5BNTc1ZWY0ZTEtZTVmNi00MTg0LTg4NmQtZTI4OWNiMmQ0MWZkXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg"}}/>
 ReactDOM.render(<App />, document.getElementById("root"));
 
 

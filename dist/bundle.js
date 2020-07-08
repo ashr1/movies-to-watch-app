@@ -11,13 +11,13 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-const API_KEY = "45fc49f2";
+const API_KEY = "";
 const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&"); // query builder:
 
 const bySearch = {
@@ -81,14 +81,17 @@ const Loading = (_ref) => {
   }, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        ")) : null;
 };
 
-const GeneralMovieSearch = () => {
+const GeneralMovieSearch = (_ref2) => {
+  let {
+    handleSubmit,
+    onFormChange
+  } = _ref2;
   const [s, setS] = (0, _react.useState)('');
   const [type, setType] = (0, _react.useState)('');
   const [year, setYear] = (0, _react.useState)('');
   const [page, setPage] = (0, _react.useState)(1);
-  const [error, setError] = (0, _react.useState)('');
-  const [loading, setLoading] = (0, _react.useState)(false);
-  const [movieData, setMovieData] = (0, _react.useState)(null);
+  const [error, setError] = (0, _react.useState)(''); // const [loading, setLoading] = useState(false)
+  // const [movieData, setMovieData] = useState(null)
 
   const submitForRequest = () => {
     if (s) {
@@ -98,28 +101,16 @@ const GeneralMovieSearch = () => {
         y: year,
         page
       };
-      setLoading(true);
-      fetchMoviesFullQuery(queryParams).then(movie => {
-        setLoading(false);
-        displayResult(movie); // display the result of request
-      }).catch(err => setError('Something went wrong making a request.'));
+      handleSubmit(queryParams);
     } else {
       setError('You must specify the title.');
     } // form validation
 
   };
 
-  const displayResult = incMovieData => {
-    if (incMovieData['Response'] === 'True') {
-      setMovieData(incMovieData);
-      setError(''); // all parameters were right, but maybe network connection failed
-    } else {
-      setError(incMovieData['Error']);
-    }
-  };
-
   const handleInput = e => {
     setError('');
+    onFormChange();
 
     switch (e.target.id) {
       case 's':
@@ -191,18 +182,14 @@ const GeneralMovieSearch = () => {
     handleClick: () => submitForRequest()
   }), error && /*#__PURE__*/_react.default.createElement("p", {
     style: ErrorMsgStyle
-  }, error), /*#__PURE__*/_react.default.createElement(Loading, {
-    loading: false
-  }), movieData && movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, _extends({
-    key: index
-  }, result))));
+  }, error));
 };
 
-const SpecificMovieForm = (_ref2) => {
+const SpecificMovieForm = (_ref3) => {
   let {
     handleSubmit,
     onFormChange
-  } = _ref2;
+  } = _ref3;
   const [i, setI] = (0, _react.useState)('');
   const [t, setT] = (0, _react.useState)('');
   const [type, setType] = (0, _react.useState)('');
@@ -324,14 +311,14 @@ const ErrorMsgStyle = {
   margin: '5px'
 };
 
-const Input = (_ref3) => {
+const Input = (_ref4) => {
   let {
     name,
     value,
     handleChange,
     type
-  } = _ref3,
-      rest = _objectWithoutProperties(_ref3, ["name", "value", "handleChange", "type"]);
+  } = _ref4,
+      rest = _objectWithoutProperties(_ref4, ["name", "value", "handleChange", "type"]);
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", _extends({
     name: name,
@@ -362,13 +349,13 @@ const TextInput = props => /*#__PURE__*/_react.default.createElement(Input, _ext
   style: TextInputStyle
 }));
 
-const NumberInput = (_ref4) => {
+const NumberInput = (_ref5) => {
   let {
     max,
     min,
     step
-  } = _ref4,
-      rest = _objectWithoutProperties(_ref4, ["max", "min", "step"]);
+  } = _ref5,
+      rest = _objectWithoutProperties(_ref5, ["max", "min", "step"]);
 
   return /*#__PURE__*/_react.default.createElement(Input, _extends({}, rest, {
     max: max,
@@ -395,7 +382,7 @@ const YearInputStyle = {
   backgroundColor: 'transparent'
 };
 
-const YearInput = (_ref5) => {
+const YearInput = (_ref6) => {
   let {
     name,
     value,
@@ -405,7 +392,7 @@ const YearInput = (_ref5) => {
     max,
     min,
     step
-  } = _ref5;
+  } = _ref6;
   return /*#__PURE__*/_react.default.createElement("div", {
     style: YearInputContainerStyle
   }, label && /*#__PURE__*/_react.default.createElement("label", {
@@ -433,12 +420,12 @@ const ButtonStyle = {
   outline: 'none'
 };
 
-const Button = (_ref6) => {
+const Button = (_ref7) => {
   let {
     text,
     handleClick
-  } = _ref6,
-      rest = _objectWithoutProperties(_ref6, ["text", "handleClick"]);
+  } = _ref7,
+      rest = _objectWithoutProperties(_ref7, ["text", "handleClick"]);
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", _extends({
     onClick: handleClick
@@ -463,14 +450,14 @@ const SelectContainer = {
   margin: '10px'
 };
 
-const Select = (_ref7) => {
+const Select = (_ref8) => {
   let {
     id,
     label,
     options,
     value,
     handleSelect
-  } = _ref7;
+  } = _ref8;
   return /*#__PURE__*/_react.default.createElement("div", {
     style: SelectContainer
   }, /*#__PURE__*/_react.default.createElement("label", {
@@ -509,14 +496,14 @@ const titleAssistStyle = {
 
 const omdbNACheck = v => v !== "N/A";
 
-const MoviePreviewDisplay = (_ref8) => {
+const MoviePreviewDisplay = (_ref9) => {
   let {
     Poster,
     Title,
     Type,
     Year,
     imdbID
-  } = _ref8;
+  } = _ref9;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -537,7 +524,7 @@ const MoviePreviewDisplay = (_ref8) => {
   }, "imdbID:"), " ", imdbID));
 };
 
-const MovieDisplay = (_ref9) => {
+const MovieDisplay = (_ref10) => {
   let {
     Poster,
     Title: title,
@@ -549,7 +536,7 @@ const MovieDisplay = (_ref9) => {
     Released,
     imdbRating,
     Plot: plot
-  } = _ref9;
+  } = _ref10;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   const released = omdbNACheck(Released) ? Released.slice(-4) : Released;
@@ -593,8 +580,7 @@ const App = () => {
   const [specificMovie, setSpecificMovie] = (0, _react.useState)(true);
   const [movieData, setMovieData] = (0, _react.useState)(null);
   const [loading, setLoading] = (0, _react.useState)(false);
-  const [error, setError] = (0, _react.useState)(''); // ways to clear error: successful display result or change in form choice...not great for user
-  // this problem was avoided in forms by the change...but nothing to really reset here.
+  const [error, setError] = (0, _react.useState)('');
 
   const makeMovieRequest = queryParams => {
     setLoading(true);
@@ -616,6 +602,12 @@ const App = () => {
     }
   };
 
+  const displayMovieType = () => {
+    return !movieData["Search"] ? /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData) : movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, _extends({
+      key: index
+    }, result)));
+  };
+
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", {
     type: "radio",
     id: "specMovieForm",
@@ -635,13 +627,15 @@ const App = () => {
   }, "General Movies")), specificMovie ? /*#__PURE__*/_react.default.createElement(SpecificMovieForm, {
     handleSubmit: makeMovieRequest,
     onFormChange: () => setError('')
-  }) : /*#__PURE__*/_react.default.createElement(GeneralMovieSearch, null), error && /*#__PURE__*/_react.default.createElement("p", {
+  }) : /*#__PURE__*/_react.default.createElement(GeneralMovieSearch, {
+    handleSubmit: makeMovieRequest,
+    onFormChange: () => setError('')
+  }), error && /*#__PURE__*/_react.default.createElement("p", {
     style: ErrorMsgStyle
   }, error), /*#__PURE__*/_react.default.createElement(Loading, {
     loading: loading
-  }), movieData && /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData));
-}; //<MovieDisplay {...{ Poster: "https://m.media-amazon.com/images/M/MV5BNTc1ZWY0ZTEtZTVmNi00MTg0LTg4NmQtZTI4OWNiMmQ0MWZkXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg"}}/>
-
+  }), movieData && displayMovieType());
+};
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root"));
 },{"react":11,"react-dom":8}],2:[function(require,module,exports){
