@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 const API_KEY = "";
@@ -580,7 +580,9 @@ const RadioButton = ({ label, id, name, checked, handleChange }) => {
     </div>
   );
 };
+
 //✗
+//✓
 
 const AddRemoveStyle = {
   textAlign: "right", 
@@ -593,18 +595,25 @@ const AddRemoveHiddenStyle = {
   color: 'rgb(88,79,79)',
   visibility: 'hidden' 
 }
-const MovieDisplayApp = ({ movieData }) => {
+
+const AddRemoveSymbol = ({ symbol, visibility }) => {
+  return (
+    <p style={ visibility ? AddRemoveStyle : AddRemoveHiddenStyle }>
+      <span>{symbol}</span>
+    </p>
+  );
+};
+
+const MovieDisplayApp = ({ movieData, handleClick, symbol }) => {
   const [hover, setHover] = useState(false);
   return (
     <div 
       style={{ width: "300px", cursor: 'pointer' }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => console.log("addedMovie")}
+      onClick={() => handleClick()}
     >
-      <p style={hover ? AddRemoveStyle : AddRemoveHiddenStyle}>
-        <span>✓</span>
-      </p>
+      <AddRemoveSymbol symbol={symbol} visibility={hover} />
       <MovieDisplay {...movieData} />
     </div>
   );
@@ -612,14 +621,34 @@ const MovieDisplayApp = ({ movieData }) => {
 
 const App = () => {
   const [specificMovie, setSpecificMovie] = useState(true)
+  const [myMovies, setMyMovies] = useState([])
   const [movieData, setMovieData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  // const addToMyMovie = (movieData) => {
-  //   const movies = JSON.stringify(movieData)
-  //   localStorage.setItem('movies', movieData)
-  // }
+  useEffect(() => {
+    let movies = localStorage.getItem('movies')
+    if(movies) {
+      movies = JSON.parse(movies)
+    } else {
+      movies = []
+    }
+    console.log('fetched movies: ', movies)
+    setMyMovies(movies)
+  }, [])
+
+  const addToMyMovies = (movieData) => {
+    let newMyMovies = myMovies.slice()
+    newMyMovies = newMyMovies.concat([ movieData ])
+    console.log('movie to add: ', movieData)
+    console.log('newmyMovies: ', newMyMovies)
+    setMyMovies(newMyMovies)
+    localStorage.setItem('movies', JSON.stringify(newMyMovies))
+  }
+
+  const removeFromMyMovies = (movieData) => {
+    console.log('removeMovie')
+  }
 
   const makeMovieRequest = (queryParams) => {
     setLoading(true)
@@ -644,7 +673,7 @@ const App = () => {
   }
 
   const displayMovieType = () => {
-    return !movieData["Search"] ?  <MovieDisplayApp movieData={movieData} /> : movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />)
+    return !movieData["Search"] ?  <MovieDisplayApp symbol={'✓'} movieData={movieData} handleClick={() => addToMyMovies(movieData)} /> : movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />)
   }
 
   return (
@@ -681,6 +710,13 @@ const App = () => {
       <Loading loading={loading} />
 
       {movieData && displayMovieType()}
+
+      <div>
+        <h2>My Movies:</h2>
+        {
+          myMovies.length > 0 && myMovies.map((movieData, index) => <MovieDisplayApp key={index} symbol={'✗'} movieData={movieData} handleClick={() => removeFromMyMovies(movieData)} />)
+        }
+      </div>
     </>
   );
 }

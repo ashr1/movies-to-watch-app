@@ -606,6 +606,7 @@ const RadioButton = (_ref11) => {
     style: RadioButtonLabelStyle
   }, label));
 }; //✗
+//✓
 
 
 const AddRemoveStyle = {
@@ -620,10 +621,22 @@ const AddRemoveHiddenStyle = {
   visibility: 'hidden'
 };
 
-const MovieDisplayApp = (_ref12) => {
+const AddRemoveSymbol = (_ref12) => {
   let {
-    movieData
+    symbol,
+    visibility
   } = _ref12;
+  return /*#__PURE__*/_react.default.createElement("p", {
+    style: visibility ? AddRemoveStyle : AddRemoveHiddenStyle
+  }, /*#__PURE__*/_react.default.createElement("span", null, symbol));
+};
+
+const MovieDisplayApp = (_ref13) => {
+  let {
+    movieData,
+    handleClick,
+    symbol
+  } = _ref13;
   const [hover, setHover] = (0, _react.useState)(false);
   return /*#__PURE__*/_react.default.createElement("div", {
     style: {
@@ -632,21 +645,43 @@ const MovieDisplayApp = (_ref12) => {
     },
     onMouseEnter: () => setHover(true),
     onMouseLeave: () => setHover(false),
-    onClick: () => console.log("addedMovie")
-  }, /*#__PURE__*/_react.default.createElement("p", {
-    style: hover ? AddRemoveStyle : AddRemoveHiddenStyle
-  }, /*#__PURE__*/_react.default.createElement("span", null, "\u2713")), /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData));
+    onClick: () => handleClick()
+  }, /*#__PURE__*/_react.default.createElement(AddRemoveSymbol, {
+    symbol: symbol,
+    visibility: hover
+  }), /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData));
 };
 
 const App = () => {
   const [specificMovie, setSpecificMovie] = (0, _react.useState)(true);
+  const [myMovies, setMyMovies] = (0, _react.useState)([]);
   const [movieData, setMovieData] = (0, _react.useState)(null);
   const [loading, setLoading] = (0, _react.useState)(false);
   const [error, setError] = (0, _react.useState)('');
+  (0, _react.useEffect)(() => {
+    let movies = localStorage.getItem('movies');
 
-  const addToMyMovie = movieData => {
-    const movies = JSON.stringify(movieData);
-    localStorage.setItem('movies', movieData);
+    if (movies) {
+      movies = JSON.parse(movies);
+    } else {
+      movies = [];
+    }
+
+    console.log('fetched movies: ', movies);
+    setMyMovies(movies);
+  }, []);
+
+  const addToMyMovies = movieData => {
+    let newMyMovies = myMovies.slice();
+    newMyMovies = newMyMovies.concat([movieData]);
+    console.log('movie to add: ', movieData);
+    console.log('newmyMovies: ', newMyMovies);
+    setMyMovies(newMyMovies);
+    localStorage.setItem('movies', JSON.stringify(newMyMovies));
+  };
+
+  const removeFromMyMovies = movieData => {
+    console.log('removeMovie');
   };
 
   const makeMovieRequest = queryParams => {
@@ -671,7 +706,9 @@ const App = () => {
 
   const displayMovieType = () => {
     return !movieData["Search"] ? /*#__PURE__*/_react.default.createElement(MovieDisplayApp, {
-      movieData: movieData
+      symbol: '✓',
+      movieData: movieData,
+      handleClick: () => addToMyMovies(movieData)
     }) : movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, _extends({
       key: index
     }, result)));
@@ -699,7 +736,12 @@ const App = () => {
     style: ErrorMsgStyle
   }, error), /*#__PURE__*/_react.default.createElement(Loading, {
     loading: loading
-  }), movieData && displayMovieType());
+  }), movieData && displayMovieType(), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), myMovies.length > 0 && myMovies.map((movieData, index) => /*#__PURE__*/_react.default.createElement(MovieDisplayApp, {
+    key: index,
+    symbol: '✗',
+    movieData: movieData,
+    handleClick: () => removeFromMyMovies(movieData)
+  }))));
 };
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root"));
