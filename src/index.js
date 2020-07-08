@@ -580,12 +580,46 @@ const RadioButton = ({ label, id, name, checked, handleChange }) => {
     </div>
   );
 };
+//✗
+
+const AddRemoveStyle = {
+  textAlign: "right", 
+  color: 'rgb(88,79,79)',
+  margin: "0 0 -23px 0" 
+}
+const AddRemoveHiddenStyle = {
+  textAlign: "right", 
+  margin: "0 0 -23px 0",
+  color: 'rgb(88,79,79)',
+  visibility: 'hidden' 
+}
+const MovieDisplayApp = ({ movieData }) => {
+  const [hover, setHover] = useState(false);
+  return (
+    <div 
+      style={{ width: "300px", cursor: 'pointer' }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={() => console.log("addedMovie")}
+    >
+      <p style={hover ? AddRemoveStyle : AddRemoveHiddenStyle}>
+        <span>✓</span>
+      </p>
+      <MovieDisplay {...movieData} />
+    </div>
+  );
+};
 
 const App = () => {
   const [specificMovie, setSpecificMovie] = useState(true)
   const [movieData, setMovieData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  // const addToMyMovie = (movieData) => {
+  //   const movies = JSON.stringify(movieData)
+  //   localStorage.setItem('movies', movieData)
+  // }
 
   const makeMovieRequest = (queryParams) => {
     setLoading(true)
@@ -610,7 +644,7 @@ const App = () => {
   }
 
   const displayMovieType = () => {
-    return !movieData["Search"] ?  <MovieDisplay {...movieData} /> : movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />)
+    return !movieData["Search"] ?  <MovieDisplayApp movieData={movieData} /> : movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />)
   }
 
   return (

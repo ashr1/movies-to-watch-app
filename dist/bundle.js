@@ -605,6 +605,37 @@ const RadioButton = (_ref11) => {
     htmlFor: id,
     style: RadioButtonLabelStyle
   }, label));
+}; //✗
+
+
+const AddRemoveStyle = {
+  textAlign: "right",
+  color: 'rgb(88,79,79)',
+  margin: "0 0 -23px 0"
+};
+const AddRemoveHiddenStyle = {
+  textAlign: "right",
+  margin: "0 0 -23px 0",
+  color: 'rgb(88,79,79)',
+  visibility: 'hidden'
+};
+
+const MovieDisplayApp = (_ref12) => {
+  let {
+    movieData
+  } = _ref12;
+  const [hover, setHover] = (0, _react.useState)(false);
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      width: "300px",
+      cursor: 'pointer'
+    },
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => setHover(false),
+    onClick: () => console.log("addedMovie")
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    style: hover ? AddRemoveStyle : AddRemoveHiddenStyle
+  }, /*#__PURE__*/_react.default.createElement("span", null, "\u2713")), /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData));
 };
 
 const App = () => {
@@ -612,6 +643,11 @@ const App = () => {
   const [movieData, setMovieData] = (0, _react.useState)(null);
   const [loading, setLoading] = (0, _react.useState)(false);
   const [error, setError] = (0, _react.useState)('');
+
+  const addToMyMovie = movieData => {
+    const movies = JSON.stringify(movieData);
+    localStorage.setItem('movies', movieData);
+  };
 
   const makeMovieRequest = queryParams => {
     setLoading(true);
@@ -634,7 +670,9 @@ const App = () => {
   };
 
   const displayMovieType = () => {
-    return !movieData["Search"] ? /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData) : movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, _extends({
+    return !movieData["Search"] ? /*#__PURE__*/_react.default.createElement(MovieDisplayApp, {
+      movieData: movieData
+    }) : movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, _extends({
       key: index
     }, result)));
   };
