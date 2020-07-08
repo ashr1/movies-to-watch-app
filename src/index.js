@@ -556,6 +556,31 @@ const MovieDisplay = ({
   );
 };
 
+const RadioButtonContainerStyle = {
+  fontFamily: 'monospace',
+  color: 'rgb(88,79,79)',
+  margin: '10px'
+}
+
+const RadioButtonLabelStyle = {
+  margin: '10px'
+}
+
+const RadioButton = ({ label, id, name, checked, handleChange }) => {
+  return (
+    <div style={RadioButtonContainerStyle}>
+      <input
+        type="radio"
+        id={id}
+        name={name}
+        checked={checked}
+        onChange={handleChange}
+      />
+      <label htmlFor={id} style={RadioButtonLabelStyle}>{label}</label>
+    </div>
+  );
+};
+
 const App = () => {
   const [specificMovie, setSpecificMovie] = useState(true)
   const [movieData, setMovieData] = useState(null)
@@ -590,33 +615,40 @@ const App = () => {
 
   return (
     <>
-      <div>
-        <input type="radio" id="specMovieForm" name="movieForm" checked={specificMovie} onChange={() => setSpecificMovie(true)} />
-        <label htmlFor="specMovieForm">Specific Movie</label>
-        <input type="radio" id="generalMovieForm" name="movieForm" checked={!specificMovie} onChange={() => setSpecificMovie(false)} />
-        <label htmlFor="generalMovieForm">General Movies</label>
-      </div>
+      <RadioButton
+        id="specMovieForm"
+        name="movieForm"
+        checked={specificMovie}
+        handleChange={() => setSpecificMovie(true)}
+        label="Specific Movie"
+      />
+      <RadioButton
+        id="generalMovieForm"
+        name="movieForm"
+        checked={!specificMovie}
+        handleChange={() => setSpecificMovie(false)}
+        label="General Movies"
+      />
 
-      { 
-        specificMovie ? (
-          <SpecificMovieForm 
-            handleSubmit={makeMovieRequest} 
-            onFormChange={() => setError('')} 
-          />) : (
-            <GeneralMovieSearch
-              handleSubmit={makeMovieRequest} 
-              onFormChange={() => setError('')}
-            />
-          ) 
-      }
+      {specificMovie ? (
+        <SpecificMovieForm
+          handleSubmit={makeMovieRequest}
+          onFormChange={() => setError("")}
+        />
+      ) : (
+        <GeneralMovieSearch
+          handleSubmit={makeMovieRequest}
+          onFormChange={() => setError("")}
+        />
+      )}
 
-      { error && <p style={ErrorMsgStyle}>{error}</p>}
+      {error && <p style={ErrorMsgStyle}>{error}</p>}
 
       <Loading loading={loading} />
 
-      { movieData && displayMovieType() }
+      {movieData && displayMovieType()}
     </>
-  )
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));

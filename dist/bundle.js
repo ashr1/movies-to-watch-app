@@ -17,7 +17,7 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-const API_KEY = "";
+const API_KEY = "45fc49f2";
 const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&"); // query builder:
 
 const bySearch = {
@@ -576,6 +576,37 @@ const MovieDisplay = (_ref10) => {
   }, imdbRating), /*#__PURE__*/_react.default.createElement("span", null, "imdbRating")));
 };
 
+const RadioButtonContainerStyle = {
+  fontFamily: 'monospace',
+  color: 'rgb(88,79,79)',
+  margin: '10px'
+};
+const RadioButtonLabelStyle = {
+  margin: '10px'
+};
+
+const RadioButton = (_ref11) => {
+  let {
+    label,
+    id,
+    name,
+    checked,
+    handleChange
+  } = _ref11;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: RadioButtonContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("input", {
+    type: "radio",
+    id: id,
+    name: name,
+    checked: checked,
+    onChange: handleChange
+  }), /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: id,
+    style: RadioButtonLabelStyle
+  }, label));
+};
+
 const App = () => {
   const [specificMovie, setSpecificMovie] = (0, _react.useState)(true);
   const [movieData, setMovieData] = (0, _react.useState)(null);
@@ -608,28 +639,24 @@ const App = () => {
     }, result)));
   };
 
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", {
-    type: "radio",
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(RadioButton, {
     id: "specMovieForm",
     name: "movieForm",
     checked: specificMovie,
-    onChange: () => setSpecificMovie(true)
-  }), /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: "specMovieForm"
-  }, "Specific Movie"), /*#__PURE__*/_react.default.createElement("input", {
-    type: "radio",
+    handleChange: () => setSpecificMovie(true),
+    label: "Specific Movie"
+  }), /*#__PURE__*/_react.default.createElement(RadioButton, {
     id: "generalMovieForm",
     name: "movieForm",
     checked: !specificMovie,
-    onChange: () => setSpecificMovie(false)
-  }), /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: "generalMovieForm"
-  }, "General Movies")), specificMovie ? /*#__PURE__*/_react.default.createElement(SpecificMovieForm, {
+    handleChange: () => setSpecificMovie(false),
+    label: "General Movies"
+  }), specificMovie ? /*#__PURE__*/_react.default.createElement(SpecificMovieForm, {
     handleSubmit: makeMovieRequest,
-    onFormChange: () => setError('')
+    onFormChange: () => setError("")
   }) : /*#__PURE__*/_react.default.createElement(GeneralMovieSearch, {
     handleSubmit: makeMovieRequest,
-    onFormChange: () => setError('')
+    onFormChange: () => setError("")
   }), error && /*#__PURE__*/_react.default.createElement("p", {
     style: ErrorMsgStyle
   }, error), /*#__PURE__*/_react.default.createElement(Loading, {

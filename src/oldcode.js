@@ -1,3 +1,23 @@
+{/* <div>
+        <input
+          type="radio"
+          id="specMovieForm"
+          name="movieForm"
+          checked={specificMovie}
+          onChange={() => setSpecificMovie(true)}
+        />
+        <label htmlFor="specMovieForm">Specific Movie</label>
+        <input
+          type="radio"
+          id="generalMovieForm"
+          name="movieForm"
+          checked={!specificMovie}
+          onChange={() => setSpecificMovie(false)}
+        />
+        <label htmlFor="generalMovieForm">General Movies</label>
+      </div> */}
+
+
 // { movieData && movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />) }
 
 //<MovieDisplay {...{ Poster: "https://m.media-amazon.com/images/M/MV5BNTc1ZWY0ZTEtZTVmNi00MTg0LTg4NmQtZTI4OWNiMmQ0MWZkXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg"}}/>
