@@ -674,14 +674,16 @@ const App = () => {
   const addToMyMovies = movieData => {
     let newMyMovies = myMovies.slice();
     newMyMovies = newMyMovies.concat([movieData]);
-    console.log('movie to add: ', movieData);
-    console.log('newmyMovies: ', newMyMovies);
     setMyMovies(newMyMovies);
     localStorage.setItem('movies', JSON.stringify(newMyMovies));
   };
 
   const removeFromMyMovies = movieData => {
-    console.log('removeMovie');
+    let newMyMovies = myMovies.slice(); // TODO: the preview movies can't be deleted like this
+
+    newMyMovies = newMyMovies.filter(movie => movie["imdbID"] !== movieData["imdbID"]);
+    setMyMovies(newMyMovies);
+    localStorage.setItem('movies', JSON.stringify(newMyMovies));
   };
 
   const makeMovieRequest = queryParams => {
