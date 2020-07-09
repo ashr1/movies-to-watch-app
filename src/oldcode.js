@@ -1,3 +1,20 @@
+// const MyMoviesPage = ({ movieData, movieFunctionality }) => {
+//   return (
+//     <div>
+//       <h2>My Movies:</h2>
+//       {myMovies.length > 0 &&
+//         myMovies.map((movieData, index) => (
+//           <MovieDisplayApp
+//             key={index}
+//             symbol={"✗"}
+//             movieData={movieData}
+//             handleClick={() => removeFromMyMovies(movieData)}
+//           />
+//         ))}
+//     </div>
+//   )
+// }
+
 {/* <div>
         <input
           type="radio"

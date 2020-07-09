@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { Router, Link } from '@reach/router';
 
 const API_KEY = "";
 const url = `http://www.omdbapi.com/?apikey=${API_KEY}&`;
@@ -619,40 +620,12 @@ const MovieDisplayApp = ({ movieData, handleClick, symbol }) => {
   );
 };
 
-const App = () => {
+// movieFunction parameter
+const Home = ({ moviesAdded, addToMyMovies }) => {
   const [specificMovie, setSpecificMovie] = useState(true)
-  const [myMovies, setMyMovies] = useState([])
   const [movieData, setMovieData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-
-  useEffect(() => {
-    let movies = localStorage.getItem('movies')
-    if(movies) {
-      movies = JSON.parse(movies)
-    } else {
-      movies = []
-    }
-    console.log('fetched movies: ', movies)
-    setMyMovies(movies)
-  }, [])
-
-  const addToMyMovies = (movieData) => {
-    let newMyMovies = myMovies.slice()
-    newMyMovies = newMyMovies.concat([ movieData ])
-    setMyMovies(newMyMovies)
-
-    localStorage.setItem('movies', JSON.stringify(newMyMovies))
-  }
-
-  const removeFromMyMovies = (movieData) => {
-    let newMyMovies = myMovies.slice()
-    // TODO: the preview movies can't be deleted like this
-    newMyMovies = newMyMovies.filter(movie => movie["imdbID"] !== movieData["imdbID"])
-    setMyMovies(newMyMovies)
-
-    localStorage.setItem('movies', JSON.stringify(newMyMovies))
-  }
 
   const makeMovieRequest = (queryParams) => {
     setLoading(true)
@@ -682,6 +655,7 @@ const App = () => {
 
   return (
     <>
+      <Link to="/my-movies">My Movies ({moviesAdded})</Link>
       <RadioButton
         id="specMovieForm"
         name="movieForm"
@@ -715,14 +689,66 @@ const App = () => {
 
       {movieData && displayMovieType()}
 
-      <div>
-        <h2>My Movies:</h2>
-        {
-          myMovies.length > 0 && myMovies.map((movieData, index) => <MovieDisplayApp key={index} symbol={'✗'} movieData={movieData} handleClick={() => removeFromMyMovies(movieData)} />)
-        }
-      </div>
     </>
   );
+}
+
+const App = () => {
+  const [myMovies, setMyMovies] = useState([])
+  
+  useEffect(() => {
+    let movies = localStorage.getItem("movies");
+    if (movies) {
+      movies = JSON.parse(movies);
+    } else {
+      movies = [];
+    }
+    console.log("fetched movies: ", movies);
+    setMyMovies(movies);
+  }, []);
+
+  const addToMyMovies = (movieData) => {
+    let newMyMovies = myMovies.slice();
+    newMyMovies = newMyMovies.concat([movieData]);
+    setMyMovies(newMyMovies);
+
+    localStorage.setItem("movies", JSON.stringify(newMyMovies));
+  };
+
+  const removeFromMyMovies = (movieData) => {
+    let newMyMovies = myMovies.slice();
+    // TODO: the preview movies can't be deleted like this
+    newMyMovies = newMyMovies.filter(
+      (movie) => movie["imdbID"] !== movieData["imdbID"]
+    );
+    setMyMovies(newMyMovies);
+
+    localStorage.setItem("movies", JSON.stringify(newMyMovies));
+  };
+  return (
+    <Router>
+      <Home path="/" moviesAdded={myMovies.length} addToMyMovies={addToMyMovies} />
+      <User path="/my-movies" myMovies={myMovies} removeFromMyMovies={removeFromMyMovies} />
+    </Router>
+  );
+};
+
+const User = ({ myMovies, removeFromMyMovies }) => {
+  return (
+    <div>
+      <Link to="/">Home</Link>
+      <h2>My Movies:</h2>
+      {myMovies.length > 0 &&
+        myMovies.map((movieData, index) => (
+          <MovieDisplayApp
+            key={index}
+            symbol={"✗"}
+            movieData={movieData}
+            handleClick={() => removeFromMyMovies(movieData)}
+          />
+        ))}
+    </div>
+  )
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
