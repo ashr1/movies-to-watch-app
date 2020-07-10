@@ -70,7 +70,6 @@ const fetchMoviesFullQuery = queryParams => {
   let paramsSection = Object.keys(queryParams).map(q => queryParams[q] ? "".concat(q, "=").concat(encodeURIComponent(queryParams[q]), "&") : '').join('');
   paramsSection = /&$/.test(paramsSection) ? paramsSection.slice(0, -1) : paramsSection;
   const URL = url + paramsSection;
-  console.log(URL);
   return fetch(URL).then(response => response.json());
 };
 
@@ -818,6 +817,12 @@ const App = () => {
 
   const addToMyMovies = movieData => {
     let newMyMovies = myMovies.slice();
+    const found = newMyMovies.find(storedMovieData => storedMovieData["imdbID"] === movieData["imdbID"]);
+
+    if (found) {
+      return;
+    }
+
     newMyMovies = newMyMovies.concat([movieData]);
     setMyMovies(newMyMovies);
     localStorage.setItem("movies", JSON.stringify(newMyMovies));
@@ -861,6 +866,11 @@ const User = (_ref19) => {
   } = _ref19;
   const [requestBeingMade, setRequestBeingMade] = (0, _react.useState)(false);
   const [error, setError] = (0, _react.useState)('');
+  (0, _react.useEffect)(() => {
+    if (error) {
+      setError('');
+    }
+  }, [myMovies]);
 
   const makeMovieRequest = (movieData, index) => {
     if (requestBeingMade) {
@@ -900,10 +910,7 @@ const User = (_ref19) => {
   })) : /*#__PURE__*/_react.default.createElement(UserMovieDisplayAppComponent, _extends({
     key: index
   }, movieData, {
-    handleClickClose: () => {
-      removeFromMyMovies(movieData);
-      setError('');
-    },
+    handleClickClose: () => removeFromMyMovies(movieData),
     handleClickRefresh: () => makeMovieRequest(movieData, index)
   }))));
 };

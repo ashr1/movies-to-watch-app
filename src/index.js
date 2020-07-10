@@ -763,6 +763,8 @@ const App = () => {
 
   const addToMyMovies = (movieData) => {
     let newMyMovies = myMovies.slice();
+    const found = newMyMovies.find(storedMovieData => storedMovieData["imdbID"] === movieData["imdbID"])
+    if(found) { return; }
     newMyMovies = newMyMovies.concat([movieData]);
     setMyMovies(newMyMovies);
 
@@ -801,6 +803,12 @@ const App = () => {
 const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
   const [requestBeingMade, setRequestBeingMade] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    if(error) {
+      setError('')
+    }
+  }, [myMovies])
 
   const makeMovieRequest = (movieData, index) => {
     if(requestBeingMade) {
@@ -847,7 +855,7 @@ const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
             <UserMovieDisplayAppComponent
               key={index}
               {...movieData}
-              handleClickClose={() => { removeFromMyMovies(movieData); setError('') }}
+              handleClickClose={() => removeFromMyMovies(movieData)}
               handleClickRefresh={() => makeMovieRequest(movieData, index)}
             />
           )
