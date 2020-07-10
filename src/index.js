@@ -629,7 +629,7 @@ const UserMovieSymbolContainer = ({ handleClickRefresh, handleClickClose }) => {
 
 const UserMovieDisplayAppComponent = ({ handleClickRefresh, handleClickClose, ...rest }) => {
   return (
-    <div style={{ width: "300px", cursor: "pointer" }}>
+    <div style={{ width: "300px" }}>
       <UserMovieSymbolContainer
         handleClickRefresh={handleClickRefresh}
         handleClickClose={handleClickClose}
@@ -779,15 +779,20 @@ const App = () => {
 
     localStorage.setItem("movies", JSON.stringify(newMyMovies));
   };
+
+  const makeIntoFullMovie = (movieData) => {
+    console.log('fullMovie')
+  }
+
   return (
     <Router>
       <Home path="/" moviesAdded={myMovies.length} addToMyMovies={addToMyMovies} />
-      <User path="/my-movies" myMovies={myMovies} removeFromMyMovies={removeFromMyMovies} />
+      <User path="/my-movies" myMovies={myMovies} removeFromMyMovies={removeFromMyMovies} makeIntoFullMovie={makeIntoFullMovie} />
     </Router>
   );
 };
 
-const User = ({ myMovies, removeFromMyMovies }) => {
+const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
   return (
     <div>
       <Link to="/">Home</Link>
@@ -805,7 +810,7 @@ const User = ({ myMovies, removeFromMyMovies }) => {
               key={index}
               {...movieData}
               handleClickClose={() => removeFromMyMovies(movieData)}
-              handleClickRefresh={() => console.log('refreshMovieItem')}
+              handleClickRefresh={() => makeIntoFullMovie(movieData)}
             />
           )
         )}

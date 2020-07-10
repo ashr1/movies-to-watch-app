@@ -681,8 +681,7 @@ const UserMovieDisplayAppComponent = (_ref15) => {
 
   return /*#__PURE__*/_react.default.createElement("div", {
     style: {
-      width: "300px",
-      cursor: "pointer"
+      width: "300px"
     }
   }, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
     handleClickRefresh: handleClickRefresh,
@@ -831,6 +830,10 @@ const App = () => {
     localStorage.setItem("movies", JSON.stringify(newMyMovies));
   };
 
+  const makeIntoFullMovie = movieData => {
+    console.log('fullMovie');
+  };
+
   return /*#__PURE__*/_react.default.createElement(_router.Router, null, /*#__PURE__*/_react.default.createElement(Home, {
     path: "/",
     moviesAdded: myMovies.length,
@@ -838,14 +841,16 @@ const App = () => {
   }), /*#__PURE__*/_react.default.createElement(User, {
     path: "/my-movies",
     myMovies: myMovies,
-    removeFromMyMovies: removeFromMyMovies
+    removeFromMyMovies: removeFromMyMovies,
+    makeIntoFullMovie: makeIntoFullMovie
   }));
 };
 
 const User = (_ref19) => {
   let {
     myMovies,
-    removeFromMyMovies
+    removeFromMyMovies,
+    makeIntoFullMovie
   } = _ref19;
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_router.Link, {
     to: "/"
@@ -857,7 +862,7 @@ const User = (_ref19) => {
     key: index
   }, movieData, {
     handleClickClose: () => removeFromMyMovies(movieData),
-    handleClickRefresh: () => console.log('refreshMovieItem')
+    handleClickRefresh: () => makeIntoFullMovie(movieData)
   }))));
 };
 
