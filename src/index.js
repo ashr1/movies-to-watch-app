@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Router, Link } from '@reach/router';
 
-const API_KEY = "";
+const API_KEY = "45fc49f2";
 const url = `http://www.omdbapi.com/?apikey=${API_KEY}&`;
 
 // query builder:
@@ -605,20 +605,25 @@ const AddRemoveSymbol = ({ symbol, visibility }) => {
   );
 };
 
-const MovieDisplayApp = ({ movieData, handleClick, symbol }) => {
-  const [hover, setHover] = useState(false);
-  return (
-    <div 
-      style={{ width: "300px", cursor: 'pointer' }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      onClick={() => handleClick()}
-    >
-      <AddRemoveSymbol symbol={symbol} visibility={hover} />
-      <MovieDisplay {...movieData} />
-    </div>
-  );
-};
+const MovieDisplayAppComponent = (MovieDisplayType) => {
+  return ({ handleClick, symbol, ...rest }) => {
+    const [hover, setHover] = useState(false);
+    return (
+      <div 
+        style={{ width: "300px", cursor: 'pointer' }}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        onClick={() => handleClick()}
+      >
+        <AddRemoveSymbol symbol={symbol} visibility={hover} />
+        <MovieDisplayType {...rest} />
+      </div>
+    );
+  };
+}
+
+const MovieDisplayApp = MovieDisplayAppComponent(MovieDisplay)
+const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay)
 
 // movieFunction parameter
 const Home = ({ moviesAdded, addToMyMovies }) => {
@@ -650,7 +655,7 @@ const Home = ({ moviesAdded, addToMyMovies }) => {
   }
 
   const displayMovieType = () => {
-    return !movieData["Search"] ?  <MovieDisplayApp symbol={'✓'} movieData={movieData} handleClick={() => addToMyMovies(movieData)} /> : movieData["Search"].map((result, index) => <MoviePreviewDisplay key={index} {...result} />)
+    return !movieData["Search"] ?  <MovieDisplayApp symbol={'✓'} {...movieData} handleClick={() => addToMyMovies({...movieData, myMovieType: 'full'})} /> : movieData["Search"].map((result, index) => <MovieDisplayPreviewApp key={index} symbol={'✓'} {...result} handleClick={() => addToMyMovies({...result, myMovieType: 'preview'})} />)
   }
 
   return (
@@ -739,16 +744,25 @@ const User = ({ myMovies, removeFromMyMovies }) => {
       <Link to="/">Home</Link>
       <h2>My Movies:</h2>
       {myMovies.length > 0 &&
-        myMovies.map((movieData, index) => (
-          <MovieDisplayApp
-            key={index}
-            symbol={"✗"}
-            movieData={movieData}
-            handleClick={() => removeFromMyMovies(movieData)}
-          />
-        ))}
+        myMovies.map((movieData, index) =>
+          movieData.myMovieType === "full" ? (
+            <MovieDisplayApp
+              key={index}
+              symbol={"✗"}
+              {...movieData}
+              handleClick={() => removeFromMyMovies(movieData)}
+            />
+          ) : (
+            <MovieDisplayPreviewApp
+              key={index}
+              symbol={"✗"}
+              {...movieData}
+              handleClick={() => removeFromMyMovies(movieData)}
+            />
+          )
+        )}
     </div>
-  )
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));

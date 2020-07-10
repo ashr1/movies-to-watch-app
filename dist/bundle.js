@@ -13,6 +13,12 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
@@ -633,27 +639,32 @@ const AddRemoveSymbol = (_ref12) => {
   }, /*#__PURE__*/_react.default.createElement("span", null, symbol));
 };
 
-const MovieDisplayApp = (_ref13) => {
-  let {
-    movieData,
-    handleClick,
-    symbol
-  } = _ref13;
-  const [hover, setHover] = (0, _react.useState)(false);
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: {
-      width: "300px",
-      cursor: 'pointer'
-    },
-    onMouseEnter: () => setHover(true),
-    onMouseLeave: () => setHover(false),
-    onClick: () => handleClick()
-  }, /*#__PURE__*/_react.default.createElement(AddRemoveSymbol, {
-    symbol: symbol,
-    visibility: hover
-  }), /*#__PURE__*/_react.default.createElement(MovieDisplay, movieData));
-}; // movieFunction parameter
+const MovieDisplayAppComponent = MovieDisplayType => {
+  return (_ref13) => {
+    let {
+      handleClick,
+      symbol
+    } = _ref13,
+        rest = _objectWithoutProperties(_ref13, ["handleClick", "symbol"]);
 
+    const [hover, setHover] = (0, _react.useState)(false);
+    return /*#__PURE__*/_react.default.createElement("div", {
+      style: {
+        width: "300px",
+        cursor: 'pointer'
+      },
+      onMouseEnter: () => setHover(true),
+      onMouseLeave: () => setHover(false),
+      onClick: () => handleClick()
+    }, /*#__PURE__*/_react.default.createElement(AddRemoveSymbol, {
+      symbol: symbol,
+      visibility: hover
+    }), /*#__PURE__*/_react.default.createElement(MovieDisplayType, rest));
+  };
+};
+
+const MovieDisplayApp = MovieDisplayAppComponent(MovieDisplay);
+const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay); // movieFunction parameter
 
 const Home = (_ref14) => {
   let {
@@ -686,13 +697,20 @@ const Home = (_ref14) => {
   };
 
   const displayMovieType = () => {
-    return !movieData["Search"] ? /*#__PURE__*/_react.default.createElement(MovieDisplayApp, {
-      symbol: '✓',
-      movieData: movieData,
-      handleClick: () => addToMyMovies(movieData)
-    }) : movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, _extends({
-      key: index
-    }, result)));
+    return !movieData["Search"] ? /*#__PURE__*/_react.default.createElement(MovieDisplayApp, _extends({
+      symbol: '✓'
+    }, movieData, {
+      handleClick: () => addToMyMovies(_objectSpread(_objectSpread({}, movieData), {}, {
+        myMovieType: 'full'
+      }))
+    })) : movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MovieDisplayPreviewApp, _extends({
+      key: index,
+      symbol: '✓'
+    }, result, {
+      handleClick: () => addToMyMovies(_objectSpread(_objectSpread({}, result), {}, {
+        myMovieType: 'preview'
+      }))
+    })));
   };
 
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_router.Link, {
@@ -770,12 +788,17 @@ const User = (_ref15) => {
   } = _ref15;
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_router.Link, {
     to: "/"
-  }, "Home"), /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), myMovies.length > 0 && myMovies.map((movieData, index) => /*#__PURE__*/_react.default.createElement(MovieDisplayApp, {
+  }, "Home"), /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayApp, _extends({
     key: index,
-    symbol: "✗",
-    movieData: movieData,
+    symbol: "✗"
+  }, movieData, {
     handleClick: () => removeFromMyMovies(movieData)
-  })));
+  })) : /*#__PURE__*/_react.default.createElement(MovieDisplayPreviewApp, _extends({
+    key: index,
+    symbol: "✗"
+  }, movieData, {
+    handleClick: () => removeFromMyMovies(movieData)
+  }))));
 };
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root"));
