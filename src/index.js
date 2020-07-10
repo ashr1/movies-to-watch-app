@@ -780,8 +780,14 @@ const App = () => {
     localStorage.setItem("movies", JSON.stringify(newMyMovies));
   };
 
-  const makeIntoFullMovie = (movieData) => {
-    console.log('fullMovie')
+  const makeIntoFullMovie = (movieData, index) => {
+    //console.log('fullMovie')
+    let newMyMovies = myMovies.slice();
+    newMyMovies[index] = {...movieData, myMovieType: 'full'}
+    setMyMovies(newMyMovies);
+
+    localStorage.setItem("movies", JSON.stringify(newMyMovies));
+
   }
 
   return (
@@ -793,10 +799,42 @@ const App = () => {
 };
 
 const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
+  const [requestBeingMade, setRequestBeingMade] = useState(false)
+  const [error, setError] = useState('')
+
+  const makeMovieRequest = (movieData, index) => {
+    if(requestBeingMade) {
+      return;
+    }
+    const queryParams = { i: movieData.imdbID }
+
+    setRequestBeingMade(true)
+
+    fetchMoviesFullQuery(queryParams)
+    .then(movie => {
+      setRequestBeingMade(false)
+      displayResult(movie, index) 
+    })
+    .catch(err => {
+      setRequestBeingMade(false)
+      setError('Something went wrong making a request.')
+    })
+  }
+
+  const displayResult = (incMovieData, index) => {
+    if(incMovieData['Response'] === 'True') {
+      makeIntoFullMovie(incMovieData, index)
+      setError('') // all parameters were right, but maybe network connection failed
+    } else {
+      setError(incMovieData['Error'])
+    }
+  }
+
   return (
     <div>
       <Link to="/">Home</Link>
       <h2>My Movies:</h2>
+      {error && <p style={ErrorMsgStyle}>{error}</p>}
       {myMovies.length > 0 &&
         myMovies.map((movieData, index) =>
           movieData.myMovieType === "full" ? (
@@ -809,8 +847,8 @@ const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
             <UserMovieDisplayAppComponent
               key={index}
               {...movieData}
-              handleClickClose={() => removeFromMyMovies(movieData)}
-              handleClickRefresh={() => makeIntoFullMovie(movieData)}
+              handleClickClose={() => { removeFromMyMovies(movieData); setError('') }}
+              handleClickRefresh={() => makeMovieRequest(movieData, index)}
             />
           )
         )}

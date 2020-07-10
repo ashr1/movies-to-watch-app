@@ -70,6 +70,7 @@ const fetchMoviesFullQuery = queryParams => {
   let paramsSection = Object.keys(queryParams).map(q => queryParams[q] ? "".concat(q, "=").concat(encodeURIComponent(queryParams[q]), "&") : '').join('');
   paramsSection = /&$/.test(paramsSection) ? paramsSection.slice(0, -1) : paramsSection;
   const URL = url + paramsSection;
+  console.log(URL);
   return fetch(URL).then(response => response.json());
 };
 
@@ -830,8 +831,14 @@ const App = () => {
     localStorage.setItem("movies", JSON.stringify(newMyMovies));
   };
 
-  const makeIntoFullMovie = movieData => {
-    console.log('fullMovie');
+  const makeIntoFullMovie = (movieData, index) => {
+    //console.log('fullMovie')
+    let newMyMovies = myMovies.slice();
+    newMyMovies[index] = _objectSpread(_objectSpread({}, movieData), {}, {
+      myMovieType: 'full'
+    });
+    setMyMovies(newMyMovies);
+    localStorage.setItem("movies", JSON.stringify(newMyMovies));
   };
 
   return /*#__PURE__*/_react.default.createElement(_router.Router, null, /*#__PURE__*/_react.default.createElement(Home, {
@@ -852,17 +859,52 @@ const User = (_ref19) => {
     removeFromMyMovies,
     makeIntoFullMovie
   } = _ref19;
+  const [requestBeingMade, setRequestBeingMade] = (0, _react.useState)(false);
+  const [error, setError] = (0, _react.useState)('');
+
+  const makeMovieRequest = (movieData, index) => {
+    if (requestBeingMade) {
+      return;
+    }
+
+    const queryParams = {
+      i: movieData.imdbID
+    };
+    setRequestBeingMade(true);
+    fetchMoviesFullQuery(queryParams).then(movie => {
+      setRequestBeingMade(false);
+      displayResult(movie, index);
+    }).catch(err => {
+      setRequestBeingMade(false);
+      setError('Something went wrong making a request.');
+    });
+  };
+
+  const displayResult = (incMovieData, index) => {
+    if (incMovieData['Response'] === 'True') {
+      makeIntoFullMovie(incMovieData, index);
+      setError(''); // all parameters were right, but maybe network connection failed
+    } else {
+      setError(incMovieData['Error']);
+    }
+  };
+
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_router.Link, {
     to: "/"
-  }, "Home"), /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayAppUser, _extends({
+  }, "Home"), /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), error && /*#__PURE__*/_react.default.createElement("p", {
+    style: ErrorMsgStyle
+  }, error), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayAppUser, _extends({
     key: index
   }, movieData, {
     handleClick: () => removeFromMyMovies(movieData)
   })) : /*#__PURE__*/_react.default.createElement(UserMovieDisplayAppComponent, _extends({
     key: index
   }, movieData, {
-    handleClickClose: () => removeFromMyMovies(movieData),
-    handleClickRefresh: () => makeIntoFullMovie(movieData)
+    handleClickClose: () => {
+      removeFromMyMovies(movieData);
+      setError('');
+    },
+    handleClickRefresh: () => makeMovieRequest(movieData, index)
   }))));
 };
 
