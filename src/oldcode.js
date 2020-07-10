@@ -1,3 +1,43 @@
+// const ResultMovieDisplayAppComponent = ({ handleClick, ...rest }) => {
+//   return (
+//     <div 
+//       style={{ width: "300px" }}
+//     >
+//       <ResultMovieSymbolContainer handleClick={handleClick} />
+//       <MovieDisplay {...rest} />
+//     </div>
+//   );
+// };
+
+// const AddRemoveSymbol = ({ symbol, visibility }) => {
+//   return (
+//     <p style={ visibility ? AddRemoveStyle : AddRemoveHiddenStyle }>
+//       <span>{symbol}</span>
+//     </p>
+//   );
+// };
+
+// const MovieDisplayAppComponent = (MovieDisplayType) => {
+//   return ({ handleClick, symbol, ...rest }) => {
+//     const [hover, setHover] = useState(false);
+//     return (
+//       <div 
+//         style={{ width: "300px", cursor: 'pointer' }}
+//         onMouseEnter={() => setHover(true)}
+//         onMouseLeave={() => setHover(false)}
+//         onClick={() => handleClick()}
+//       >
+//         <AddRemoveSymbol symbol={symbol} visibility={hover} />
+//         <MovieDisplayType {...rest} />
+//       </div>
+//     );
+//   };
+// }
+
+// const MovieDisplayApp = MovieDisplayAppComponent(MovieDisplay)
+// const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay)
+
+
 // const MyMoviesPage = ({ movieData, movieFunctionality }) => {
 //   return (
 //     <div>

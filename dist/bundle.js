@@ -615,6 +615,7 @@ const RadioButton = (_ref11) => {
   }, label));
 }; //✗
 //✓
+//↻ ↺
 
 
 const AddRemoveStyle = {
@@ -629,48 +630,111 @@ const AddRemoveHiddenStyle = {
   visibility: 'hidden'
 };
 
-const AddRemoveSymbol = (_ref12) => {
+const InteractiveSymbol = (_ref12) => {
   let {
     symbol,
-    visibility
-  } = _ref12;
+    handleClick
+  } = _ref12,
+      rest = _objectWithoutProperties(_ref12, ["symbol", "handleClick"]);
+
+  return /*#__PURE__*/_react.default.createElement("span", _extends({
+    onClick: handleClick
+  }, rest), symbol);
+};
+
+const InteractiveSymbolContainer = (_ref13) => {
+  let {
+    children
+  } = _ref13;
   return /*#__PURE__*/_react.default.createElement("p", {
-    style: visibility ? AddRemoveStyle : AddRemoveHiddenStyle
-  }, /*#__PURE__*/_react.default.createElement("span", null, symbol));
+    style: AddRemoveStyle
+  }, children);
+};
+
+const UserMovieSymbolContainer = (_ref14) => {
+  let {
+    handleClickRefresh,
+    handleClickClose
+  } = _ref14;
+  return /*#__PURE__*/_react.default.createElement(InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
+    symbol: "↻",
+    handleClick: handleClickRefresh,
+    style: {
+      cursor: 'pointer'
+    }
+  }), /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
+    symbol: "✗",
+    handleClick: handleClickClose,
+    style: {
+      paddingLeft: '23px',
+      cursor: 'pointer'
+    }
+  }));
+};
+
+const UserMovieDisplayAppComponent = (_ref15) => {
+  let {
+    handleClickRefresh,
+    handleClickClose
+  } = _ref15,
+      rest = _objectWithoutProperties(_ref15, ["handleClickRefresh", "handleClickClose"]);
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      width: "300px",
+      cursor: "pointer"
+    }
+  }, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
+    handleClickRefresh: handleClickRefresh,
+    handleClickClose: handleClickClose
+  }), /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, rest));
+};
+
+const SingleMovieSymbolContainer = (_ref16) => {
+  let {
+    symbol,
+    handleClick
+  } = _ref16;
+  return /*#__PURE__*/_react.default.createElement(InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
+    symbol: symbol,
+    handleClick: handleClick,
+    style: {
+      cursor: 'pointer'
+    }
+  }));
 };
 
 const MovieDisplayAppComponent = MovieDisplayType => {
-  return (_ref13) => {
-    let {
-      handleClick,
-      symbol
-    } = _ref13,
-        rest = _objectWithoutProperties(_ref13, ["handleClick", "symbol"]);
+  return symbol => {
+    return (_ref17) => {
+      let {
+        handleClick
+      } = _ref17,
+          rest = _objectWithoutProperties(_ref17, ["handleClick"]);
 
-    const [hover, setHover] = (0, _react.useState)(false);
-    return /*#__PURE__*/_react.default.createElement("div", {
-      style: {
-        width: "300px",
-        cursor: 'pointer'
-      },
-      onMouseEnter: () => setHover(true),
-      onMouseLeave: () => setHover(false),
-      onClick: () => handleClick()
-    }, /*#__PURE__*/_react.default.createElement(AddRemoveSymbol, {
-      symbol: symbol,
-      visibility: hover
-    }), /*#__PURE__*/_react.default.createElement(MovieDisplayType, rest));
+      return /*#__PURE__*/_react.default.createElement("div", {
+        style: {
+          width: "300px"
+        }
+      }, /*#__PURE__*/_react.default.createElement(SingleMovieSymbolContainer, {
+        symbol: symbol,
+        handleClick: handleClick
+      }), /*#__PURE__*/_react.default.createElement(MovieDisplayType, rest));
+    };
   };
 };
 
 const MovieDisplayApp = MovieDisplayAppComponent(MovieDisplay);
-const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay); // movieFunction parameter
+const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay);
+const MovieDisplayAppHome = MovieDisplayApp('✓');
+const MovieDisplayPreviewAppHome = MovieDisplayPreviewApp('✓');
+const MovieDisplayAppUser = MovieDisplayApp('✗'); // movieFunction parameter
 
-const Home = (_ref14) => {
+const Home = (_ref18) => {
   let {
     moviesAdded,
     addToMyMovies
-  } = _ref14;
+  } = _ref18;
   const [specificMovie, setSpecificMovie] = (0, _react.useState)(true);
   const [movieData, setMovieData] = (0, _react.useState)(null);
   const [loading, setLoading] = (0, _react.useState)(false);
@@ -697,15 +761,12 @@ const Home = (_ref14) => {
   };
 
   const displayMovieType = () => {
-    return !movieData["Search"] ? /*#__PURE__*/_react.default.createElement(MovieDisplayApp, _extends({
-      symbol: '✓'
-    }, movieData, {
+    return !movieData["Search"] ? /*#__PURE__*/_react.default.createElement(MovieDisplayAppHome, _extends({}, movieData, {
       handleClick: () => addToMyMovies(_objectSpread(_objectSpread({}, movieData), {}, {
         myMovieType: 'full'
       }))
-    })) : movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MovieDisplayPreviewApp, _extends({
-      key: index,
-      symbol: '✓'
+    })) : movieData["Search"].map((result, index) => /*#__PURE__*/_react.default.createElement(MovieDisplayPreviewAppHome, _extends({
+      key: index
     }, result, {
       handleClick: () => addToMyMovies(_objectSpread(_objectSpread({}, result), {}, {
         myMovieType: 'preview'
@@ -781,23 +842,22 @@ const App = () => {
   }));
 };
 
-const User = (_ref15) => {
+const User = (_ref19) => {
   let {
     myMovies,
     removeFromMyMovies
-  } = _ref15;
+  } = _ref19;
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_router.Link, {
     to: "/"
-  }, "Home"), /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayApp, _extends({
-    key: index,
-    symbol: "✗"
+  }, "Home"), /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayAppUser, _extends({
+    key: index
   }, movieData, {
     handleClick: () => removeFromMyMovies(movieData)
-  })) : /*#__PURE__*/_react.default.createElement(MovieDisplayPreviewApp, _extends({
-    key: index,
-    symbol: "✗"
+  })) : /*#__PURE__*/_react.default.createElement(UserMovieDisplayAppComponent, _extends({
+    key: index
   }, movieData, {
-    handleClick: () => removeFromMyMovies(movieData)
+    handleClickClose: () => removeFromMyMovies(movieData),
+    handleClickRefresh: () => console.log('refreshMovieItem')
   }))));
 };
 

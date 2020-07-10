@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { Router, Link } from '@reach/router';
 
-const API_KEY = "45fc49f2";
+const API_KEY = "";
 const url = `http://www.omdbapi.com/?apikey=${API_KEY}&`;
 
 // query builder:
@@ -584,6 +584,7 @@ const RadioButton = ({ label, id, name, checked, handleChange }) => {
 
 //✗
 //✓
+//↻ ↺
 
 const AddRemoveStyle = {
   textAlign: "right", 
@@ -597,33 +598,81 @@ const AddRemoveHiddenStyle = {
   visibility: 'hidden' 
 }
 
-const AddRemoveSymbol = ({ symbol, visibility }) => {
+const InteractiveSymbol = ({ symbol, handleClick, ...rest }) => {
   return (
-    <p style={ visibility ? AddRemoveStyle : AddRemoveHiddenStyle }>
-      <span>{symbol}</span>
-    </p>
+    <span onClick={handleClick} {...rest}>{symbol}</span>
+  )
+}
+
+const InteractiveSymbolContainer = ({ children }) => (
+  <p style={AddRemoveStyle}>
+    { children }
+  </p>
+)
+
+const UserMovieSymbolContainer = ({ handleClickRefresh, handleClickClose }) => {
+  return (
+    <InteractiveSymbolContainer>
+      <InteractiveSymbol
+        symbol={"↻"}
+        handleClick={handleClickRefresh}
+        style={{ cursor: 'pointer' }}
+      />
+      <InteractiveSymbol
+        symbol={"✗"}
+        handleClick={handleClickClose}
+        style={{ paddingLeft: '23px', cursor: 'pointer' }}
+      />
+    </InteractiveSymbolContainer>
+  );
+}
+
+const UserMovieDisplayAppComponent = ({ handleClickRefresh, handleClickClose, ...rest }) => {
+  return (
+    <div style={{ width: "300px", cursor: "pointer" }}>
+      <UserMovieSymbolContainer
+        handleClickRefresh={handleClickRefresh}
+        handleClickClose={handleClickClose}
+      />
+      <MoviePreviewDisplay {...rest} />
+    </div>
   );
 };
 
+const SingleMovieSymbolContainer = ({ symbol, handleClick }) => {
+  return (
+    <InteractiveSymbolContainer>
+      <InteractiveSymbol
+        symbol={symbol}
+        handleClick={handleClick}
+        style={{ cursor: 'pointer' }}
+      />
+    </InteractiveSymbolContainer>
+  )
+}
+
 const MovieDisplayAppComponent = (MovieDisplayType) => {
-  return ({ handleClick, symbol, ...rest }) => {
-    const [hover, setHover] = useState(false);
-    return (
-      <div 
-        style={{ width: "300px", cursor: 'pointer' }}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        onClick={() => handleClick()}
-      >
-        <AddRemoveSymbol symbol={symbol} visibility={hover} />
-        <MovieDisplayType {...rest} />
-      </div>
-    );
-  };
+  return (symbol) => {
+    return ({ handleClick, ...rest }) => {
+      return (
+        <div 
+          style={{ width: "300px" }}
+        >
+          <SingleMovieSymbolContainer symbol={symbol} handleClick={handleClick} />
+          <MovieDisplayType {...rest} />
+        </div>
+      );
+    };
+  }
 }
 
 const MovieDisplayApp = MovieDisplayAppComponent(MovieDisplay)
 const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay)
+
+const MovieDisplayAppHome = MovieDisplayApp('✓')
+const MovieDisplayPreviewAppHome = MovieDisplayPreviewApp('✓')
+
+const MovieDisplayAppUser = MovieDisplayApp('✗')
 
 // movieFunction parameter
 const Home = ({ moviesAdded, addToMyMovies }) => {
@@ -655,7 +704,7 @@ const Home = ({ moviesAdded, addToMyMovies }) => {
   }
 
   const displayMovieType = () => {
-    return !movieData["Search"] ?  <MovieDisplayApp symbol={'✓'} {...movieData} handleClick={() => addToMyMovies({...movieData, myMovieType: 'full'})} /> : movieData["Search"].map((result, index) => <MovieDisplayPreviewApp key={index} symbol={'✓'} {...result} handleClick={() => addToMyMovies({...result, myMovieType: 'preview'})} />)
+    return !movieData["Search"] ?  <MovieDisplayAppHome {...movieData} handleClick={() => addToMyMovies({...movieData, myMovieType: 'full'})} /> : movieData["Search"].map((result, index) => <MovieDisplayPreviewAppHome key={index} {...result} handleClick={() => addToMyMovies({...result, myMovieType: 'preview'})} />)
   }
 
   return (
@@ -746,18 +795,17 @@ const User = ({ myMovies, removeFromMyMovies }) => {
       {myMovies.length > 0 &&
         myMovies.map((movieData, index) =>
           movieData.myMovieType === "full" ? (
-            <MovieDisplayApp
+            <MovieDisplayAppUser
               key={index}
-              symbol={"✗"}
               {...movieData}
               handleClick={() => removeFromMyMovies(movieData)}
             />
           ) : (
-            <MovieDisplayPreviewApp
+            <UserMovieDisplayAppComponent
               key={index}
-              symbol={"✗"}
               {...movieData}
-              handleClick={() => removeFromMyMovies(movieData)}
+              handleClickClose={() => removeFromMyMovies(movieData)}
+              handleClickRefresh={() => console.log('refreshMovieItem')}
             />
           )
         )}
