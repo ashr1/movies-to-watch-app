@@ -642,9 +642,10 @@ const UserMovieSymbolContainer = ({ handleClickRefresh, handleClickClose }) => {
   );
 }
 
-const UserMovieDisplayAppComponent = ({ handleClickRefresh, handleClickClose, ...rest }) => {
+const UserMovieDisplayAppComponent = ({ children, handleClickRefresh, handleClickClose, ...rest }) => {
   return (
     <div style={{ width: "300px" }}>
+      { children }
       <UserMovieSymbolContainer
         handleClickRefresh={handleClickRefresh}
         handleClickClose={handleClickClose}
@@ -818,11 +819,11 @@ const App = () => {
 
 const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
   const [requestBeingMade, setRequestBeingMade] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     if(error) {
-      setError('')
+      setError(null)
     }
   }, [myMovies])
 
@@ -841,16 +842,16 @@ const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
     })
     .catch(err => {
       setRequestBeingMade(false)
-      setError('Something went wrong making a request.')
+      setError([index,'Something went wrong making a request.'])
     })
   }
 
   const displayResult = (incMovieData, index) => {
     if(incMovieData['Response'] === 'True') {
       makeIntoFullMovie(incMovieData, index)
-      setError('') // all parameters were right, but maybe network connection failed
+      setError(null) // all parameters were right, but maybe network connection failed
     } else {
-      setError(incMovieData['Error'])
+      setError([index,incMovieData['Error']])
     }
   }
 
@@ -858,7 +859,7 @@ const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
     <div>
       <Link to="/">Home</Link>
       <h2>My Movies:</h2>
-      {error && <p style={ErrorMsgStyle}>{error}</p>}
+      
       {myMovies.length > 0 &&
         myMovies.map((movieData, index) =>
           movieData.myMovieType === "full" ? (
@@ -867,13 +868,16 @@ const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
               {...movieData}
               handleClick={() => removeFromMyMovies(movieData)}
             />
-          ) : (
-            <UserMovieDisplayAppComponent
-              key={index}
-              {...movieData}
-              handleClickClose={() => removeFromMyMovies(movieData)}
-              handleClickRefresh={() => makeMovieRequest(movieData, index)}
-            />
+          ) : (   
+              <UserMovieDisplayAppComponent
+                key={index}
+                {...movieData}
+                handleClickClose={() => removeFromMyMovies(movieData)}
+                handleClickRefresh={() => makeMovieRequest(movieData, index)}
+              >
+                { error && error[0] === index && <p style={ErrorMsgStyle}>{error[1]}</p> }
+              </UserMovieDisplayAppComponent>
+        
           )
         )}
     </div>

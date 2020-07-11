@@ -693,16 +693,17 @@ const UserMovieSymbolContainer = (_ref15) => {
 
 const UserMovieDisplayAppComponent = (_ref16) => {
   let {
+    children,
     handleClickRefresh,
     handleClickClose
   } = _ref16,
-      rest = _objectWithoutProperties(_ref16, ["handleClickRefresh", "handleClickClose"]);
+      rest = _objectWithoutProperties(_ref16, ["children", "handleClickRefresh", "handleClickClose"]);
 
   return /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: "300px"
     }
-  }, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
+  }, children, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
     handleClickRefresh: handleClickRefresh,
     handleClickClose: handleClickClose
   }), /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, rest));
@@ -885,10 +886,10 @@ const User = (_ref20) => {
     makeIntoFullMovie
   } = _ref20;
   const [requestBeingMade, setRequestBeingMade] = (0, _react.useState)(false);
-  const [error, setError] = (0, _react.useState)('');
+  const [error, setError] = (0, _react.useState)(null);
   (0, _react.useEffect)(() => {
     if (error) {
-      setError('');
+      setError(null);
     }
   }, [myMovies]);
 
@@ -906,24 +907,22 @@ const User = (_ref20) => {
       displayResult(movie, index);
     }).catch(err => {
       setRequestBeingMade(false);
-      setError('Something went wrong making a request.');
+      setError([index, 'Something went wrong making a request.']);
     });
   };
 
   const displayResult = (incMovieData, index) => {
     if (incMovieData['Response'] === 'True') {
       makeIntoFullMovie(incMovieData, index);
-      setError(''); // all parameters were right, but maybe network connection failed
+      setError(null); // all parameters were right, but maybe network connection failed
     } else {
-      setError(incMovieData['Error']);
+      setError([index, incMovieData['Error']]);
     }
   };
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_router.Link, {
     to: "/"
-  }, "Home"), /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), error && /*#__PURE__*/_react.default.createElement("p", {
-    style: ErrorMsgStyle
-  }, error), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayAppUser, _extends({
+  }, "Home"), /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayAppUser, _extends({
     key: index
   }, movieData, {
     handleClick: () => removeFromMyMovies(movieData)
@@ -932,7 +931,9 @@ const User = (_ref20) => {
   }, movieData, {
     handleClickClose: () => removeFromMyMovies(movieData),
     handleClickRefresh: () => makeMovieRequest(movieData, index)
-  }))));
+  }), error && error[0] === index && /*#__PURE__*/_react.default.createElement("p", {
+    style: ErrorMsgStyle
+  }, error[1]))));
 };
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root"));
