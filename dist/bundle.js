@@ -504,14 +504,33 @@ const titleAssistStyle = {
 
 const omdbNACheck = v => v !== "N/A";
 
-const MoviePreviewDisplay = (_ref9) => {
+const ImageComponent = (_ref9) => {
+  let {
+    src
+  } = _ref9,
+      rest = _objectWithoutProperties(_ref9, ["src"]);
+
+  const [imgSrc, setImgSrc] = (0, _react.useState)(src);
+  (0, _react.useEffect)(() => {
+    setImgSrc(src);
+  }, [src]);
+
+  const fallBackSrc = () => setImgSrc("https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster");
+
+  return /*#__PURE__*/_react.default.createElement("img", _extends({
+    src: imgSrc,
+    onError: fallBackSrc
+  }, rest));
+};
+
+const MoviePreviewDisplay = (_ref10) => {
   let {
     Poster,
     Title,
     Type,
     Year,
     imdbID
-  } = _ref9;
+  } = _ref10;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -522,7 +541,7 @@ const MoviePreviewDisplay = (_ref9) => {
     style: titleAssistStyle
   }, /*#__PURE__*/_react.default.createElement("span", {
     style: titleSubStyle
-  }, Year, " "), /*#__PURE__*/_react.default.createElement("span", null, Type, " ")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
+  }, Year, " "), /*#__PURE__*/_react.default.createElement("span", null, Type, " ")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(ImageComponent, {
     src: imgSrc,
     style: imageStyle
   })), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
@@ -532,7 +551,7 @@ const MoviePreviewDisplay = (_ref9) => {
   }, "imdbID:"), " ", imdbID));
 };
 
-const MovieDisplay = (_ref10) => {
+const MovieDisplay = (_ref11) => {
   let {
     Poster,
     Title: title,
@@ -544,7 +563,7 @@ const MovieDisplay = (_ref10) => {
     Released,
     imdbRating,
     Plot: plot
-  } = _ref10;
+  } = _ref11;
   const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
   const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
   const released = omdbNACheck(Released) ? Released.slice(-4) : Released;
@@ -556,7 +575,7 @@ const MovieDisplay = (_ref10) => {
     style: titleAssistStyle
   }, /*#__PURE__*/_react.default.createElement("span", {
     style: titleSubStyle
-  }, released, " "), /*#__PURE__*/_react.default.createElement("span", null, runtime, " "), /*#__PURE__*/_react.default.createElement("span", null, rated)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
+  }, released, " "), /*#__PURE__*/_react.default.createElement("span", null, runtime, " "), /*#__PURE__*/_react.default.createElement("span", null, rated)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(ImageComponent, {
     src: imgSrc,
     style: imageStyle
   })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", {
@@ -593,14 +612,14 @@ const RadioButtonLabelStyle = {
   margin: '10px'
 };
 
-const RadioButton = (_ref11) => {
+const RadioButton = (_ref12) => {
   let {
     label,
     id,
     name,
     checked,
     handleChange
-  } = _ref11;
+  } = _ref12;
   return /*#__PURE__*/_react.default.createElement("div", {
     style: RadioButtonContainerStyle
   }, /*#__PURE__*/_react.default.createElement("input", {
@@ -630,32 +649,32 @@ const AddRemoveHiddenStyle = {
   visibility: 'hidden'
 };
 
-const InteractiveSymbol = (_ref12) => {
+const InteractiveSymbol = (_ref13) => {
   let {
     symbol,
     handleClick
-  } = _ref12,
-      rest = _objectWithoutProperties(_ref12, ["symbol", "handleClick"]);
+  } = _ref13,
+      rest = _objectWithoutProperties(_ref13, ["symbol", "handleClick"]);
 
   return /*#__PURE__*/_react.default.createElement("span", _extends({
     onClick: handleClick
   }, rest), symbol);
 };
 
-const InteractiveSymbolContainer = (_ref13) => {
+const InteractiveSymbolContainer = (_ref14) => {
   let {
     children
-  } = _ref13;
+  } = _ref14;
   return /*#__PURE__*/_react.default.createElement("p", {
     style: AddRemoveStyle
   }, children);
 };
 
-const UserMovieSymbolContainer = (_ref14) => {
+const UserMovieSymbolContainer = (_ref15) => {
   let {
     handleClickRefresh,
     handleClickClose
-  } = _ref14;
+  } = _ref15;
   return /*#__PURE__*/_react.default.createElement(InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
     symbol: "↻",
     handleClick: handleClickRefresh,
@@ -672,12 +691,12 @@ const UserMovieSymbolContainer = (_ref14) => {
   }));
 };
 
-const UserMovieDisplayAppComponent = (_ref15) => {
+const UserMovieDisplayAppComponent = (_ref16) => {
   let {
     handleClickRefresh,
     handleClickClose
-  } = _ref15,
-      rest = _objectWithoutProperties(_ref15, ["handleClickRefresh", "handleClickClose"]);
+  } = _ref16,
+      rest = _objectWithoutProperties(_ref16, ["handleClickRefresh", "handleClickClose"]);
 
   return /*#__PURE__*/_react.default.createElement("div", {
     style: {
@@ -689,11 +708,11 @@ const UserMovieDisplayAppComponent = (_ref15) => {
   }), /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, rest));
 };
 
-const SingleMovieSymbolContainer = (_ref16) => {
+const SingleMovieSymbolContainer = (_ref17) => {
   let {
     symbol,
     handleClick
-  } = _ref16;
+  } = _ref17;
   return /*#__PURE__*/_react.default.createElement(InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
     symbol: symbol,
     handleClick: handleClick,
@@ -705,11 +724,11 @@ const SingleMovieSymbolContainer = (_ref16) => {
 
 const MovieDisplayAppComponent = MovieDisplayType => {
   return symbol => {
-    return (_ref17) => {
+    return (_ref18) => {
       let {
         handleClick
-      } = _ref17,
-          rest = _objectWithoutProperties(_ref17, ["handleClick"]);
+      } = _ref18,
+          rest = _objectWithoutProperties(_ref18, ["handleClick"]);
 
       return /*#__PURE__*/_react.default.createElement("div", {
         style: {
@@ -729,11 +748,11 @@ const MovieDisplayAppHome = MovieDisplayApp('✓');
 const MovieDisplayPreviewAppHome = MovieDisplayPreviewApp('✓');
 const MovieDisplayAppUser = MovieDisplayApp('✗'); // movieFunction parameter
 
-const Home = (_ref18) => {
+const Home = (_ref19) => {
   let {
     moviesAdded,
     addToMyMovies
-  } = _ref18;
+  } = _ref19;
   const [specificMovie, setSpecificMovie] = (0, _react.useState)(true);
   const [movieData, setMovieData] = (0, _react.useState)(null);
   const [loading, setLoading] = (0, _react.useState)(false);
@@ -752,6 +771,7 @@ const Home = (_ref18) => {
 
   const displayResult = incMovieData => {
     if (incMovieData['Response'] === 'True') {
+      console.log(incMovieData);
       setMovieData(incMovieData);
       setError(''); // all parameters were right, but maybe network connection failed
     } else {
@@ -858,12 +878,12 @@ const App = () => {
   }));
 };
 
-const User = (_ref19) => {
+const User = (_ref20) => {
   let {
     myMovies,
     removeFromMyMovies,
     makeIntoFullMovie
-  } = _ref19;
+  } = _ref20;
   const [requestBeingMade, setRequestBeingMade] = (0, _react.useState)(false);
   const [error, setError] = (0, _react.useState)('');
   (0, _react.useEffect)(() => {
