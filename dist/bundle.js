@@ -1278,7 +1278,7 @@ const Home = (_ref) => {
   }, /*#__PURE__*/_react.default.createElement("h1", {
     style: _HomePageStyles.HomePageHeaderStyle
   }, "Movies To Watch"), /*#__PURE__*/_react.default.createElement(_router.Link, {
-    to: "/my-movies",
+    to: "/movies-to-watch-app/my-movies",
     style: _HomePageStyles.HomePageLinkStyle
   }, "My Movies (", moviesAdded, ")"), /*#__PURE__*/_react.default.createElement(_RadioButton.default, {
     id: "specMovieForm",
@@ -1385,7 +1385,7 @@ const User = (_ref) => {
   }, /*#__PURE__*/_react.default.createElement("h1", {
     style: _HomePageStyles.HomePageHeaderStyle
   }, "My Movies"), /*#__PURE__*/_react.default.createElement(_router.Link, {
-    to: "/",
+    to: "/movies-to-watch-app/",
     style: _HomePageStyles.HomePageLinkStyle
   }, "Home"), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayAppUser, _extends({
     key: index

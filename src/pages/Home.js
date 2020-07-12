@@ -48,7 +48,7 @@ const Home = ({ moviesAdded, addToMyMovies }) => {
     return (
       <div style={HomePageContainerStyle}>
         <h1 style={HomePageHeaderStyle}>Movies To Watch</h1>
-        <Link to="/my-movies" style={HomePageLinkStyle}>My Movies ({moviesAdded})</Link>
+        <Link to="/movies-to-watch-app/my-movies" style={HomePageLinkStyle}>My Movies ({moviesAdded})</Link>
         <RadioButton
           id="specMovieForm"
           name="movieForm"

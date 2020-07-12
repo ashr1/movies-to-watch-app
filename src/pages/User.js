@@ -49,7 +49,7 @@ const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
     return (
       <div style={HomePageContainerStyle}>
         <h1 style={HomePageHeaderStyle}>My Movies</h1>
-        <Link to="/" style={HomePageLinkStyle}>Home</Link>
+        <Link to="/movies-to-watch-app/" style={HomePageLinkStyle}>Home</Link>
         {myMovies.length > 0 &&
           myMovies.map((movieData, index) =>
             movieData.myMovieType === "full" ? (
