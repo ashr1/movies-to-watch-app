@@ -102,712 +102,31 @@ const PrimaryButton = props => /*#__PURE__*/_react.default.createElement(Button,
 exports.PrimaryButton = PrimaryButton;
 var _default = Button;
 exports.default = _default;
-},{"react":40}],3:[function(require,module,exports){
+},{"react":43}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.imageStyle = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+var _generalStyles = require("../globalStyles/generalStyles");
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _Input = require("./Input");
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+var _Select = _interopRequireDefault(require("./Select"));
 
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+var _YearInput = _interopRequireDefault(require("./YearInput"));
 
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-const imageStyle = {
-  width: "150px",
-  height: "auto"
-};
-exports.imageStyle = imageStyle;
-
-const ImageComponent = (_ref) => {
-  let {
-    src
-  } = _ref,
-      rest = _objectWithoutProperties(_ref, ["src"]);
-
-  const [imgSrc, setImgSrc] = (0, _react.useState)(src);
-  (0, _react.useEffect)(() => {
-    setImgSrc(src);
-  }, [src]);
-
-  const fallBackSrc = () => setImgSrc("https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster");
-
-  return /*#__PURE__*/_react.default.createElement("img", _extends({
-    src: imgSrc,
-    onError: fallBackSrc
-  }, rest));
-};
-
-var _default = ImageComponent;
-exports.default = _default;
-},{"react":40}],4:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.NumberInput = exports.TextInput = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-const Input = (_ref) => {
-  let {
-    name,
-    value,
-    handleChange,
-    type
-  } = _ref,
-      rest = _objectWithoutProperties(_ref, ["name", "value", "handleChange", "type"]);
-
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", _extends({
-    name: name,
-    type: type,
-    value: value,
-    onChange: handleChange
-  }, rest)));
-}; // preventing the default input background highlight:
-// add !important to color
-// add background-image: initial !important
-// add background-color: transparent !important
-
-
-const TextInputStyle = {
-  borderWidth: '0 0 1px 0',
-  fontFamily: 'monospace',
-  borderColor: '#cdd7e5',
-  color: '#584f4f',
-  outline: 'none',
-  width: '300px',
-  margin: '10px',
-  backgroundImage: 'initial',
-  backgroundColor: 'transparent'
-};
-
-const TextInput = props => /*#__PURE__*/_react.default.createElement(Input, _extends({}, props, {
-  type: "text",
-  style: TextInputStyle
-}));
-
-exports.TextInput = TextInput;
-
-const NumberInput = (_ref2) => {
-  let {
-    max,
-    min,
-    step
-  } = _ref2,
-      rest = _objectWithoutProperties(_ref2, ["max", "min", "step"]);
-
-  return /*#__PURE__*/_react.default.createElement(Input, _extends({}, rest, {
-    max: max,
-    min: min,
-    step: step ? step : 1,
-    type: "number",
-    style: TextInputStyle
-  }));
-};
-
-exports.NumberInput = NumberInput;
-},{"react":40}],5:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.InteractiveSymbolContainer = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-//✗
-//✓
-//↻ ↺
-const AddRemoveStyle = {
-  textAlign: "right",
-  color: 'rgb(88,79,79)',
-  margin: "0 0 -23px 0"
-};
-const AddRemoveHiddenStyle = {
-  textAlign: "right",
-  margin: "0 0 -23px 0",
-  color: 'rgb(88,79,79)',
-  visibility: 'hidden'
-};
-
-const InteractiveSymbol = (_ref) => {
-  let {
-    symbol,
-    handleClick
-  } = _ref,
-      rest = _objectWithoutProperties(_ref, ["symbol", "handleClick"]);
-
-  return /*#__PURE__*/_react.default.createElement("span", _extends({
-    onClick: handleClick
-  }, rest), symbol);
-};
-
-const InteractiveSymbolContainer = (_ref2) => {
-  let {
-    children
-  } = _ref2;
-  return /*#__PURE__*/_react.default.createElement("p", {
-    style: AddRemoveStyle
-  }, children);
-};
-
-exports.InteractiveSymbolContainer = InteractiveSymbolContainer;
-var _default = InteractiveSymbol;
-exports.default = _default;
-},{"react":40}],6:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const Loading = (_ref) => {
-  let {
-    loading
-  } = _ref;
-  return loading ? /*#__PURE__*/_react.default.createElement("div", {
-    style: {
-      width: "40px",
-      height: "40px",
-      border: "5px solid",
-      borderColor: "white rgb(141,135,130) rgb(141,135,130) rgb(141,135,130)",
-      borderRadius: "50%",
-      margin: "0 auto",
-      animation: "spin 1s linear infinite"
-    }
-  }, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        ")) : null;
-};
-
-var _default = Loading;
-exports.default = _default;
-},{"react":40}],7:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _movieComponentStyles = require("../globalStyles/movieComponentStyles");
-
-var _ImageComponent = _interopRequireWildcard(require("./ImageComponent"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const omdbNACheck = v => v !== "N/A";
-
-const MovieDisplay = (_ref) => {
-  let {
-    Poster,
-    Title: title,
-    Actors: actors,
-    Director: director,
-    Genre: genre,
-    Runtime: runtime,
-    Rated: rated,
-    Released,
-    imdbRating,
-    Plot: plot
-  } = _ref;
-  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
-  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
-  const released = omdbNACheck(Released) ? Released.slice(-4) : Released;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: _movieComponentStyles.movieContainerStyle
-  }, /*#__PURE__*/_react.default.createElement("p", {
-    style: _movieComponentStyles.titleStyle
-  }, title), /*#__PURE__*/_react.default.createElement("p", {
-    style: _movieComponentStyles.titleAssistStyle
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    style: _movieComponentStyles.titleSubStyle
-  }, released, " "), /*#__PURE__*/_react.default.createElement("span", null, runtime, " "), /*#__PURE__*/_react.default.createElement("span", null, rated)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_ImageComponent.default, {
-    src: imgSrc,
-    style: _ImageComponent.imageStyle
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", {
-    style: {
-      fontWeight: "bold"
-    }
-  }, genre), /*#__PURE__*/_react.default.createElement("p", null, plot)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
-    style: {
-      fontWeight: "bold"
-    }
-  }, "Directed By:"), " ", director), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
-    style: {
-      fontWeight: "bold"
-    }
-  }, "Actors:"), " ", actors)), /*#__PURE__*/_react.default.createElement("div", {
-    style: {
-      display: "inline-block",
-      marginTop: "10px"
-    }
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    style: {
-      display: "block",
-      fontSize: "25px"
-    }
-  }, imdbRating), /*#__PURE__*/_react.default.createElement("span", null, "imdbRating")));
-};
-
-var _default = MovieDisplay;
-exports.default = _default;
-},{"../globalStyles/movieComponentStyles":15,"./ImageComponent":3,"react":40}],8:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.MovieDisplayPreviewApp = exports.MovieDisplayApp = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _InteractiveSymbol = _interopRequireWildcard(require("./InteractiveSymbol"));
-
-var _MovieDisplay = _interopRequireDefault(require("./MovieDisplay"));
-
-var _MoviePreviewDisplay = _interopRequireDefault(require("./MoviePreviewDisplay"));
-
-var _MovieAppComponentStyles = require("../globalStyles/MovieAppComponentStyles");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-const SingleMovieSymbolContainer = (_ref) => {
-  let {
-    symbol,
-    handleClick
-  } = _ref;
-  return /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.default, {
-    symbol: symbol,
-    handleClick: handleClick,
-    style: {
-      cursor: 'pointer'
-    }
-  }));
-};
-
-const MovieDisplayAppComponent = MovieDisplayType => {
-  return symbol => {
-    return (_ref2) => {
-      let {
-        handleClick
-      } = _ref2,
-          rest = _objectWithoutProperties(_ref2, ["handleClick"]);
-
-      return /*#__PURE__*/_react.default.createElement("div", {
-        style: _MovieAppComponentStyles.MovieAppComponentStyles
-      }, /*#__PURE__*/_react.default.createElement(SingleMovieSymbolContainer, {
-        symbol: symbol,
-        handleClick: handleClick
-      }), /*#__PURE__*/_react.default.createElement(MovieDisplayType, rest));
-    };
-  };
-};
-
-const MovieDisplayApp = MovieDisplayAppComponent(_MovieDisplay.default);
-exports.MovieDisplayApp = MovieDisplayApp;
-const MovieDisplayPreviewApp = MovieDisplayAppComponent(_MoviePreviewDisplay.default);
-exports.MovieDisplayPreviewApp = MovieDisplayPreviewApp;
-var _default = MovieDisplayAppComponent;
-exports.default = _default;
-},{"../globalStyles/MovieAppComponentStyles":14,"./InteractiveSymbol":5,"./MovieDisplay":7,"./MoviePreviewDisplay":9,"react":40}],9:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _movieComponentStyles = require("../globalStyles/movieComponentStyles");
-
-var _ImageComponent = _interopRequireWildcard(require("./ImageComponent"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const MoviePreviewDisplay = (_ref) => {
-  let {
-    Poster,
-    Title,
-    Type,
-    Year,
-    imdbID
-  } = _ref;
-  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
-  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: _movieComponentStyles.movieContainerStyle
-  }, /*#__PURE__*/_react.default.createElement("p", {
-    style: _movieComponentStyles.titleStyle
-  }, Title), /*#__PURE__*/_react.default.createElement("p", {
-    style: _movieComponentStyles.titleAssistStyle
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    style: _movieComponentStyles.titleSubStyle
-  }, Year, " "), /*#__PURE__*/_react.default.createElement("span", null, Type, " ")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_ImageComponent.default, {
-    src: imgSrc,
-    style: _ImageComponent.imageStyle
-  })), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
-    style: {
-      fontWeight: "bold"
-    }
-  }, "imdbID:"), " ", imdbID));
-};
-
-var _default = MoviePreviewDisplay;
-exports.default = _default;
-},{"../globalStyles/movieComponentStyles":15,"./ImageComponent":3,"react":40}],10:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const RadioButtonContainerStyle = {
-  fontFamily: 'monospace',
-  color: 'rgb(88,79,79)',
-  margin: '10px'
-};
-const RadioButtonLabelStyle = {
-  margin: '10px'
-};
-
-const RadioButton = (_ref) => {
-  let {
-    label,
-    id,
-    name,
-    checked,
-    handleChange
-  } = _ref;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: RadioButtonContainerStyle
-  }, /*#__PURE__*/_react.default.createElement("input", {
-    type: "radio",
-    id: id,
-    name: name,
-    checked: checked,
-    onChange: handleChange
-  }), /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: id,
-    style: RadioButtonLabelStyle
-  }, label));
-};
-
-var _default = RadioButton;
-exports.default = _default;
-},{"react":40}],11:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const SelectStyle = {
-  borderWidth: '0 0 1px 0',
-  borderColor: '#cdd7e5',
-  outline: 'none',
-  color: '#584f4f'
-};
-const SelectContainer = {
-  width: '300px',
-  fontFamily: 'monospace',
-  color: '#584f4f',
-  margin: '10px'
-};
-
-const Select = (_ref) => {
-  let {
-    id,
-    label,
-    options,
-    value,
-    handleSelect
-  } = _ref;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: SelectContainer
-  }, /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: id
-  }, label, " "), /*#__PURE__*/_react.default.createElement("select", {
-    id: id,
-    value: value,
-    onChange: handleSelect,
-    style: SelectStyle
-  }, options.map((option, index) => /*#__PURE__*/_react.default.createElement("option", {
-    key: index,
-    value: option.value
-  }, option.text))));
-};
-
-var _default = Select;
-exports.default = _default;
-},{"react":40}],12:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _MoviePreviewDisplay = _interopRequireDefault(require("./MoviePreviewDisplay"));
-
-var _InteractiveSymbol = _interopRequireWildcard(require("./InteractiveSymbol"));
-
-var _MovieAppComponentStyles = require("../globalStyles/MovieAppComponentStyles");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-const UserMovieSymbolContainer = (_ref) => {
-  let {
-    handleClickRefresh,
-    handleClickClose
-  } = _ref;
-  return /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.default, {
-    symbol: "↻",
-    handleClick: handleClickRefresh,
-    style: {
-      cursor: 'pointer'
-    }
-  }), /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.default, {
-    symbol: "✗",
-    handleClick: handleClickClose,
-    style: {
-      paddingLeft: '23px',
-      cursor: 'pointer'
-    }
-  }));
-};
-
-const UserMovieDisplayAppComponent = (_ref2) => {
-  let {
-    children,
-    handleClickRefresh,
-    handleClickClose
-  } = _ref2,
-      rest = _objectWithoutProperties(_ref2, ["children", "handleClickRefresh", "handleClickClose"]);
-
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: _MovieAppComponentStyles.MovieAppComponentStyles
-  }, children, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
-    handleClickRefresh: handleClickRefresh,
-    handleClickClose: handleClickClose
-  }), /*#__PURE__*/_react.default.createElement(_MoviePreviewDisplay.default, rest));
-};
-
-var _default = UserMovieDisplayAppComponent;
-exports.default = _default;
-},{"../globalStyles/MovieAppComponentStyles":14,"./InteractiveSymbol":5,"./MoviePreviewDisplay":9,"react":40}],13:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const YearInputContainerStyle = {
-  width: '300px',
-  fontFamily: 'monospace',
-  color: '#584f4f',
-  margin: '10px'
-};
-const YearInputStyle = {
-  borderWidth: '0 0 1px 0',
-  fontFamily: 'monospace',
-  borderColor: '#cdd7e5',
-  color: '#584f4f',
-  outline: 'none',
-  backgroundImage: 'initial',
-  backgroundColor: 'transparent'
-};
-
-const YearInput = (_ref) => {
-  let {
-    name,
-    value,
-    handleChange,
-    label,
-    id,
-    max,
-    min,
-    step
-  } = _ref;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: YearInputContainerStyle
-  }, label && /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: id
-  }, label), /*#__PURE__*/_react.default.createElement("input", {
-    name: name,
-    id: id,
-    type: "number",
-    value: value,
-    max: max,
-    min: min,
-    step: step,
-    onChange: handleChange,
-    style: YearInputStyle
-  }));
-};
-
-var _default = YearInput;
-exports.default = _default;
-},{"react":40}],14:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MovieAppComponentStyles = void 0;
-const MovieAppComponentStyles = {
-  maxWidth: "300px",
-  textAlign: 'center',
-  margin: '15px 0'
-};
-exports.MovieAppComponentStyles = MovieAppComponentStyles;
-},{}],15:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.titleAssistStyle = exports.titleSubStyle = exports.titleStyle = exports.movieContainerStyle = void 0;
-const movieContainerStyle = {
-  color: "black",
-  fontFamily: "monospace",
-  maxWidth: "310px"
-};
-exports.movieContainerStyle = movieContainerStyle;
-const titleStyle = {
-  fontSize: "23px",
-  marginBottom: "2px"
-};
-exports.titleStyle = titleStyle;
-const titleSubStyle = {
-  fontSize: "14px"
-};
-exports.titleSubStyle = titleSubStyle;
-const titleAssistStyle = {
-  marginTop: "2px"
-};
-exports.titleAssistStyle = titleAssistStyle;
-},{}],16:[function(require,module,exports){
-"use strict";
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactDom = _interopRequireDefault(require("react-dom"));
-
-var _router = require("@reach/router");
-
-var _fetchMoviesFullQuery = _interopRequireDefault(require("./api/fetchMoviesFullQuery"));
-
-var _Loading = _interopRequireDefault(require("./components/Loading"));
-
-var _Select = _interopRequireDefault(require("./components/Select"));
-
-var _RadioButton = _interopRequireDefault(require("./components/RadioButton"));
-
-var _Button = require("./components/Button");
-
-var _Input = require("./components/Input");
-
-var _YearInput = _interopRequireDefault(require("./components/YearInput"));
-
-var _ImageComponent = _interopRequireWildcard(require("./components/ImageComponent"));
-
-var _MoviePreviewDisplay = _interopRequireDefault(require("./components/MoviePreviewDisplay"));
-
-var _MovieDisplay = _interopRequireDefault(require("./components/MovieDisplay"));
-
-var _UserMovieDisplayAppComponent = _interopRequireDefault(require("./components/UserMovieDisplayAppComponent"));
-
-var _MovieDisplayAppComponent = require("./components/MovieDisplayAppComponent");
+var _Button = require("./Button");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 const GeneralMovieSearch = (_ref) => {
   let {
@@ -909,15 +228,541 @@ const GeneralMovieSearch = (_ref) => {
     text: "Search",
     handleClick: () => submitForRequest()
   }), error && /*#__PURE__*/_react.default.createElement("p", {
-    style: ErrorMsgStyle
+    style: _generalStyles.ErrorMsgStyle
   }, error));
 };
 
-const SpecificMovieForm = (_ref2) => {
+var _default = GeneralMovieSearch;
+exports.default = _default;
+},{"../globalStyles/generalStyles":17,"./Button":2,"./Input":5,"./Select":12,"./YearInput":15,"react":43}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.imageStyle = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const imageStyle = {
+  width: "150px",
+  height: "auto"
+};
+exports.imageStyle = imageStyle;
+
+const ImageComponent = (_ref) => {
+  let {
+    src
+  } = _ref,
+      rest = _objectWithoutProperties(_ref, ["src"]);
+
+  const [imgSrc, setImgSrc] = (0, _react.useState)(src);
+  (0, _react.useEffect)(() => {
+    setImgSrc(src);
+  }, [src]);
+
+  const fallBackSrc = () => setImgSrc("https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster");
+
+  return /*#__PURE__*/_react.default.createElement("img", _extends({
+    src: imgSrc,
+    onError: fallBackSrc
+  }, rest));
+};
+
+var _default = ImageComponent;
+exports.default = _default;
+},{"react":43}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.NumberInput = exports.TextInput = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const Input = (_ref) => {
+  let {
+    name,
+    value,
+    handleChange,
+    type
+  } = _ref,
+      rest = _objectWithoutProperties(_ref, ["name", "value", "handleChange", "type"]);
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", _extends({
+    name: name,
+    type: type,
+    value: value,
+    onChange: handleChange
+  }, rest)));
+}; // preventing the default input background highlight:
+// add !important to color
+// add background-image: initial !important
+// add background-color: transparent !important
+
+
+const TextInputStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  width: '300px',
+  margin: '10px',
+  backgroundImage: 'initial',
+  backgroundColor: 'transparent'
+};
+
+const TextInput = props => /*#__PURE__*/_react.default.createElement(Input, _extends({}, props, {
+  type: "text",
+  style: TextInputStyle
+}));
+
+exports.TextInput = TextInput;
+
+const NumberInput = (_ref2) => {
+  let {
+    max,
+    min,
+    step
+  } = _ref2,
+      rest = _objectWithoutProperties(_ref2, ["max", "min", "step"]);
+
+  return /*#__PURE__*/_react.default.createElement(Input, _extends({}, rest, {
+    max: max,
+    min: min,
+    step: step ? step : 1,
+    type: "number",
+    style: TextInputStyle
+  }));
+};
+
+exports.NumberInput = NumberInput;
+},{"react":43}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.InteractiveSymbolContainer = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+//✗
+//✓
+//↻ ↺
+const AddRemoveStyle = {
+  textAlign: "right",
+  color: 'rgb(88,79,79)',
+  margin: "0 0 -23px 0"
+};
+const AddRemoveHiddenStyle = {
+  textAlign: "right",
+  margin: "0 0 -23px 0",
+  color: 'rgb(88,79,79)',
+  visibility: 'hidden'
+};
+
+const InteractiveSymbol = (_ref) => {
+  let {
+    symbol,
+    handleClick
+  } = _ref,
+      rest = _objectWithoutProperties(_ref, ["symbol", "handleClick"]);
+
+  return /*#__PURE__*/_react.default.createElement("span", _extends({
+    onClick: handleClick
+  }, rest), symbol);
+};
+
+const InteractiveSymbolContainer = (_ref2) => {
+  let {
+    children
+  } = _ref2;
+  return /*#__PURE__*/_react.default.createElement("p", {
+    style: AddRemoveStyle
+  }, children);
+};
+
+exports.InteractiveSymbolContainer = InteractiveSymbolContainer;
+var _default = InteractiveSymbol;
+exports.default = _default;
+},{"react":43}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const Loading = (_ref) => {
+  let {
+    loading
+  } = _ref;
+  return loading ? /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      width: "40px",
+      height: "40px",
+      border: "5px solid",
+      borderColor: "white rgb(141,135,130) rgb(141,135,130) rgb(141,135,130)",
+      borderRadius: "50%",
+      margin: "0 auto",
+      animation: "spin 1s linear infinite"
+    }
+  }, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        ")) : null;
+};
+
+var _default = Loading;
+exports.default = _default;
+},{"react":43}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _movieComponentStyles = require("../globalStyles/movieComponentStyles");
+
+var _ImageComponent = _interopRequireWildcard(require("./ImageComponent"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const omdbNACheck = v => v !== "N/A";
+
+const MovieDisplay = (_ref) => {
+  let {
+    Poster,
+    Title: title,
+    Actors: actors,
+    Director: director,
+    Genre: genre,
+    Runtime: runtime,
+    Rated: rated,
+    Released,
+    imdbRating,
+    Plot: plot
+  } = _ref;
+  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
+  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
+  const released = omdbNACheck(Released) ? Released.slice(-4) : Released;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: _movieComponentStyles.movieContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    style: _movieComponentStyles.titleStyle
+  }, title), /*#__PURE__*/_react.default.createElement("p", {
+    style: _movieComponentStyles.titleAssistStyle
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    style: _movieComponentStyles.titleSubStyle
+  }, released, " "), /*#__PURE__*/_react.default.createElement("span", null, runtime, " "), /*#__PURE__*/_react.default.createElement("span", null, rated)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_ImageComponent.default, {
+    src: imgSrc,
+    style: _ImageComponent.imageStyle
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", {
+    style: {
+      fontWeight: "bold"
+    }
+  }, genre), /*#__PURE__*/_react.default.createElement("p", null, plot)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: "bold"
+    }
+  }, "Directed By:"), " ", director), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: "bold"
+    }
+  }, "Actors:"), " ", actors)), /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      display: "inline-block",
+      marginTop: "10px"
+    }
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      display: "block",
+      fontSize: "25px"
+    }
+  }, imdbRating), /*#__PURE__*/_react.default.createElement("span", null, "imdbRating")));
+};
+
+var _default = MovieDisplay;
+exports.default = _default;
+},{"../globalStyles/movieComponentStyles":18,"./ImageComponent":4,"react":43}],9:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.MovieDisplayPreviewApp = exports.MovieDisplayApp = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _InteractiveSymbol = _interopRequireWildcard(require("./InteractiveSymbol"));
+
+var _MovieDisplay = _interopRequireDefault(require("./MovieDisplay"));
+
+var _MoviePreviewDisplay = _interopRequireDefault(require("./MoviePreviewDisplay"));
+
+var _MovieAppComponentStyles = require("../globalStyles/MovieAppComponentStyles");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const SingleMovieSymbolContainer = (_ref) => {
+  let {
+    symbol,
+    handleClick
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.default, {
+    symbol: symbol,
+    handleClick: handleClick,
+    style: {
+      cursor: 'pointer'
+    }
+  }));
+};
+
+const MovieDisplayAppComponent = MovieDisplayType => {
+  return symbol => {
+    return (_ref2) => {
+      let {
+        handleClick
+      } = _ref2,
+          rest = _objectWithoutProperties(_ref2, ["handleClick"]);
+
+      return /*#__PURE__*/_react.default.createElement("div", {
+        style: _MovieAppComponentStyles.MovieAppComponentStyles
+      }, /*#__PURE__*/_react.default.createElement(SingleMovieSymbolContainer, {
+        symbol: symbol,
+        handleClick: handleClick
+      }), /*#__PURE__*/_react.default.createElement(MovieDisplayType, rest));
+    };
+  };
+};
+
+const MovieDisplayApp = MovieDisplayAppComponent(_MovieDisplay.default);
+exports.MovieDisplayApp = MovieDisplayApp;
+const MovieDisplayPreviewApp = MovieDisplayAppComponent(_MoviePreviewDisplay.default);
+exports.MovieDisplayPreviewApp = MovieDisplayPreviewApp;
+var _default = MovieDisplayAppComponent;
+exports.default = _default;
+},{"../globalStyles/MovieAppComponentStyles":16,"./InteractiveSymbol":6,"./MovieDisplay":8,"./MoviePreviewDisplay":10,"react":43}],10:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _movieComponentStyles = require("../globalStyles/movieComponentStyles");
+
+var _ImageComponent = _interopRequireWildcard(require("./ImageComponent"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const MoviePreviewDisplay = (_ref) => {
+  let {
+    Poster,
+    Title,
+    Type,
+    Year,
+    imdbID
+  } = _ref;
+  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
+  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: _movieComponentStyles.movieContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    style: _movieComponentStyles.titleStyle
+  }, Title), /*#__PURE__*/_react.default.createElement("p", {
+    style: _movieComponentStyles.titleAssistStyle
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    style: _movieComponentStyles.titleSubStyle
+  }, Year, " "), /*#__PURE__*/_react.default.createElement("span", null, Type, " ")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_ImageComponent.default, {
+    src: imgSrc,
+    style: _ImageComponent.imageStyle
+  })), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: "bold"
+    }
+  }, "imdbID:"), " ", imdbID));
+};
+
+var _default = MoviePreviewDisplay;
+exports.default = _default;
+},{"../globalStyles/movieComponentStyles":18,"./ImageComponent":4,"react":43}],11:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const RadioButtonContainerStyle = {
+  fontFamily: 'monospace',
+  color: 'rgb(88,79,79)',
+  margin: '10px'
+};
+const RadioButtonLabelStyle = {
+  margin: '10px'
+};
+
+const RadioButton = (_ref) => {
+  let {
+    label,
+    id,
+    name,
+    checked,
+    handleChange
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: RadioButtonContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("input", {
+    type: "radio",
+    id: id,
+    name: name,
+    checked: checked,
+    onChange: handleChange
+  }), /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: id,
+    style: RadioButtonLabelStyle
+  }, label));
+};
+
+var _default = RadioButton;
+exports.default = _default;
+},{"react":43}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const SelectStyle = {
+  borderWidth: '0 0 1px 0',
+  borderColor: '#cdd7e5',
+  outline: 'none',
+  color: '#584f4f'
+};
+const SelectContainer = {
+  width: '300px',
+  fontFamily: 'monospace',
+  color: '#584f4f',
+  margin: '10px'
+};
+
+const Select = (_ref) => {
+  let {
+    id,
+    label,
+    options,
+    value,
+    handleSelect
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: SelectContainer
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: id
+  }, label, " "), /*#__PURE__*/_react.default.createElement("select", {
+    id: id,
+    value: value,
+    onChange: handleSelect,
+    style: SelectStyle
+  }, options.map((option, index) => /*#__PURE__*/_react.default.createElement("option", {
+    key: index,
+    value: option.value
+  }, option.text))));
+};
+
+var _default = Select;
+exports.default = _default;
+},{"react":43}],13:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _generalStyles = require("../globalStyles/generalStyles");
+
+var _Input = require("./Input");
+
+var _Select = _interopRequireDefault(require("./Select"));
+
+var _YearInput = _interopRequireDefault(require("./YearInput"));
+
+var _Button = require("./Button");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const SpecificMovieForm = (_ref) => {
   let {
     handleSubmit,
     onFormChange
-  } = _ref2;
+  } = _ref;
   const [i, setI] = (0, _react.useState)('');
   const [t, setT] = (0, _react.useState)('');
   const [type, setType] = (0, _react.useState)('');
@@ -1029,15 +874,226 @@ const SpecificMovieForm = (_ref2) => {
     text: "Search",
     handleClick: () => submitForRequest()
   }), error && /*#__PURE__*/_react.default.createElement("p", {
-    style: ErrorMsgStyle
+    style: _generalStyles.ErrorMsgStyle
   }, error));
 };
 
+var _default = SpecificMovieForm;
+exports.default = _default;
+},{"../globalStyles/generalStyles":17,"./Button":2,"./Input":5,"./Select":12,"./YearInput":15,"react":43}],14:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _MoviePreviewDisplay = _interopRequireDefault(require("./MoviePreviewDisplay"));
+
+var _InteractiveSymbol = _interopRequireWildcard(require("./InteractiveSymbol"));
+
+var _MovieAppComponentStyles = require("../globalStyles/MovieAppComponentStyles");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const UserMovieSymbolContainer = (_ref) => {
+  let {
+    handleClickRefresh,
+    handleClickClose
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.default, {
+    symbol: "↻",
+    handleClick: handleClickRefresh,
+    style: {
+      cursor: 'pointer'
+    }
+  }), /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.default, {
+    symbol: "✗",
+    handleClick: handleClickClose,
+    style: {
+      paddingLeft: '23px',
+      cursor: 'pointer'
+    }
+  }));
+};
+
+const UserMovieDisplayAppComponent = (_ref2) => {
+  let {
+    children,
+    handleClickRefresh,
+    handleClickClose
+  } = _ref2,
+      rest = _objectWithoutProperties(_ref2, ["children", "handleClickRefresh", "handleClickClose"]);
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: _MovieAppComponentStyles.MovieAppComponentStyles
+  }, children, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
+    handleClickRefresh: handleClickRefresh,
+    handleClickClose: handleClickClose
+  }), /*#__PURE__*/_react.default.createElement(_MoviePreviewDisplay.default, rest));
+};
+
+var _default = UserMovieDisplayAppComponent;
+exports.default = _default;
+},{"../globalStyles/MovieAppComponentStyles":16,"./InteractiveSymbol":6,"./MoviePreviewDisplay":10,"react":43}],15:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const YearInputContainerStyle = {
+  width: '300px',
+  fontFamily: 'monospace',
+  color: '#584f4f',
+  margin: '10px'
+};
+const YearInputStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  backgroundImage: 'initial',
+  backgroundColor: 'transparent'
+};
+
+const YearInput = (_ref) => {
+  let {
+    name,
+    value,
+    handleChange,
+    label,
+    id,
+    max,
+    min,
+    step
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: YearInputContainerStyle
+  }, label && /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: id
+  }, label), /*#__PURE__*/_react.default.createElement("input", {
+    name: name,
+    id: id,
+    type: "number",
+    value: value,
+    max: max,
+    min: min,
+    step: step,
+    onChange: handleChange,
+    style: YearInputStyle
+  }));
+};
+
+var _default = YearInput;
+exports.default = _default;
+},{"react":43}],16:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MovieAppComponentStyles = void 0;
+const MovieAppComponentStyles = {
+  maxWidth: "300px",
+  textAlign: 'center',
+  margin: '15px 0'
+};
+exports.MovieAppComponentStyles = MovieAppComponentStyles;
+},{}],17:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ErrorMsgStyle = void 0;
 const ErrorMsgStyle = {
   color: '#ff4d66',
   fontFamily: 'monospace',
   margin: '5px'
 };
+exports.ErrorMsgStyle = ErrorMsgStyle;
+},{}],18:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.titleAssistStyle = exports.titleSubStyle = exports.titleStyle = exports.movieContainerStyle = void 0;
+const movieContainerStyle = {
+  color: "black",
+  fontFamily: "monospace",
+  maxWidth: "310px"
+};
+exports.movieContainerStyle = movieContainerStyle;
+const titleStyle = {
+  fontSize: "23px",
+  marginBottom: "2px"
+};
+exports.titleStyle = titleStyle;
+const titleSubStyle = {
+  fontSize: "14px"
+};
+exports.titleSubStyle = titleSubStyle;
+const titleAssistStyle = {
+  marginTop: "2px"
+};
+exports.titleAssistStyle = titleAssistStyle;
+},{}],19:[function(require,module,exports){
+"use strict";
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
+var _router = require("@reach/router");
+
+var _fetchMoviesFullQuery = _interopRequireDefault(require("./api/fetchMoviesFullQuery"));
+
+var _Loading = _interopRequireDefault(require("./components/Loading"));
+
+var _RadioButton = _interopRequireDefault(require("./components/RadioButton"));
+
+var _UserMovieDisplayAppComponent = _interopRequireDefault(require("./components/UserMovieDisplayAppComponent"));
+
+var _MovieDisplayAppComponent = require("./components/MovieDisplayAppComponent");
+
+var _generalStyles = require("./globalStyles/generalStyles");
+
+var _GeneralMovieSearch = _interopRequireDefault(require("./components/GeneralMovieSearch"));
+
+var _SpecificMovieForm = _interopRequireDefault(require("./components/SpecificMovieForm"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 const MovieDisplayAppHome = (0, _MovieDisplayAppComponent.MovieDisplayApp)('✓');
 const MovieDisplayPreviewAppHome = (0, _MovieDisplayAppComponent.MovieDisplayPreviewApp)('✓');
 const MovieDisplayAppUser = (0, _MovieDisplayAppComponent.MovieDisplayApp)('✗');
@@ -1061,11 +1117,11 @@ const HomePageLinkStyle = {
   textAlign: 'center'
 }; // movieFunction parameter
 
-const Home = (_ref3) => {
+const Home = (_ref) => {
   let {
     moviesAdded,
     addToMyMovies
-  } = _ref3;
+  } = _ref;
   const [specificMovie, setSpecificMovie] = (0, _react.useState)(true);
   const [movieData, setMovieData] = (0, _react.useState)(null);
   const [loading, setLoading] = (0, _react.useState)(false);
@@ -1125,14 +1181,14 @@ const Home = (_ref3) => {
     checked: !specificMovie,
     handleChange: () => setSpecificMovie(false),
     label: "General Movies"
-  }), specificMovie ? /*#__PURE__*/_react.default.createElement(SpecificMovieForm, {
+  }), specificMovie ? /*#__PURE__*/_react.default.createElement(_SpecificMovieForm.default, {
     handleSubmit: makeMovieRequest,
     onFormChange: () => setError("")
-  }) : /*#__PURE__*/_react.default.createElement(GeneralMovieSearch, {
+  }) : /*#__PURE__*/_react.default.createElement(_GeneralMovieSearch.default, {
     handleSubmit: makeMovieRequest,
     onFormChange: () => setError("")
   }), error && /*#__PURE__*/_react.default.createElement("p", {
-    style: ErrorMsgStyle
+    style: _generalStyles.ErrorMsgStyle
   }, error), /*#__PURE__*/_react.default.createElement(_Loading.default, {
     loading: loading
   }), movieData && displayMovieType());
@@ -1196,12 +1252,12 @@ const App = () => {
   }));
 };
 
-const User = (_ref4) => {
+const User = (_ref2) => {
   let {
     myMovies,
     removeFromMyMovies,
     makeIntoFullMovie
-  } = _ref4;
+  } = _ref2;
   const [requestBeingMade, setRequestBeingMade] = (0, _react.useState)(false);
   const [error, setError] = (0, _react.useState)(null);
   (0, _react.useEffect)(() => {
@@ -1254,12 +1310,12 @@ const User = (_ref4) => {
     handleClickClose: () => removeFromMyMovies(movieData),
     handleClickRefresh: () => makeMovieRequest(movieData, index)
   }), error && error[0] === index && /*#__PURE__*/_react.default.createElement("p", {
-    style: ErrorMsgStyle
+    style: _generalStyles.ErrorMsgStyle
   }, error[1]))));
 };
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root"));
-},{"./api/fetchMoviesFullQuery":1,"./components/Button":2,"./components/ImageComponent":3,"./components/Input":4,"./components/Loading":6,"./components/MovieDisplay":7,"./components/MovieDisplayAppComponent":8,"./components/MoviePreviewDisplay":9,"./components/RadioButton":10,"./components/Select":11,"./components/UserMovieDisplayAppComponent":12,"./components/YearInput":13,"@reach/router":17,"react":40,"react-dom":33}],17:[function(require,module,exports){
+},{"./api/fetchMoviesFullQuery":1,"./components/GeneralMovieSearch":3,"./components/Loading":7,"./components/MovieDisplayAppComponent":9,"./components/RadioButton":11,"./components/SpecificMovieForm":13,"./components/UserMovieDisplayAppComponent":14,"./globalStyles/generalStyles":17,"@reach/router":20,"react":43,"react-dom":36}],20:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -2020,7 +2076,7 @@ exports.useNavigate = useNavigate;
 exports.useParams = useParams;
 exports.useMatch = useMatch;
 }).call(this,require('_process'))
-},{"./lib/history":18,"./lib/utils":19,"_process":25,"create-react-context":21,"invariant":23,"prop-types":29,"react":40,"react-lifecycles-compat":37}],18:[function(require,module,exports){
+},{"./lib/history":21,"./lib/utils":22,"_process":28,"create-react-context":24,"invariant":26,"prop-types":32,"react":43,"react-lifecycles-compat":40}],21:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -2211,7 +2267,7 @@ exports.globalHistory = globalHistory;
 exports.navigate = navigate;
 exports.createHistory = createHistory;
 exports.createMemorySource = createMemorySource;
-},{}],19:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -2512,7 +2568,7 @@ exports.insertParams = insertParams;
 exports.validateRedirect = validateRedirect;
 exports.shallowCompare = shallowCompare;
 }).call(this,require('_process'))
-},{"_process":25,"invariant":23}],20:[function(require,module,exports){
+},{"_process":28,"invariant":26}],23:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2711,7 +2767,7 @@ function createReactContext(defaultValue, calculateChangedBits) {
 exports.default = createReactContext;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":25,"gud":22,"prop-types":29,"react":40,"warning":47}],21:[function(require,module,exports){
+},{"_process":28,"gud":25,"prop-types":32,"react":43,"warning":50}],24:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -2728,7 +2784,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _react2.default.createContext || _implementation2.default;
 module.exports = exports['default'];
-},{"./implementation":20,"react":40}],22:[function(require,module,exports){
+},{"./implementation":23,"react":43}],25:[function(require,module,exports){
 (function (global){
 // @flow
 'use strict';
@@ -2740,7 +2796,7 @@ module.exports = function() {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],23:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2793,7 +2849,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":25}],24:[function(require,module,exports){
+},{"_process":28}],27:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -2885,7 +2941,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],25:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -3071,7 +3127,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],26:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -3177,7 +3233,7 @@ checkPropTypes.resetWarningCache = function() {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":30,"_process":25}],27:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":33,"_process":28}],30:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -3243,7 +3299,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":30}],28:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":33}],31:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -3838,7 +3894,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":26,"./lib/ReactPropTypesSecret":30,"_process":25,"object-assign":24,"react-is":36}],29:[function(require,module,exports){
+},{"./checkPropTypes":29,"./lib/ReactPropTypesSecret":33,"_process":28,"object-assign":27,"react-is":39}],32:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -3861,7 +3917,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":27,"./factoryWithTypeCheckers":28,"_process":25,"react-is":36}],30:[function(require,module,exports){
+},{"./factoryWithThrowingShims":30,"./factoryWithTypeCheckers":31,"_process":28,"react-is":39}],33:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -3875,7 +3931,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],31:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 (function (process){
 /** @license React v16.13.1
  * react-dom.development.js
@@ -28891,7 +28947,7 @@ exports.version = ReactVersion;
 }
 
 }).call(this,require('_process'))
-},{"_process":25,"object-assign":24,"prop-types/checkPropTypes":26,"react":40,"scheduler":45,"scheduler/tracing":46}],32:[function(require,module,exports){
+},{"_process":28,"object-assign":27,"prop-types/checkPropTypes":29,"react":43,"scheduler":48,"scheduler/tracing":49}],35:[function(require,module,exports){
 /** @license React v16.13.1
  * react-dom.production.min.js
  *
@@ -29185,7 +29241,7 @@ exports.flushSync=function(a,b){if((W&(fj|gj))!==V)throw Error(u(187));var c=W;W
 exports.unmountComponentAtNode=function(a){if(!gk(a))throw Error(u(40));return a._reactRootContainer?(Nj(function(){ik(null,null,a,!1,function(){a._reactRootContainer=null;a[Od]=null})}),!0):!1};exports.unstable_batchedUpdates=Mj;exports.unstable_createPortal=function(a,b){return kk(a,b,2<arguments.length&&void 0!==arguments[2]?arguments[2]:null)};
 exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!gk(c))throw Error(u(200));if(null==a||void 0===a._reactInternalFiber)throw Error(u(38));return ik(a,b,c,!1,d)};exports.version="16.13.1";
 
-},{"object-assign":24,"react":40,"scheduler":45}],33:[function(require,module,exports){
+},{"object-assign":27,"react":43,"scheduler":48}],36:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -29227,7 +29283,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":31,"./cjs/react-dom.production.min.js":32,"_process":25}],34:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":34,"./cjs/react-dom.production.min.js":35,"_process":28}],37:[function(require,module,exports){
 (function (process){
 /** @license React v16.13.1
  * react-is.development.js
@@ -29412,7 +29468,7 @@ exports.typeOf = typeOf;
 }
 
 }).call(this,require('_process'))
-},{"_process":25}],35:[function(require,module,exports){
+},{"_process":28}],38:[function(require,module,exports){
 /** @license React v16.13.1
  * react-is.production.min.js
  *
@@ -29429,7 +29485,7 @@ exports.Profiler=g;exports.StrictMode=f;exports.Suspense=p;exports.isAsyncMode=f
 exports.isMemo=function(a){return z(a)===r};exports.isPortal=function(a){return z(a)===d};exports.isProfiler=function(a){return z(a)===g};exports.isStrictMode=function(a){return z(a)===f};exports.isSuspense=function(a){return z(a)===p};
 exports.isValidElementType=function(a){return"string"===typeof a||"function"===typeof a||a===e||a===m||a===g||a===f||a===p||a===q||"object"===typeof a&&null!==a&&(a.$$typeof===t||a.$$typeof===r||a.$$typeof===h||a.$$typeof===k||a.$$typeof===n||a.$$typeof===w||a.$$typeof===x||a.$$typeof===y||a.$$typeof===v)};exports.typeOf=z;
 
-},{}],36:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -29440,7 +29496,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-is.development.js":34,"./cjs/react-is.production.min.js":35,"_process":25}],37:[function(require,module,exports){
+},{"./cjs/react-is.development.js":37,"./cjs/react-is.production.min.js":38,"_process":28}],40:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -29604,7 +29660,7 @@ function polyfill(Component) {
 
 exports.polyfill = polyfill;
 
-},{}],38:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function (process){
 /** @license React v16.13.1
  * react.development.js
@@ -31520,7 +31576,7 @@ exports.version = ReactVersion;
 }
 
 }).call(this,require('_process'))
-},{"_process":25,"object-assign":24,"prop-types/checkPropTypes":26}],39:[function(require,module,exports){
+},{"_process":28,"object-assign":27,"prop-types/checkPropTypes":29}],42:[function(require,module,exports){
 /** @license React v16.13.1
  * react.production.min.js
  *
@@ -31547,7 +31603,7 @@ key:d,ref:g,props:e,_owner:k}};exports.createContext=function(a,b){void 0===b&&(
 exports.lazy=function(a){return{$$typeof:A,_ctor:a,_status:-1,_result:null}};exports.memo=function(a,b){return{$$typeof:z,type:a,compare:void 0===b?null:b}};exports.useCallback=function(a,b){return Z().useCallback(a,b)};exports.useContext=function(a,b){return Z().useContext(a,b)};exports.useDebugValue=function(){};exports.useEffect=function(a,b){return Z().useEffect(a,b)};exports.useImperativeHandle=function(a,b,c){return Z().useImperativeHandle(a,b,c)};
 exports.useLayoutEffect=function(a,b){return Z().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return Z().useMemo(a,b)};exports.useReducer=function(a,b,c){return Z().useReducer(a,b,c)};exports.useRef=function(a){return Z().useRef(a)};exports.useState=function(a){return Z().useState(a)};exports.version="16.13.1";
 
-},{"object-assign":24}],40:[function(require,module,exports){
+},{"object-assign":27}],43:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -31558,7 +31614,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":38,"./cjs/react.production.min.js":39,"_process":25}],41:[function(require,module,exports){
+},{"./cjs/react.development.js":41,"./cjs/react.production.min.js":42,"_process":28}],44:[function(require,module,exports){
 (function (process){
 /** @license React v0.19.1
  * scheduler-tracing.development.js
@@ -31911,7 +31967,7 @@ exports.unstable_wrap = unstable_wrap;
 }
 
 }).call(this,require('_process'))
-},{"_process":25}],42:[function(require,module,exports){
+},{"_process":28}],45:[function(require,module,exports){
 /** @license React v0.19.1
  * scheduler-tracing.production.min.js
  *
@@ -31923,7 +31979,7 @@ exports.unstable_wrap = unstable_wrap;
 
 'use strict';var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unstable_clear=function(a){return a()};exports.unstable_getCurrent=function(){return null};exports.unstable_getThreadID=function(){return++b};exports.unstable_subscribe=function(){};exports.unstable_trace=function(a,d,c){return c()};exports.unstable_unsubscribe=function(){};exports.unstable_wrap=function(a){return a};
 
-},{}],43:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 (function (process){
 /** @license React v0.19.1
  * scheduler.development.js
@@ -32785,7 +32841,7 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 }
 
 }).call(this,require('_process'))
-},{"_process":25}],44:[function(require,module,exports){
+},{"_process":28}],47:[function(require,module,exports){
 /** @license React v0.19.1
  * scheduler.production.min.js
  *
@@ -32808,7 +32864,7 @@ exports.unstable_getCurrentPriorityLevel=function(){return R};exports.unstable_g
 exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();if("object"===typeof c&&null!==c){var e=c.delay;e="number"===typeof e&&0<e?d+e:d;c="number"===typeof c.timeout?c.timeout:Y(a)}else c=Y(a),e=d;c=e+c;a={id:P++,callback:b,priorityLevel:a,startTime:e,expirationTime:c,sortIndex:-1};e>d?(a.sortIndex=e,J(O,a),null===L(N)&&a===L(O)&&(U?h():U=!0,g(W,e-d))):(a.sortIndex=c,J(N,a),T||S||(T=!0,f(X)));return a};
 exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=L(N);return b!==Q&&null!==Q&&null!==b&&null!==b.callback&&b.startTime<=a&&b.expirationTime<Q.expirationTime||k()};exports.unstable_wrapCallback=function(a){var b=R;return function(){var c=R;R=b;try{return a.apply(this,arguments)}finally{R=c}}};
 
-},{}],45:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -32819,7 +32875,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler.development.js":43,"./cjs/scheduler.production.min.js":44,"_process":25}],46:[function(require,module,exports){
+},{"./cjs/scheduler.development.js":46,"./cjs/scheduler.production.min.js":47,"_process":28}],49:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -32830,7 +32886,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler-tracing.development.js":41,"./cjs/scheduler-tracing.production.min.js":42,"_process":25}],47:[function(require,module,exports){
+},{"./cjs/scheduler-tracing.development.js":44,"./cjs/scheduler-tracing.production.min.js":45,"_process":28}],50:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -32896,4 +32952,4 @@ if (__DEV__) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":25}]},{},[16]);
+},{"_process":28}]},{},[19]);
