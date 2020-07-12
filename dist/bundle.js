@@ -102,7 +102,7 @@ const PrimaryButton = props => /*#__PURE__*/_react.default.createElement(Button,
 exports.PrimaryButton = PrimaryButton;
 var _default = Button;
 exports.default = _default;
-},{"react":36}],3:[function(require,module,exports){
+},{"react":40}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -149,7 +149,7 @@ const ImageComponent = (_ref) => {
 
 var _default = ImageComponent;
 exports.default = _default;
-},{"react":36}],4:[function(require,module,exports){
+},{"react":40}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -225,7 +225,64 @@ const NumberInput = (_ref2) => {
 };
 
 exports.NumberInput = NumberInput;
-},{"react":36}],5:[function(require,module,exports){
+},{"react":40}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.InteractiveSymbolContainer = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+//✗
+//✓
+//↻ ↺
+const AddRemoveStyle = {
+  textAlign: "right",
+  color: 'rgb(88,79,79)',
+  margin: "0 0 -23px 0"
+};
+const AddRemoveHiddenStyle = {
+  textAlign: "right",
+  margin: "0 0 -23px 0",
+  color: 'rgb(88,79,79)',
+  visibility: 'hidden'
+};
+
+const InteractiveSymbol = (_ref) => {
+  let {
+    symbol,
+    handleClick
+  } = _ref,
+      rest = _objectWithoutProperties(_ref, ["symbol", "handleClick"]);
+
+  return /*#__PURE__*/_react.default.createElement("span", _extends({
+    onClick: handleClick
+  }, rest), symbol);
+};
+
+const InteractiveSymbolContainer = (_ref2) => {
+  let {
+    children
+  } = _ref2;
+  return /*#__PURE__*/_react.default.createElement("p", {
+    style: AddRemoveStyle
+  }, children);
+};
+
+exports.InteractiveSymbolContainer = InteractiveSymbolContainer;
+var _default = InteractiveSymbol;
+exports.default = _default;
+},{"react":40}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -256,7 +313,7 @@ const Loading = (_ref) => {
 
 var _default = Loading;
 exports.default = _default;
-},{"react":36}],6:[function(require,module,exports){
+},{"react":40}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -332,7 +389,73 @@ const MovieDisplay = (_ref) => {
 
 var _default = MovieDisplay;
 exports.default = _default;
-},{"../globalStyles/movieComponentStyles":11,"./ImageComponent":3,"react":36}],7:[function(require,module,exports){
+},{"../globalStyles/movieComponentStyles":15,"./ImageComponent":3,"react":40}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.MovieDisplayPreviewApp = exports.MovieDisplayApp = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _InteractiveSymbol = _interopRequireWildcard(require("./InteractiveSymbol"));
+
+var _MovieDisplay = _interopRequireDefault(require("./MovieDisplay"));
+
+var _MoviePreviewDisplay = _interopRequireDefault(require("./MoviePreviewDisplay"));
+
+var _MovieAppComponentStyles = require("../globalStyles/MovieAppComponentStyles");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const SingleMovieSymbolContainer = (_ref) => {
+  let {
+    symbol,
+    handleClick
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.default, {
+    symbol: symbol,
+    handleClick: handleClick,
+    style: {
+      cursor: 'pointer'
+    }
+  }));
+};
+
+const MovieDisplayAppComponent = MovieDisplayType => {
+  return symbol => {
+    return (_ref2) => {
+      let {
+        handleClick
+      } = _ref2,
+          rest = _objectWithoutProperties(_ref2, ["handleClick"]);
+
+      return /*#__PURE__*/_react.default.createElement("div", {
+        style: _MovieAppComponentStyles.MovieAppComponentStyles
+      }, /*#__PURE__*/_react.default.createElement(SingleMovieSymbolContainer, {
+        symbol: symbol,
+        handleClick: handleClick
+      }), /*#__PURE__*/_react.default.createElement(MovieDisplayType, rest));
+    };
+  };
+};
+
+const MovieDisplayApp = MovieDisplayAppComponent(_MovieDisplay.default);
+exports.MovieDisplayApp = MovieDisplayApp;
+const MovieDisplayPreviewApp = MovieDisplayAppComponent(_MoviePreviewDisplay.default);
+exports.MovieDisplayPreviewApp = MovieDisplayPreviewApp;
+var _default = MovieDisplayAppComponent;
+exports.default = _default;
+},{"../globalStyles/MovieAppComponentStyles":14,"./InteractiveSymbol":5,"./MovieDisplay":7,"./MoviePreviewDisplay":9,"react":40}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -382,7 +505,7 @@ const MoviePreviewDisplay = (_ref) => {
 
 var _default = MoviePreviewDisplay;
 exports.default = _default;
-},{"../globalStyles/movieComponentStyles":11,"./ImageComponent":3,"react":36}],8:[function(require,module,exports){
+},{"../globalStyles/movieComponentStyles":15,"./ImageComponent":3,"react":40}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -427,7 +550,7 @@ const RadioButton = (_ref) => {
 
 var _default = RadioButton;
 exports.default = _default;
-},{"react":36}],9:[function(require,module,exports){
+},{"react":40}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -477,7 +600,72 @@ const Select = (_ref) => {
 
 var _default = Select;
 exports.default = _default;
-},{"react":36}],10:[function(require,module,exports){
+},{"react":40}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _MoviePreviewDisplay = _interopRequireDefault(require("./MoviePreviewDisplay"));
+
+var _InteractiveSymbol = _interopRequireWildcard(require("./InteractiveSymbol"));
+
+var _MovieAppComponentStyles = require("../globalStyles/MovieAppComponentStyles");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const UserMovieSymbolContainer = (_ref) => {
+  let {
+    handleClickRefresh,
+    handleClickClose
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.default, {
+    symbol: "↻",
+    handleClick: handleClickRefresh,
+    style: {
+      cursor: 'pointer'
+    }
+  }), /*#__PURE__*/_react.default.createElement(_InteractiveSymbol.default, {
+    symbol: "✗",
+    handleClick: handleClickClose,
+    style: {
+      paddingLeft: '23px',
+      cursor: 'pointer'
+    }
+  }));
+};
+
+const UserMovieDisplayAppComponent = (_ref2) => {
+  let {
+    children,
+    handleClickRefresh,
+    handleClickClose
+  } = _ref2,
+      rest = _objectWithoutProperties(_ref2, ["children", "handleClickRefresh", "handleClickClose"]);
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: _MovieAppComponentStyles.MovieAppComponentStyles
+  }, children, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
+    handleClickRefresh: handleClickRefresh,
+    handleClickClose: handleClickClose
+  }), /*#__PURE__*/_react.default.createElement(_MoviePreviewDisplay.default, rest));
+};
+
+var _default = UserMovieDisplayAppComponent;
+exports.default = _default;
+},{"../globalStyles/MovieAppComponentStyles":14,"./InteractiveSymbol":5,"./MoviePreviewDisplay":9,"react":40}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -535,7 +723,20 @@ const YearInput = (_ref) => {
 
 var _default = YearInput;
 exports.default = _default;
-},{"react":36}],11:[function(require,module,exports){
+},{"react":40}],14:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MovieAppComponentStyles = void 0;
+const MovieAppComponentStyles = {
+  maxWidth: "300px",
+  textAlign: 'center',
+  margin: '15px 0'
+};
+exports.MovieAppComponentStyles = MovieAppComponentStyles;
+},{}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -561,7 +762,7 @@ const titleAssistStyle = {
   marginTop: "2px"
 };
 exports.titleAssistStyle = titleAssistStyle;
-},{}],12:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -590,23 +791,23 @@ var _MoviePreviewDisplay = _interopRequireDefault(require("./components/MoviePre
 
 var _MovieDisplay = _interopRequireDefault(require("./components/MovieDisplay"));
 
+var _UserMovieDisplayAppComponent = _interopRequireDefault(require("./components/UserMovieDisplayAppComponent"));
+
+var _MovieDisplayAppComponent = require("./components/MovieDisplayAppComponent");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 const GeneralMovieSearch = (_ref) => {
   let {
@@ -836,122 +1037,10 @@ const ErrorMsgStyle = {
   color: '#ff4d66',
   fontFamily: 'monospace',
   margin: '5px'
-}; //✗
-//✓
-//↻ ↺
-
-const AddRemoveStyle = {
-  textAlign: "right",
-  color: 'rgb(88,79,79)',
-  margin: "0 0 -23px 0"
 };
-const AddRemoveHiddenStyle = {
-  textAlign: "right",
-  margin: "0 0 -23px 0",
-  color: 'rgb(88,79,79)',
-  visibility: 'hidden'
-};
-
-const InteractiveSymbol = (_ref3) => {
-  let {
-    symbol,
-    handleClick
-  } = _ref3,
-      rest = _objectWithoutProperties(_ref3, ["symbol", "handleClick"]);
-
-  return /*#__PURE__*/_react.default.createElement("span", _extends({
-    onClick: handleClick
-  }, rest), symbol);
-};
-
-const InteractiveSymbolContainer = (_ref4) => {
-  let {
-    children
-  } = _ref4;
-  return /*#__PURE__*/_react.default.createElement("p", {
-    style: AddRemoveStyle
-  }, children);
-};
-
-const UserMovieSymbolContainer = (_ref5) => {
-  let {
-    handleClickRefresh,
-    handleClickClose
-  } = _ref5;
-  return /*#__PURE__*/_react.default.createElement(InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
-    symbol: "↻",
-    handleClick: handleClickRefresh,
-    style: {
-      cursor: 'pointer'
-    }
-  }), /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
-    symbol: "✗",
-    handleClick: handleClickClose,
-    style: {
-      paddingLeft: '23px',
-      cursor: 'pointer'
-    }
-  }));
-};
-
-const UserMovieDisplayAppComponent = (_ref6) => {
-  let {
-    children,
-    handleClickRefresh,
-    handleClickClose
-  } = _ref6,
-      rest = _objectWithoutProperties(_ref6, ["children", "handleClickRefresh", "handleClickClose"]);
-
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: MovieAppComponentStyles
-  }, children, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
-    handleClickRefresh: handleClickRefresh,
-    handleClickClose: handleClickClose
-  }), /*#__PURE__*/_react.default.createElement(_MoviePreviewDisplay.default, rest));
-};
-
-const SingleMovieSymbolContainer = (_ref7) => {
-  let {
-    symbol,
-    handleClick
-  } = _ref7;
-  return /*#__PURE__*/_react.default.createElement(InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
-    symbol: symbol,
-    handleClick: handleClick,
-    style: {
-      cursor: 'pointer'
-    }
-  }));
-};
-
-const MovieDisplayAppComponent = MovieDisplayType => {
-  return symbol => {
-    return (_ref8) => {
-      let {
-        handleClick
-      } = _ref8,
-          rest = _objectWithoutProperties(_ref8, ["handleClick"]);
-
-      return /*#__PURE__*/_react.default.createElement("div", {
-        style: MovieAppComponentStyles
-      }, /*#__PURE__*/_react.default.createElement(SingleMovieSymbolContainer, {
-        symbol: symbol,
-        handleClick: handleClick
-      }), /*#__PURE__*/_react.default.createElement(MovieDisplayType, rest));
-    };
-  };
-};
-
-const MovieAppComponentStyles = {
-  maxWidth: "300px",
-  textAlign: 'center',
-  margin: '15px 0'
-};
-const MovieDisplayApp = MovieDisplayAppComponent(_MovieDisplay.default);
-const MovieDisplayPreviewApp = MovieDisplayAppComponent(_MoviePreviewDisplay.default);
-const MovieDisplayAppHome = MovieDisplayApp('✓');
-const MovieDisplayPreviewAppHome = MovieDisplayPreviewApp('✓');
-const MovieDisplayAppUser = MovieDisplayApp('✗');
+const MovieDisplayAppHome = (0, _MovieDisplayAppComponent.MovieDisplayApp)('✓');
+const MovieDisplayPreviewAppHome = (0, _MovieDisplayAppComponent.MovieDisplayPreviewApp)('✓');
+const MovieDisplayAppUser = (0, _MovieDisplayAppComponent.MovieDisplayApp)('✗');
 const HomePageContainerStyle = {
   maxWidth: '300px',
   margin: '0 auto'
@@ -972,11 +1061,11 @@ const HomePageLinkStyle = {
   textAlign: 'center'
 }; // movieFunction parameter
 
-const Home = (_ref9) => {
+const Home = (_ref3) => {
   let {
     moviesAdded,
     addToMyMovies
-  } = _ref9;
+  } = _ref3;
   const [specificMovie, setSpecificMovie] = (0, _react.useState)(true);
   const [movieData, setMovieData] = (0, _react.useState)(null);
   const [loading, setLoading] = (0, _react.useState)(false);
@@ -1107,12 +1196,12 @@ const App = () => {
   }));
 };
 
-const User = (_ref10) => {
+const User = (_ref4) => {
   let {
     myMovies,
     removeFromMyMovies,
     makeIntoFullMovie
-  } = _ref10;
+  } = _ref4;
   const [requestBeingMade, setRequestBeingMade] = (0, _react.useState)(false);
   const [error, setError] = (0, _react.useState)(null);
   (0, _react.useEffect)(() => {
@@ -1159,7 +1248,7 @@ const User = (_ref10) => {
     key: index
   }, movieData, {
     handleClick: () => removeFromMyMovies(movieData)
-  })) : /*#__PURE__*/_react.default.createElement(UserMovieDisplayAppComponent, _extends({
+  })) : /*#__PURE__*/_react.default.createElement(_UserMovieDisplayAppComponent.default, _extends({
     key: index
   }, movieData, {
     handleClickClose: () => removeFromMyMovies(movieData),
@@ -1170,7 +1259,7 @@ const User = (_ref10) => {
 };
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root"));
-},{"./api/fetchMoviesFullQuery":1,"./components/Button":2,"./components/ImageComponent":3,"./components/Input":4,"./components/Loading":5,"./components/MovieDisplay":6,"./components/MoviePreviewDisplay":7,"./components/RadioButton":8,"./components/Select":9,"./components/YearInput":10,"@reach/router":13,"react":36,"react-dom":29}],13:[function(require,module,exports){
+},{"./api/fetchMoviesFullQuery":1,"./components/Button":2,"./components/ImageComponent":3,"./components/Input":4,"./components/Loading":6,"./components/MovieDisplay":7,"./components/MovieDisplayAppComponent":8,"./components/MoviePreviewDisplay":9,"./components/RadioButton":10,"./components/Select":11,"./components/UserMovieDisplayAppComponent":12,"./components/YearInput":13,"@reach/router":17,"react":40,"react-dom":33}],17:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -1931,7 +2020,7 @@ exports.useNavigate = useNavigate;
 exports.useParams = useParams;
 exports.useMatch = useMatch;
 }).call(this,require('_process'))
-},{"./lib/history":14,"./lib/utils":15,"_process":21,"create-react-context":17,"invariant":19,"prop-types":25,"react":36,"react-lifecycles-compat":33}],14:[function(require,module,exports){
+},{"./lib/history":18,"./lib/utils":19,"_process":25,"create-react-context":21,"invariant":23,"prop-types":29,"react":40,"react-lifecycles-compat":37}],18:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -2122,7 +2211,7 @@ exports.globalHistory = globalHistory;
 exports.navigate = navigate;
 exports.createHistory = createHistory;
 exports.createMemorySource = createMemorySource;
-},{}],15:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -2423,7 +2512,7 @@ exports.insertParams = insertParams;
 exports.validateRedirect = validateRedirect;
 exports.shallowCompare = shallowCompare;
 }).call(this,require('_process'))
-},{"_process":21,"invariant":19}],16:[function(require,module,exports){
+},{"_process":25,"invariant":23}],20:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2622,7 +2711,7 @@ function createReactContext(defaultValue, calculateChangedBits) {
 exports.default = createReactContext;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":21,"gud":18,"prop-types":25,"react":36,"warning":43}],17:[function(require,module,exports){
+},{"_process":25,"gud":22,"prop-types":29,"react":40,"warning":47}],21:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -2639,7 +2728,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _react2.default.createContext || _implementation2.default;
 module.exports = exports['default'];
-},{"./implementation":16,"react":36}],18:[function(require,module,exports){
+},{"./implementation":20,"react":40}],22:[function(require,module,exports){
 (function (global){
 // @flow
 'use strict';
@@ -2651,7 +2740,7 @@ module.exports = function() {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],19:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2704,7 +2793,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":21}],20:[function(require,module,exports){
+},{"_process":25}],24:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -2796,7 +2885,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],21:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -2982,7 +3071,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],22:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -3088,7 +3177,7 @@ checkPropTypes.resetWarningCache = function() {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":26,"_process":21}],23:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":30,"_process":25}],27:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -3154,7 +3243,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":26}],24:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":30}],28:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -3749,7 +3838,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":22,"./lib/ReactPropTypesSecret":26,"_process":21,"object-assign":20,"react-is":32}],25:[function(require,module,exports){
+},{"./checkPropTypes":26,"./lib/ReactPropTypesSecret":30,"_process":25,"object-assign":24,"react-is":36}],29:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -3772,7 +3861,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":23,"./factoryWithTypeCheckers":24,"_process":21,"react-is":32}],26:[function(require,module,exports){
+},{"./factoryWithThrowingShims":27,"./factoryWithTypeCheckers":28,"_process":25,"react-is":36}],30:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -3786,7 +3875,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],27:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 (function (process){
 /** @license React v16.13.1
  * react-dom.development.js
@@ -28802,7 +28891,7 @@ exports.version = ReactVersion;
 }
 
 }).call(this,require('_process'))
-},{"_process":21,"object-assign":20,"prop-types/checkPropTypes":22,"react":36,"scheduler":41,"scheduler/tracing":42}],28:[function(require,module,exports){
+},{"_process":25,"object-assign":24,"prop-types/checkPropTypes":26,"react":40,"scheduler":45,"scheduler/tracing":46}],32:[function(require,module,exports){
 /** @license React v16.13.1
  * react-dom.production.min.js
  *
@@ -29096,7 +29185,7 @@ exports.flushSync=function(a,b){if((W&(fj|gj))!==V)throw Error(u(187));var c=W;W
 exports.unmountComponentAtNode=function(a){if(!gk(a))throw Error(u(40));return a._reactRootContainer?(Nj(function(){ik(null,null,a,!1,function(){a._reactRootContainer=null;a[Od]=null})}),!0):!1};exports.unstable_batchedUpdates=Mj;exports.unstable_createPortal=function(a,b){return kk(a,b,2<arguments.length&&void 0!==arguments[2]?arguments[2]:null)};
 exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!gk(c))throw Error(u(200));if(null==a||void 0===a._reactInternalFiber)throw Error(u(38));return ik(a,b,c,!1,d)};exports.version="16.13.1";
 
-},{"object-assign":20,"react":36,"scheduler":41}],29:[function(require,module,exports){
+},{"object-assign":24,"react":40,"scheduler":45}],33:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -29138,7 +29227,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":27,"./cjs/react-dom.production.min.js":28,"_process":21}],30:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":31,"./cjs/react-dom.production.min.js":32,"_process":25}],34:[function(require,module,exports){
 (function (process){
 /** @license React v16.13.1
  * react-is.development.js
@@ -29323,7 +29412,7 @@ exports.typeOf = typeOf;
 }
 
 }).call(this,require('_process'))
-},{"_process":21}],31:[function(require,module,exports){
+},{"_process":25}],35:[function(require,module,exports){
 /** @license React v16.13.1
  * react-is.production.min.js
  *
@@ -29340,7 +29429,7 @@ exports.Profiler=g;exports.StrictMode=f;exports.Suspense=p;exports.isAsyncMode=f
 exports.isMemo=function(a){return z(a)===r};exports.isPortal=function(a){return z(a)===d};exports.isProfiler=function(a){return z(a)===g};exports.isStrictMode=function(a){return z(a)===f};exports.isSuspense=function(a){return z(a)===p};
 exports.isValidElementType=function(a){return"string"===typeof a||"function"===typeof a||a===e||a===m||a===g||a===f||a===p||a===q||"object"===typeof a&&null!==a&&(a.$$typeof===t||a.$$typeof===r||a.$$typeof===h||a.$$typeof===k||a.$$typeof===n||a.$$typeof===w||a.$$typeof===x||a.$$typeof===y||a.$$typeof===v)};exports.typeOf=z;
 
-},{}],32:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -29351,7 +29440,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-is.development.js":30,"./cjs/react-is.production.min.js":31,"_process":21}],33:[function(require,module,exports){
+},{"./cjs/react-is.development.js":34,"./cjs/react-is.production.min.js":35,"_process":25}],37:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -29515,7 +29604,7 @@ function polyfill(Component) {
 
 exports.polyfill = polyfill;
 
-},{}],34:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (process){
 /** @license React v16.13.1
  * react.development.js
@@ -31431,7 +31520,7 @@ exports.version = ReactVersion;
 }
 
 }).call(this,require('_process'))
-},{"_process":21,"object-assign":20,"prop-types/checkPropTypes":22}],35:[function(require,module,exports){
+},{"_process":25,"object-assign":24,"prop-types/checkPropTypes":26}],39:[function(require,module,exports){
 /** @license React v16.13.1
  * react.production.min.js
  *
@@ -31458,7 +31547,7 @@ key:d,ref:g,props:e,_owner:k}};exports.createContext=function(a,b){void 0===b&&(
 exports.lazy=function(a){return{$$typeof:A,_ctor:a,_status:-1,_result:null}};exports.memo=function(a,b){return{$$typeof:z,type:a,compare:void 0===b?null:b}};exports.useCallback=function(a,b){return Z().useCallback(a,b)};exports.useContext=function(a,b){return Z().useContext(a,b)};exports.useDebugValue=function(){};exports.useEffect=function(a,b){return Z().useEffect(a,b)};exports.useImperativeHandle=function(a,b,c){return Z().useImperativeHandle(a,b,c)};
 exports.useLayoutEffect=function(a,b){return Z().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return Z().useMemo(a,b)};exports.useReducer=function(a,b,c){return Z().useReducer(a,b,c)};exports.useRef=function(a){return Z().useRef(a)};exports.useState=function(a){return Z().useState(a)};exports.version="16.13.1";
 
-},{"object-assign":20}],36:[function(require,module,exports){
+},{"object-assign":24}],40:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -31469,7 +31558,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":34,"./cjs/react.production.min.js":35,"_process":21}],37:[function(require,module,exports){
+},{"./cjs/react.development.js":38,"./cjs/react.production.min.js":39,"_process":25}],41:[function(require,module,exports){
 (function (process){
 /** @license React v0.19.1
  * scheduler-tracing.development.js
@@ -31822,7 +31911,7 @@ exports.unstable_wrap = unstable_wrap;
 }
 
 }).call(this,require('_process'))
-},{"_process":21}],38:[function(require,module,exports){
+},{"_process":25}],42:[function(require,module,exports){
 /** @license React v0.19.1
  * scheduler-tracing.production.min.js
  *
@@ -31834,7 +31923,7 @@ exports.unstable_wrap = unstable_wrap;
 
 'use strict';var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unstable_clear=function(a){return a()};exports.unstable_getCurrent=function(){return null};exports.unstable_getThreadID=function(){return++b};exports.unstable_subscribe=function(){};exports.unstable_trace=function(a,d,c){return c()};exports.unstable_unsubscribe=function(){};exports.unstable_wrap=function(a){return a};
 
-},{}],39:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 (function (process){
 /** @license React v0.19.1
  * scheduler.development.js
@@ -32696,7 +32785,7 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 }
 
 }).call(this,require('_process'))
-},{"_process":21}],40:[function(require,module,exports){
+},{"_process":25}],44:[function(require,module,exports){
 /** @license React v0.19.1
  * scheduler.production.min.js
  *
@@ -32719,7 +32808,7 @@ exports.unstable_getCurrentPriorityLevel=function(){return R};exports.unstable_g
 exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();if("object"===typeof c&&null!==c){var e=c.delay;e="number"===typeof e&&0<e?d+e:d;c="number"===typeof c.timeout?c.timeout:Y(a)}else c=Y(a),e=d;c=e+c;a={id:P++,callback:b,priorityLevel:a,startTime:e,expirationTime:c,sortIndex:-1};e>d?(a.sortIndex=e,J(O,a),null===L(N)&&a===L(O)&&(U?h():U=!0,g(W,e-d))):(a.sortIndex=c,J(N,a),T||S||(T=!0,f(X)));return a};
 exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=L(N);return b!==Q&&null!==Q&&null!==b&&null!==b.callback&&b.startTime<=a&&b.expirationTime<Q.expirationTime||k()};exports.unstable_wrapCallback=function(a){var b=R;return function(){var c=R;R=b;try{return a.apply(this,arguments)}finally{R=c}}};
 
-},{}],41:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -32730,7 +32819,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler.development.js":39,"./cjs/scheduler.production.min.js":40,"_process":21}],42:[function(require,module,exports){
+},{"./cjs/scheduler.development.js":43,"./cjs/scheduler.production.min.js":44,"_process":25}],46:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -32741,7 +32830,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler-tracing.development.js":37,"./cjs/scheduler-tracing.production.min.js":38,"_process":21}],43:[function(require,module,exports){
+},{"./cjs/scheduler-tracing.development.js":41,"./cjs/scheduler-tracing.production.min.js":42,"_process":25}],47:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -32807,4 +32896,4 @@ if (__DEV__) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":21}]},{},[12]);
+},{"_process":25}]},{},[16]);

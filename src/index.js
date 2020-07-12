@@ -11,6 +11,8 @@ import YearInput from './components/YearInput'
 import ImageComponent, { imageStyle } from './components/ImageComponent'
 import MoviePreviewDisplay from './components/MoviePreviewDisplay'
 import MovieDisplay from './components/MovieDisplay'
+import UserMovieDisplayAppComponent from './components/UserMovieDisplayAppComponent'
+import { MovieDisplayApp, MovieDisplayPreviewApp } from './components/MovieDisplayAppComponent'
 
   const GeneralMovieSearch = ({ handleSubmit, onFormChange }) => {
     const [s, setS] = useState('')
@@ -249,100 +251,6 @@ const ErrorMsgStyle = {
   fontFamily: 'monospace',
   margin: '5px' 
 }
-
-//✗
-//✓
-//↻ ↺
-
-const AddRemoveStyle = {
-  textAlign: "right", 
-  color: 'rgb(88,79,79)',
-  margin: "0 0 -23px 0" 
-}
-const AddRemoveHiddenStyle = {
-  textAlign: "right", 
-  margin: "0 0 -23px 0",
-  color: 'rgb(88,79,79)',
-  visibility: 'hidden' 
-}
-
-const InteractiveSymbol = ({ symbol, handleClick, ...rest }) => {
-  return (
-    <span onClick={handleClick} {...rest}>{symbol}</span>
-  )
-}
-
-const InteractiveSymbolContainer = ({ children }) => (
-  <p style={AddRemoveStyle}>
-    { children }
-  </p>
-)
-
-const UserMovieSymbolContainer = ({ handleClickRefresh, handleClickClose }) => {
-  return (
-    <InteractiveSymbolContainer>
-      <InteractiveSymbol
-        symbol={"↻"}
-        handleClick={handleClickRefresh}
-        style={{ cursor: 'pointer' }}
-      />
-      <InteractiveSymbol
-        symbol={"✗"}
-        handleClick={handleClickClose}
-        style={{ paddingLeft: '23px', cursor: 'pointer' }}
-      />
-    </InteractiveSymbolContainer>
-  );
-}
-
-const UserMovieDisplayAppComponent = ({ children, handleClickRefresh, handleClickClose, ...rest }) => {
-  return (
-    <div style={MovieAppComponentStyles}>
-      { children }
-      <UserMovieSymbolContainer
-        handleClickRefresh={handleClickRefresh}
-        handleClickClose={handleClickClose}
-      />
-      <MoviePreviewDisplay {...rest} />
-    </div>
-  );
-};
-
-const SingleMovieSymbolContainer = ({ symbol, handleClick }) => {
-  return (
-    <InteractiveSymbolContainer>
-      <InteractiveSymbol
-        symbol={symbol}
-        handleClick={handleClick}
-        style={{ cursor: 'pointer' }}
-      />
-    </InteractiveSymbolContainer>
-  )
-}
-
-const MovieDisplayAppComponent = (MovieDisplayType) => {
-  return (symbol) => {
-    return ({ handleClick, ...rest }) => {
-      return (
-        <div 
-          style={MovieAppComponentStyles}
-        >
-          <SingleMovieSymbolContainer symbol={symbol} handleClick={handleClick} />
-          <MovieDisplayType {...rest} />
-        </div>
-      );
-    };
-  }
-}
-
-const MovieAppComponentStyles = { 
-  maxWidth: "300px", 
-  textAlign: 'center', 
-  margin: '15px 0' 
-}
-
-const MovieDisplayApp = MovieDisplayAppComponent(MovieDisplay)
-const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay)
 
 const MovieDisplayAppHome = MovieDisplayApp('✓')
 const MovieDisplayPreviewAppHome = MovieDisplayPreviewApp('✓')
