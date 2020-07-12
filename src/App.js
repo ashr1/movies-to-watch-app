@@ -48,9 +48,9 @@ const App = () => {
     }
   
     return (
-      <Router basepath="movies-to-watch-app">
-        <Home path="/" moviesAdded={myMovies.length} addToMyMovies={addToMyMovies} />
-        <User path="/my-movies" myMovies={myMovies} removeFromMyMovies={removeFromMyMovies} makeIntoFullMovie={makeIntoFullMovie} />
+      <Router>
+        <Home path="/movies-to-watch-app" moviesAdded={myMovies.length} addToMyMovies={addToMyMovies} />
+        <User path="/movies-to-watch-app/my-movies" myMovies={myMovies} removeFromMyMovies={removeFromMyMovies} makeIntoFullMovie={makeIntoFullMovie} />
       </Router>
     );
   };

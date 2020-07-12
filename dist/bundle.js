@@ -71,14 +71,12 @@ const App = () => {
     localStorage.setItem("movies", JSON.stringify(newMyMovies));
   };
 
-  return /*#__PURE__*/_react.default.createElement(_router.Router, {
-    basepath: "movies-to-watch-app"
-  }, /*#__PURE__*/_react.default.createElement(_Home.default, {
-    path: "/",
+  return /*#__PURE__*/_react.default.createElement(_router.Router, null, /*#__PURE__*/_react.default.createElement(_Home.default, {
+    path: "/movies-to-watch-app",
     moviesAdded: myMovies.length,
     addToMyMovies: addToMyMovies
   }), /*#__PURE__*/_react.default.createElement(_User.default, {
-    path: "/my-movies",
+    path: "/movies-to-watch-app/my-movies",
     myMovies: myMovies,
     removeFromMyMovies: removeFromMyMovies,
     makeIntoFullMovie: makeIntoFullMovie
