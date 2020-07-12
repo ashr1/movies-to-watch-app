@@ -1,33 +1,11 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactDom = _interopRequireDefault(require("react-dom"));
-
-var _router = require("@reach/router");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-const API_KEY = "45fc49f2";
-const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&"); // query builder:
-
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+// query builder:
 const bySearch = {
   s: "",
   type: {
@@ -65,13 +43,199 @@ const byTitleOrId = {
   callback: "",
   v: 1
 };
+const API_KEY = "45fc49f2";
+const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&");
 
 const fetchMoviesFullQuery = queryParams => {
-  let paramsSection = Object.keys(queryParams).map(q => queryParams[q] ? "".concat(q, "=").concat(encodeURIComponent(queryParams[q]), "&") : '').join('');
+  let paramsSection = Object.keys(queryParams).map(q => queryParams[q] ? "".concat(q, "=").concat(encodeURIComponent(queryParams[q]), "&") : "").join("");
   paramsSection = /&$/.test(paramsSection) ? paramsSection.slice(0, -1) : paramsSection;
   const URL = url + paramsSection;
   return fetch(URL).then(response => response.json());
 };
+
+var _default = fetchMoviesFullQuery;
+exports.default = _default;
+},{}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.PrimaryButton = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const ButtonStyle = {
+  padding: '8px 12px',
+  backgroundColor: 'rgb(233,197,166)',
+  color: '#584f4f',
+  borderStyle: 'none',
+  fontFamily: 'monospace',
+  margin: '10px',
+  outline: 'none'
+};
+
+const Button = (_ref) => {
+  let {
+    text,
+    handleClick
+  } = _ref,
+      rest = _objectWithoutProperties(_ref, ["text", "handleClick"]);
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", _extends({
+    onClick: handleClick
+  }, rest), text));
+};
+
+const PrimaryButton = props => /*#__PURE__*/_react.default.createElement(Button, _extends({}, props, {
+  style: ButtonStyle
+}));
+
+exports.PrimaryButton = PrimaryButton;
+var _default = Button;
+exports.default = _default;
+},{"react":36}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.imageStyle = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const imageStyle = {
+  width: "150px",
+  height: "auto"
+};
+exports.imageStyle = imageStyle;
+
+const ImageComponent = (_ref) => {
+  let {
+    src
+  } = _ref,
+      rest = _objectWithoutProperties(_ref, ["src"]);
+
+  const [imgSrc, setImgSrc] = (0, _react.useState)(src);
+  (0, _react.useEffect)(() => {
+    setImgSrc(src);
+  }, [src]);
+
+  const fallBackSrc = () => setImgSrc("https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster");
+
+  return /*#__PURE__*/_react.default.createElement("img", _extends({
+    src: imgSrc,
+    onError: fallBackSrc
+  }, rest));
+};
+
+var _default = ImageComponent;
+exports.default = _default;
+},{"react":36}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.NumberInput = exports.TextInput = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const Input = (_ref) => {
+  let {
+    name,
+    value,
+    handleChange,
+    type
+  } = _ref,
+      rest = _objectWithoutProperties(_ref, ["name", "value", "handleChange", "type"]);
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", _extends({
+    name: name,
+    type: type,
+    value: value,
+    onChange: handleChange
+  }, rest)));
+}; // preventing the default input background highlight:
+// add !important to color
+// add background-image: initial !important
+// add background-color: transparent !important
+
+
+const TextInputStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  width: '300px',
+  margin: '10px',
+  backgroundImage: 'initial',
+  backgroundColor: 'transparent'
+};
+
+const TextInput = props => /*#__PURE__*/_react.default.createElement(Input, _extends({}, props, {
+  type: "text",
+  style: TextInputStyle
+}));
+
+exports.TextInput = TextInput;
+
+const NumberInput = (_ref2) => {
+  let {
+    max,
+    min,
+    step
+  } = _ref2,
+      rest = _objectWithoutProperties(_ref2, ["max", "min", "step"]);
+
+  return /*#__PURE__*/_react.default.createElement(Input, _extends({}, rest, {
+    max: max,
+    min: min,
+    step: step ? step : 1,
+    type: "number",
+    style: TextInputStyle
+  }));
+};
+
+exports.NumberInput = NumberInput;
+},{"react":36}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const Loading = (_ref) => {
   let {
@@ -90,11 +254,365 @@ const Loading = (_ref) => {
   }, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        ")) : null;
 };
 
-const GeneralMovieSearch = (_ref2) => {
+var _default = Loading;
+exports.default = _default;
+},{"react":36}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _movieComponentStyles = require("../globalStyles/movieComponentStyles");
+
+var _ImageComponent = _interopRequireWildcard(require("./ImageComponent"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const omdbNACheck = v => v !== "N/A";
+
+const MovieDisplay = (_ref) => {
+  let {
+    Poster,
+    Title: title,
+    Actors: actors,
+    Director: director,
+    Genre: genre,
+    Runtime: runtime,
+    Rated: rated,
+    Released,
+    imdbRating,
+    Plot: plot
+  } = _ref;
+  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
+  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
+  const released = omdbNACheck(Released) ? Released.slice(-4) : Released;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: _movieComponentStyles.movieContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    style: _movieComponentStyles.titleStyle
+  }, title), /*#__PURE__*/_react.default.createElement("p", {
+    style: _movieComponentStyles.titleAssistStyle
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    style: _movieComponentStyles.titleSubStyle
+  }, released, " "), /*#__PURE__*/_react.default.createElement("span", null, runtime, " "), /*#__PURE__*/_react.default.createElement("span", null, rated)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_ImageComponent.default, {
+    src: imgSrc,
+    style: _ImageComponent.imageStyle
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", {
+    style: {
+      fontWeight: "bold"
+    }
+  }, genre), /*#__PURE__*/_react.default.createElement("p", null, plot)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: "bold"
+    }
+  }, "Directed By:"), " ", director), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: "bold"
+    }
+  }, "Actors:"), " ", actors)), /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      display: "inline-block",
+      marginTop: "10px"
+    }
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      display: "block",
+      fontSize: "25px"
+    }
+  }, imdbRating), /*#__PURE__*/_react.default.createElement("span", null, "imdbRating")));
+};
+
+var _default = MovieDisplay;
+exports.default = _default;
+},{"../globalStyles/movieComponentStyles":11,"./ImageComponent":3,"react":36}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _movieComponentStyles = require("../globalStyles/movieComponentStyles");
+
+var _ImageComponent = _interopRequireWildcard(require("./ImageComponent"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const MoviePreviewDisplay = (_ref) => {
+  let {
+    Poster,
+    Title,
+    Type,
+    Year,
+    imdbID
+  } = _ref;
+  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
+  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: _movieComponentStyles.movieContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    style: _movieComponentStyles.titleStyle
+  }, Title), /*#__PURE__*/_react.default.createElement("p", {
+    style: _movieComponentStyles.titleAssistStyle
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    style: _movieComponentStyles.titleSubStyle
+  }, Year, " "), /*#__PURE__*/_react.default.createElement("span", null, Type, " ")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_ImageComponent.default, {
+    src: imgSrc,
+    style: _ImageComponent.imageStyle
+  })), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
+    style: {
+      fontWeight: "bold"
+    }
+  }, "imdbID:"), " ", imdbID));
+};
+
+var _default = MoviePreviewDisplay;
+exports.default = _default;
+},{"../globalStyles/movieComponentStyles":11,"./ImageComponent":3,"react":36}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const RadioButtonContainerStyle = {
+  fontFamily: 'monospace',
+  color: 'rgb(88,79,79)',
+  margin: '10px'
+};
+const RadioButtonLabelStyle = {
+  margin: '10px'
+};
+
+const RadioButton = (_ref) => {
+  let {
+    label,
+    id,
+    name,
+    checked,
+    handleChange
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: RadioButtonContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("input", {
+    type: "radio",
+    id: id,
+    name: name,
+    checked: checked,
+    onChange: handleChange
+  }), /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: id,
+    style: RadioButtonLabelStyle
+  }, label));
+};
+
+var _default = RadioButton;
+exports.default = _default;
+},{"react":36}],9:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const SelectStyle = {
+  borderWidth: '0 0 1px 0',
+  borderColor: '#cdd7e5',
+  outline: 'none',
+  color: '#584f4f'
+};
+const SelectContainer = {
+  width: '300px',
+  fontFamily: 'monospace',
+  color: '#584f4f',
+  margin: '10px'
+};
+
+const Select = (_ref) => {
+  let {
+    id,
+    label,
+    options,
+    value,
+    handleSelect
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: SelectContainer
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: id
+  }, label, " "), /*#__PURE__*/_react.default.createElement("select", {
+    id: id,
+    value: value,
+    onChange: handleSelect,
+    style: SelectStyle
+  }, options.map((option, index) => /*#__PURE__*/_react.default.createElement("option", {
+    key: index,
+    value: option.value
+  }, option.text))));
+};
+
+var _default = Select;
+exports.default = _default;
+},{"react":36}],10:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const YearInputContainerStyle = {
+  width: '300px',
+  fontFamily: 'monospace',
+  color: '#584f4f',
+  margin: '10px'
+};
+const YearInputStyle = {
+  borderWidth: '0 0 1px 0',
+  fontFamily: 'monospace',
+  borderColor: '#cdd7e5',
+  color: '#584f4f',
+  outline: 'none',
+  backgroundImage: 'initial',
+  backgroundColor: 'transparent'
+};
+
+const YearInput = (_ref) => {
+  let {
+    name,
+    value,
+    handleChange,
+    label,
+    id,
+    max,
+    min,
+    step
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: YearInputContainerStyle
+  }, label && /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: id
+  }, label), /*#__PURE__*/_react.default.createElement("input", {
+    name: name,
+    id: id,
+    type: "number",
+    value: value,
+    max: max,
+    min: min,
+    step: step,
+    onChange: handleChange,
+    style: YearInputStyle
+  }));
+};
+
+var _default = YearInput;
+exports.default = _default;
+},{"react":36}],11:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.titleAssistStyle = exports.titleSubStyle = exports.titleStyle = exports.movieContainerStyle = void 0;
+const movieContainerStyle = {
+  color: "black",
+  fontFamily: "monospace",
+  maxWidth: "310px"
+};
+exports.movieContainerStyle = movieContainerStyle;
+const titleStyle = {
+  fontSize: "23px",
+  marginBottom: "2px"
+};
+exports.titleStyle = titleStyle;
+const titleSubStyle = {
+  fontSize: "14px"
+};
+exports.titleSubStyle = titleSubStyle;
+const titleAssistStyle = {
+  marginTop: "2px"
+};
+exports.titleAssistStyle = titleAssistStyle;
+},{}],12:[function(require,module,exports){
+"use strict";
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
+var _router = require("@reach/router");
+
+var _fetchMoviesFullQuery = _interopRequireDefault(require("./api/fetchMoviesFullQuery"));
+
+var _Loading = _interopRequireDefault(require("./components/Loading"));
+
+var _Select = _interopRequireDefault(require("./components/Select"));
+
+var _RadioButton = _interopRequireDefault(require("./components/RadioButton"));
+
+var _Button = require("./components/Button");
+
+var _Input = require("./components/Input");
+
+var _YearInput = _interopRequireDefault(require("./components/YearInput"));
+
+var _ImageComponent = _interopRequireWildcard(require("./components/ImageComponent"));
+
+var _MoviePreviewDisplay = _interopRequireDefault(require("./components/MoviePreviewDisplay"));
+
+var _MovieDisplay = _interopRequireDefault(require("./components/MovieDisplay"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+const GeneralMovieSearch = (_ref) => {
   let {
     handleSubmit,
     onFormChange
-  } = _ref2;
+  } = _ref;
   const [s, setS] = (0, _react.useState)('');
   const [type, setType] = (0, _react.useState)('');
   const [year, setYear] = (0, _react.useState)('');
@@ -147,12 +665,12 @@ const GeneralMovieSearch = (_ref2) => {
     }
   };
 
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TextInput, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Input.TextInput, {
     id: "s",
     value: s,
     handleChange: handleInput,
     placeholder: "Enter the title of the movie"
-  }), /*#__PURE__*/_react.default.createElement(Select, {
+  }), /*#__PURE__*/_react.default.createElement(_Select.default, {
     id: "type",
     label: "Search By: ",
     options: [{
@@ -170,7 +688,7 @@ const GeneralMovieSearch = (_ref2) => {
     }],
     value: type,
     handleSelect: handleInput
-  }), /*#__PURE__*/_react.default.createElement(YearInput, {
+  }), /*#__PURE__*/_react.default.createElement(_YearInput.default, {
     id: "year",
     label: "Year: ",
     value: year,
@@ -178,7 +696,7 @@ const GeneralMovieSearch = (_ref2) => {
     max: 3000,
     step: 200,
     handleChange: handleInput
-  }), /*#__PURE__*/_react.default.createElement(YearInput, {
+  }), /*#__PURE__*/_react.default.createElement(_YearInput.default, {
     id: "page",
     label: "Page: ",
     value: page,
@@ -186,7 +704,7 @@ const GeneralMovieSearch = (_ref2) => {
     max: 100,
     step: 1,
     handleChange: handleInput
-  }), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
+  }), /*#__PURE__*/_react.default.createElement(_Button.PrimaryButton, {
     text: "Search",
     handleClick: () => submitForRequest()
   }), error && /*#__PURE__*/_react.default.createElement("p", {
@@ -194,11 +712,11 @@ const GeneralMovieSearch = (_ref2) => {
   }, error));
 };
 
-const SpecificMovieForm = (_ref3) => {
+const SpecificMovieForm = (_ref2) => {
   let {
     handleSubmit,
     onFormChange
-  } = _ref3;
+  } = _ref2;
   const [i, setI] = (0, _react.useState)('');
   const [t, setT] = (0, _react.useState)('');
   const [type, setType] = (0, _react.useState)('');
@@ -258,17 +776,17 @@ const SpecificMovieForm = (_ref3) => {
     }
   };
 
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(TextInput, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Input.TextInput, {
     id: "t",
     value: t,
     handleChange: handleInput,
     placeholder: "Enter the title of the movie"
-  }), /*#__PURE__*/_react.default.createElement(TextInput, {
+  }), /*#__PURE__*/_react.default.createElement(_Input.TextInput, {
     id: "i",
     value: i,
     handleChange: handleInput,
     placeholder: "Enter the imdbID of the movie"
-  }), /*#__PURE__*/_react.default.createElement(Select, {
+  }), /*#__PURE__*/_react.default.createElement(_Select.default, {
     id: "type",
     label: "Search By: ",
     options: [{
@@ -286,7 +804,7 @@ const SpecificMovieForm = (_ref3) => {
     }],
     value: type,
     handleSelect: handleInput
-  }), /*#__PURE__*/_react.default.createElement(YearInput, {
+  }), /*#__PURE__*/_react.default.createElement(_YearInput.default, {
     id: "year",
     label: "Year: ",
     value: year,
@@ -294,7 +812,7 @@ const SpecificMovieForm = (_ref3) => {
     max: 3000,
     step: 200,
     handleChange: handleInput
-  }), /*#__PURE__*/_react.default.createElement(Select, {
+  }), /*#__PURE__*/_react.default.createElement(_Select.default, {
     id: "plot",
     label: "Plot: ",
     options: [{
@@ -306,7 +824,7 @@ const SpecificMovieForm = (_ref3) => {
     }],
     value: plot,
     handleSelect: handleInput
-  }), /*#__PURE__*/_react.default.createElement(PrimaryButton, {
+  }), /*#__PURE__*/_react.default.createElement(_Button.PrimaryButton, {
     text: "Search",
     handleClick: () => submitForRequest()
   }), error && /*#__PURE__*/_react.default.createElement("p", {
@@ -318,324 +836,9 @@ const ErrorMsgStyle = {
   color: '#ff4d66',
   fontFamily: 'monospace',
   margin: '5px'
-};
-
-const Input = (_ref4) => {
-  let {
-    name,
-    value,
-    handleChange,
-    type
-  } = _ref4,
-      rest = _objectWithoutProperties(_ref4, ["name", "value", "handleChange", "type"]);
-
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", _extends({
-    name: name,
-    type: type,
-    value: value,
-    onChange: handleChange
-  }, rest)));
-}; // preventing the default input background highlight:
-// add !important to color
-// add background-image: initial !important
-// add background-color: transparent !important
-
-
-const TextInputStyle = {
-  borderWidth: '0 0 1px 0',
-  fontFamily: 'monospace',
-  borderColor: '#cdd7e5',
-  color: '#584f4f',
-  outline: 'none',
-  width: '300px',
-  margin: '10px',
-  backgroundImage: 'initial',
-  backgroundColor: 'transparent'
-};
-
-const TextInput = props => /*#__PURE__*/_react.default.createElement(Input, _extends({}, props, {
-  type: "text",
-  style: TextInputStyle
-}));
-
-const NumberInput = (_ref5) => {
-  let {
-    max,
-    min,
-    step
-  } = _ref5,
-      rest = _objectWithoutProperties(_ref5, ["max", "min", "step"]);
-
-  return /*#__PURE__*/_react.default.createElement(Input, _extends({}, rest, {
-    max: max,
-    min: min,
-    step: step ? step : 1,
-    type: "number",
-    style: TextInputStyle
-  }));
-};
-
-const YearInputContainerStyle = {
-  width: '300px',
-  fontFamily: 'monospace',
-  color: '#584f4f',
-  margin: '10px'
-};
-const YearInputStyle = {
-  borderWidth: '0 0 1px 0',
-  fontFamily: 'monospace',
-  borderColor: '#cdd7e5',
-  color: '#584f4f',
-  outline: 'none',
-  backgroundImage: 'initial',
-  backgroundColor: 'transparent'
-};
-
-const YearInput = (_ref6) => {
-  let {
-    name,
-    value,
-    handleChange,
-    label,
-    id,
-    max,
-    min,
-    step
-  } = _ref6;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: YearInputContainerStyle
-  }, label && /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: id
-  }, label), /*#__PURE__*/_react.default.createElement("input", {
-    name: name,
-    id: id,
-    type: "number",
-    value: value,
-    max: max,
-    min: min,
-    step: step,
-    onChange: handleChange,
-    style: YearInputStyle
-  }));
-};
-
-const ButtonStyle = {
-  padding: '8px 12px',
-  backgroundColor: 'rgb(233,197,166)',
-  color: '#584f4f',
-  borderStyle: 'none',
-  fontFamily: 'monospace',
-  margin: '10px',
-  outline: 'none'
-};
-
-const Button = (_ref7) => {
-  let {
-    text,
-    handleClick
-  } = _ref7,
-      rest = _objectWithoutProperties(_ref7, ["text", "handleClick"]);
-
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", _extends({
-    onClick: handleClick
-  }, rest), text));
-}; //TODO: add hover background color
-
-
-const PrimaryButton = props => /*#__PURE__*/_react.default.createElement(Button, _extends({}, props, {
-  style: ButtonStyle
-}));
-
-const SelectStyle = {
-  borderWidth: '0 0 1px 0',
-  borderColor: '#cdd7e5',
-  outline: 'none',
-  color: '#584f4f'
-};
-const SelectContainer = {
-  width: '300px',
-  fontFamily: 'monospace',
-  color: '#584f4f',
-  margin: '10px'
-};
-
-const Select = (_ref8) => {
-  let {
-    id,
-    label,
-    options,
-    value,
-    handleSelect
-  } = _ref8;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: SelectContainer
-  }, /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: id
-  }, label, " "), /*#__PURE__*/_react.default.createElement("select", {
-    id: id,
-    value: value,
-    onChange: handleSelect,
-    style: SelectStyle
-  }, options.map((option, index) => /*#__PURE__*/_react.default.createElement("option", {
-    key: index,
-    value: option.value
-  }, option.text))));
-};
-
-const movieContainerStyle = {
-  color: "black",
-  fontFamily: "monospace",
-  maxWidth: "310px"
-};
-const imageStyle = {
-  width: "150px",
-  height: "auto"
-};
-const titleStyle = {
-  fontSize: "23px",
-  marginBottom: "2px"
-};
-const titleSubStyle = {
-  fontSize: "14px"
-};
-const titleAssistStyle = {
-  marginTop: "2px"
-};
-
-const omdbNACheck = v => v !== "N/A";
-
-const ImageComponent = (_ref9) => {
-  let {
-    src
-  } = _ref9,
-      rest = _objectWithoutProperties(_ref9, ["src"]);
-
-  const [imgSrc, setImgSrc] = (0, _react.useState)(src);
-  (0, _react.useEffect)(() => {
-    setImgSrc(src);
-  }, [src]);
-
-  const fallBackSrc = () => setImgSrc("https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster");
-
-  return /*#__PURE__*/_react.default.createElement("img", _extends({
-    src: imgSrc,
-    onError: fallBackSrc
-  }, rest));
-};
-
-const MoviePreviewDisplay = (_ref10) => {
-  let {
-    Poster,
-    Title,
-    Type,
-    Year,
-    imdbID
-  } = _ref10;
-  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
-  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: movieContainerStyle
-  }, /*#__PURE__*/_react.default.createElement("p", {
-    style: titleStyle
-  }, Title), /*#__PURE__*/_react.default.createElement("p", {
-    style: titleAssistStyle
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    style: titleSubStyle
-  }, Year, " "), /*#__PURE__*/_react.default.createElement("span", null, Type, " ")), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(ImageComponent, {
-    src: imgSrc,
-    style: imageStyle
-  })), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
-    style: {
-      fontWeight: "bold"
-    }
-  }, "imdbID:"), " ", imdbID));
-};
-
-const MovieDisplay = (_ref11) => {
-  let {
-    Poster,
-    Title: title,
-    Actors: actors,
-    Director: director,
-    Genre: genre,
-    Runtime: runtime,
-    Rated: rated,
-    Released,
-    imdbRating,
-    Plot: plot
-  } = _ref11;
-  const altImgSrc = "https://via.placeholder.com/150.jpg/000000/FFFFFF/?text=Movie+Poster";
-  const imgSrc = /^https?/.test(Poster) ? Poster : altImgSrc;
-  const released = omdbNACheck(Released) ? Released.slice(-4) : Released;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: movieContainerStyle
-  }, /*#__PURE__*/_react.default.createElement("p", {
-    style: titleStyle
-  }, title), /*#__PURE__*/_react.default.createElement("p", {
-    style: titleAssistStyle
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    style: titleSubStyle
-  }, released, " "), /*#__PURE__*/_react.default.createElement("span", null, runtime, " "), /*#__PURE__*/_react.default.createElement("span", null, rated)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(ImageComponent, {
-    src: imgSrc,
-    style: imageStyle
-  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", {
-    style: {
-      fontWeight: "bold"
-    }
-  }, genre), /*#__PURE__*/_react.default.createElement("p", null, plot)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
-    style: {
-      fontWeight: "bold"
-    }
-  }, "Directed By:"), " ", director), /*#__PURE__*/_react.default.createElement("p", null, /*#__PURE__*/_react.default.createElement("span", {
-    style: {
-      fontWeight: "bold"
-    }
-  }, "Actors:"), " ", actors)), /*#__PURE__*/_react.default.createElement("div", {
-    style: {
-      display: "inline-block",
-      marginTop: "10px"
-    }
-  }, /*#__PURE__*/_react.default.createElement("span", {
-    style: {
-      display: "block",
-      fontSize: "25px"
-    }
-  }, imdbRating), /*#__PURE__*/_react.default.createElement("span", null, "imdbRating")));
-};
-
-const RadioButtonContainerStyle = {
-  fontFamily: 'monospace',
-  color: 'rgb(88,79,79)',
-  margin: '10px'
-};
-const RadioButtonLabelStyle = {
-  margin: '10px'
-};
-
-const RadioButton = (_ref12) => {
-  let {
-    label,
-    id,
-    name,
-    checked,
-    handleChange
-  } = _ref12;
-  return /*#__PURE__*/_react.default.createElement("div", {
-    style: RadioButtonContainerStyle
-  }, /*#__PURE__*/_react.default.createElement("input", {
-    type: "radio",
-    id: id,
-    name: name,
-    checked: checked,
-    onChange: handleChange
-  }), /*#__PURE__*/_react.default.createElement("label", {
-    htmlFor: id,
-    style: RadioButtonLabelStyle
-  }, label));
 }; //✗
 //✓
 //↻ ↺
-
 
 const AddRemoveStyle = {
   textAlign: "right",
@@ -649,32 +852,32 @@ const AddRemoveHiddenStyle = {
   visibility: 'hidden'
 };
 
-const InteractiveSymbol = (_ref13) => {
+const InteractiveSymbol = (_ref3) => {
   let {
     symbol,
     handleClick
-  } = _ref13,
-      rest = _objectWithoutProperties(_ref13, ["symbol", "handleClick"]);
+  } = _ref3,
+      rest = _objectWithoutProperties(_ref3, ["symbol", "handleClick"]);
 
   return /*#__PURE__*/_react.default.createElement("span", _extends({
     onClick: handleClick
   }, rest), symbol);
 };
 
-const InteractiveSymbolContainer = (_ref14) => {
+const InteractiveSymbolContainer = (_ref4) => {
   let {
     children
-  } = _ref14;
+  } = _ref4;
   return /*#__PURE__*/_react.default.createElement("p", {
     style: AddRemoveStyle
   }, children);
 };
 
-const UserMovieSymbolContainer = (_ref15) => {
+const UserMovieSymbolContainer = (_ref5) => {
   let {
     handleClickRefresh,
     handleClickClose
-  } = _ref15;
+  } = _ref5;
   return /*#__PURE__*/_react.default.createElement(InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
     symbol: "↻",
     handleClick: handleClickRefresh,
@@ -691,27 +894,27 @@ const UserMovieSymbolContainer = (_ref15) => {
   }));
 };
 
-const UserMovieDisplayAppComponent = (_ref16) => {
+const UserMovieDisplayAppComponent = (_ref6) => {
   let {
     children,
     handleClickRefresh,
     handleClickClose
-  } = _ref16,
-      rest = _objectWithoutProperties(_ref16, ["children", "handleClickRefresh", "handleClickClose"]);
+  } = _ref6,
+      rest = _objectWithoutProperties(_ref6, ["children", "handleClickRefresh", "handleClickClose"]);
 
   return /*#__PURE__*/_react.default.createElement("div", {
     style: MovieAppComponentStyles
   }, children, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
     handleClickRefresh: handleClickRefresh,
     handleClickClose: handleClickClose
-  }), /*#__PURE__*/_react.default.createElement(MoviePreviewDisplay, rest));
+  }), /*#__PURE__*/_react.default.createElement(_MoviePreviewDisplay.default, rest));
 };
 
-const SingleMovieSymbolContainer = (_ref17) => {
+const SingleMovieSymbolContainer = (_ref7) => {
   let {
     symbol,
     handleClick
-  } = _ref17;
+  } = _ref7;
   return /*#__PURE__*/_react.default.createElement(InteractiveSymbolContainer, null, /*#__PURE__*/_react.default.createElement(InteractiveSymbol, {
     symbol: symbol,
     handleClick: handleClick,
@@ -723,11 +926,11 @@ const SingleMovieSymbolContainer = (_ref17) => {
 
 const MovieDisplayAppComponent = MovieDisplayType => {
   return symbol => {
-    return (_ref18) => {
+    return (_ref8) => {
       let {
         handleClick
-      } = _ref18,
-          rest = _objectWithoutProperties(_ref18, ["handleClick"]);
+      } = _ref8,
+          rest = _objectWithoutProperties(_ref8, ["handleClick"]);
 
       return /*#__PURE__*/_react.default.createElement("div", {
         style: MovieAppComponentStyles
@@ -744,8 +947,8 @@ const MovieAppComponentStyles = {
   textAlign: 'center',
   margin: '15px 0'
 };
-const MovieDisplayApp = MovieDisplayAppComponent(MovieDisplay);
-const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay);
+const MovieDisplayApp = MovieDisplayAppComponent(_MovieDisplay.default);
+const MovieDisplayPreviewApp = MovieDisplayAppComponent(_MoviePreviewDisplay.default);
 const MovieDisplayAppHome = MovieDisplayApp('✓');
 const MovieDisplayPreviewAppHome = MovieDisplayPreviewApp('✓');
 const MovieDisplayAppUser = MovieDisplayApp('✗');
@@ -769,11 +972,11 @@ const HomePageLinkStyle = {
   textAlign: 'center'
 }; // movieFunction parameter
 
-const Home = (_ref19) => {
+const Home = (_ref9) => {
   let {
     moviesAdded,
     addToMyMovies
-  } = _ref19;
+  } = _ref9;
   const [specificMovie, setSpecificMovie] = (0, _react.useState)(true);
   const [movieData, setMovieData] = (0, _react.useState)(null);
   const [loading, setLoading] = (0, _react.useState)(false);
@@ -781,7 +984,7 @@ const Home = (_ref19) => {
 
   const makeMovieRequest = queryParams => {
     setLoading(true);
-    fetchMoviesFullQuery(queryParams).then(movie => {
+    (0, _fetchMoviesFullQuery.default)(queryParams).then(movie => {
       setLoading(false);
       displayResult(movie);
     }).catch(err => {
@@ -821,13 +1024,13 @@ const Home = (_ref19) => {
   }, "Movies To Watch"), /*#__PURE__*/_react.default.createElement(_router.Link, {
     to: "/my-movies",
     style: HomePageLinkStyle
-  }, "My Movies (", moviesAdded, ")"), /*#__PURE__*/_react.default.createElement(RadioButton, {
+  }, "My Movies (", moviesAdded, ")"), /*#__PURE__*/_react.default.createElement(_RadioButton.default, {
     id: "specMovieForm",
     name: "movieForm",
     checked: specificMovie,
     handleChange: () => setSpecificMovie(true),
     label: "Specific Movie"
-  }), /*#__PURE__*/_react.default.createElement(RadioButton, {
+  }), /*#__PURE__*/_react.default.createElement(_RadioButton.default, {
     id: "generalMovieForm",
     name: "movieForm",
     checked: !specificMovie,
@@ -841,7 +1044,7 @@ const Home = (_ref19) => {
     onFormChange: () => setError("")
   }), error && /*#__PURE__*/_react.default.createElement("p", {
     style: ErrorMsgStyle
-  }, error), /*#__PURE__*/_react.default.createElement(Loading, {
+  }, error), /*#__PURE__*/_react.default.createElement(_Loading.default, {
     loading: loading
   }), movieData && displayMovieType());
 };
@@ -904,12 +1107,12 @@ const App = () => {
   }));
 };
 
-const User = (_ref20) => {
+const User = (_ref10) => {
   let {
     myMovies,
     removeFromMyMovies,
     makeIntoFullMovie
-  } = _ref20;
+  } = _ref10;
   const [requestBeingMade, setRequestBeingMade] = (0, _react.useState)(false);
   const [error, setError] = (0, _react.useState)(null);
   (0, _react.useEffect)(() => {
@@ -927,7 +1130,7 @@ const User = (_ref20) => {
       i: movieData.imdbID
     };
     setRequestBeingMade(true);
-    fetchMoviesFullQuery(queryParams).then(movie => {
+    (0, _fetchMoviesFullQuery.default)(queryParams).then(movie => {
       setRequestBeingMade(false);
       displayResult(movie, index);
     }).catch(err => {
@@ -967,7 +1170,7 @@ const User = (_ref20) => {
 };
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root"));
-},{"@reach/router":2,"react":25,"react-dom":18}],2:[function(require,module,exports){
+},{"./api/fetchMoviesFullQuery":1,"./components/Button":2,"./components/ImageComponent":3,"./components/Input":4,"./components/Loading":5,"./components/MovieDisplay":6,"./components/MoviePreviewDisplay":7,"./components/RadioButton":8,"./components/Select":9,"./components/YearInput":10,"@reach/router":13,"react":36,"react-dom":29}],13:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -1728,7 +1931,7 @@ exports.useNavigate = useNavigate;
 exports.useParams = useParams;
 exports.useMatch = useMatch;
 }).call(this,require('_process'))
-},{"./lib/history":3,"./lib/utils":4,"_process":10,"create-react-context":6,"invariant":8,"prop-types":14,"react":25,"react-lifecycles-compat":22}],3:[function(require,module,exports){
+},{"./lib/history":14,"./lib/utils":15,"_process":21,"create-react-context":17,"invariant":19,"prop-types":25,"react":36,"react-lifecycles-compat":33}],14:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -1919,7 +2122,7 @@ exports.globalHistory = globalHistory;
 exports.navigate = navigate;
 exports.createHistory = createHistory;
 exports.createMemorySource = createMemorySource;
-},{}],4:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -2220,7 +2423,7 @@ exports.insertParams = insertParams;
 exports.validateRedirect = validateRedirect;
 exports.shallowCompare = shallowCompare;
 }).call(this,require('_process'))
-},{"_process":10,"invariant":8}],5:[function(require,module,exports){
+},{"_process":21,"invariant":19}],16:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -2419,7 +2622,7 @@ function createReactContext(defaultValue, calculateChangedBits) {
 exports.default = createReactContext;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":10,"gud":7,"prop-types":14,"react":25,"warning":32}],6:[function(require,module,exports){
+},{"_process":21,"gud":18,"prop-types":25,"react":36,"warning":43}],17:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -2436,7 +2639,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _react2.default.createContext || _implementation2.default;
 module.exports = exports['default'];
-},{"./implementation":5,"react":25}],7:[function(require,module,exports){
+},{"./implementation":16,"react":36}],18:[function(require,module,exports){
 (function (global){
 // @flow
 'use strict';
@@ -2448,7 +2651,7 @@ module.exports = function() {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],8:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2501,7 +2704,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":10}],9:[function(require,module,exports){
+},{"_process":21}],20:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -2593,7 +2796,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],10:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -2779,7 +2982,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],11:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2885,7 +3088,7 @@ checkPropTypes.resetWarningCache = function() {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":15,"_process":10}],12:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":26,"_process":21}],23:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2951,7 +3154,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":15}],13:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":26}],24:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -3546,7 +3749,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":11,"./lib/ReactPropTypesSecret":15,"_process":10,"object-assign":9,"react-is":21}],14:[function(require,module,exports){
+},{"./checkPropTypes":22,"./lib/ReactPropTypesSecret":26,"_process":21,"object-assign":20,"react-is":32}],25:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -3569,7 +3772,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":12,"./factoryWithTypeCheckers":13,"_process":10,"react-is":21}],15:[function(require,module,exports){
+},{"./factoryWithThrowingShims":23,"./factoryWithTypeCheckers":24,"_process":21,"react-is":32}],26:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -3583,7 +3786,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],16:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 (function (process){
 /** @license React v16.13.1
  * react-dom.development.js
@@ -28599,7 +28802,7 @@ exports.version = ReactVersion;
 }
 
 }).call(this,require('_process'))
-},{"_process":10,"object-assign":9,"prop-types/checkPropTypes":11,"react":25,"scheduler":30,"scheduler/tracing":31}],17:[function(require,module,exports){
+},{"_process":21,"object-assign":20,"prop-types/checkPropTypes":22,"react":36,"scheduler":41,"scheduler/tracing":42}],28:[function(require,module,exports){
 /** @license React v16.13.1
  * react-dom.production.min.js
  *
@@ -28893,7 +29096,7 @@ exports.flushSync=function(a,b){if((W&(fj|gj))!==V)throw Error(u(187));var c=W;W
 exports.unmountComponentAtNode=function(a){if(!gk(a))throw Error(u(40));return a._reactRootContainer?(Nj(function(){ik(null,null,a,!1,function(){a._reactRootContainer=null;a[Od]=null})}),!0):!1};exports.unstable_batchedUpdates=Mj;exports.unstable_createPortal=function(a,b){return kk(a,b,2<arguments.length&&void 0!==arguments[2]?arguments[2]:null)};
 exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!gk(c))throw Error(u(200));if(null==a||void 0===a._reactInternalFiber)throw Error(u(38));return ik(a,b,c,!1,d)};exports.version="16.13.1";
 
-},{"object-assign":9,"react":25,"scheduler":30}],18:[function(require,module,exports){
+},{"object-assign":20,"react":36,"scheduler":41}],29:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -28935,7 +29138,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":16,"./cjs/react-dom.production.min.js":17,"_process":10}],19:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":27,"./cjs/react-dom.production.min.js":28,"_process":21}],30:[function(require,module,exports){
 (function (process){
 /** @license React v16.13.1
  * react-is.development.js
@@ -29120,7 +29323,7 @@ exports.typeOf = typeOf;
 }
 
 }).call(this,require('_process'))
-},{"_process":10}],20:[function(require,module,exports){
+},{"_process":21}],31:[function(require,module,exports){
 /** @license React v16.13.1
  * react-is.production.min.js
  *
@@ -29137,7 +29340,7 @@ exports.Profiler=g;exports.StrictMode=f;exports.Suspense=p;exports.isAsyncMode=f
 exports.isMemo=function(a){return z(a)===r};exports.isPortal=function(a){return z(a)===d};exports.isProfiler=function(a){return z(a)===g};exports.isStrictMode=function(a){return z(a)===f};exports.isSuspense=function(a){return z(a)===p};
 exports.isValidElementType=function(a){return"string"===typeof a||"function"===typeof a||a===e||a===m||a===g||a===f||a===p||a===q||"object"===typeof a&&null!==a&&(a.$$typeof===t||a.$$typeof===r||a.$$typeof===h||a.$$typeof===k||a.$$typeof===n||a.$$typeof===w||a.$$typeof===x||a.$$typeof===y||a.$$typeof===v)};exports.typeOf=z;
 
-},{}],21:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -29148,7 +29351,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-is.development.js":19,"./cjs/react-is.production.min.js":20,"_process":10}],22:[function(require,module,exports){
+},{"./cjs/react-is.development.js":30,"./cjs/react-is.production.min.js":31,"_process":21}],33:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -29312,7 +29515,7 @@ function polyfill(Component) {
 
 exports.polyfill = polyfill;
 
-},{}],23:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 (function (process){
 /** @license React v16.13.1
  * react.development.js
@@ -31228,7 +31431,7 @@ exports.version = ReactVersion;
 }
 
 }).call(this,require('_process'))
-},{"_process":10,"object-assign":9,"prop-types/checkPropTypes":11}],24:[function(require,module,exports){
+},{"_process":21,"object-assign":20,"prop-types/checkPropTypes":22}],35:[function(require,module,exports){
 /** @license React v16.13.1
  * react.production.min.js
  *
@@ -31255,7 +31458,7 @@ key:d,ref:g,props:e,_owner:k}};exports.createContext=function(a,b){void 0===b&&(
 exports.lazy=function(a){return{$$typeof:A,_ctor:a,_status:-1,_result:null}};exports.memo=function(a,b){return{$$typeof:z,type:a,compare:void 0===b?null:b}};exports.useCallback=function(a,b){return Z().useCallback(a,b)};exports.useContext=function(a,b){return Z().useContext(a,b)};exports.useDebugValue=function(){};exports.useEffect=function(a,b){return Z().useEffect(a,b)};exports.useImperativeHandle=function(a,b,c){return Z().useImperativeHandle(a,b,c)};
 exports.useLayoutEffect=function(a,b){return Z().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return Z().useMemo(a,b)};exports.useReducer=function(a,b,c){return Z().useReducer(a,b,c)};exports.useRef=function(a){return Z().useRef(a)};exports.useState=function(a){return Z().useState(a)};exports.version="16.13.1";
 
-},{"object-assign":9}],25:[function(require,module,exports){
+},{"object-assign":20}],36:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -31266,7 +31469,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":23,"./cjs/react.production.min.js":24,"_process":10}],26:[function(require,module,exports){
+},{"./cjs/react.development.js":34,"./cjs/react.production.min.js":35,"_process":21}],37:[function(require,module,exports){
 (function (process){
 /** @license React v0.19.1
  * scheduler-tracing.development.js
@@ -31619,7 +31822,7 @@ exports.unstable_wrap = unstable_wrap;
 }
 
 }).call(this,require('_process'))
-},{"_process":10}],27:[function(require,module,exports){
+},{"_process":21}],38:[function(require,module,exports){
 /** @license React v0.19.1
  * scheduler-tracing.production.min.js
  *
@@ -31631,7 +31834,7 @@ exports.unstable_wrap = unstable_wrap;
 
 'use strict';var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unstable_clear=function(a){return a()};exports.unstable_getCurrent=function(){return null};exports.unstable_getThreadID=function(){return++b};exports.unstable_subscribe=function(){};exports.unstable_trace=function(a,d,c){return c()};exports.unstable_unsubscribe=function(){};exports.unstable_wrap=function(a){return a};
 
-},{}],28:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function (process){
 /** @license React v0.19.1
  * scheduler.development.js
@@ -32493,7 +32696,7 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 }
 
 }).call(this,require('_process'))
-},{"_process":10}],29:[function(require,module,exports){
+},{"_process":21}],40:[function(require,module,exports){
 /** @license React v0.19.1
  * scheduler.production.min.js
  *
@@ -32516,7 +32719,7 @@ exports.unstable_getCurrentPriorityLevel=function(){return R};exports.unstable_g
 exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();if("object"===typeof c&&null!==c){var e=c.delay;e="number"===typeof e&&0<e?d+e:d;c="number"===typeof c.timeout?c.timeout:Y(a)}else c=Y(a),e=d;c=e+c;a={id:P++,callback:b,priorityLevel:a,startTime:e,expirationTime:c,sortIndex:-1};e>d?(a.sortIndex=e,J(O,a),null===L(N)&&a===L(O)&&(U?h():U=!0,g(W,e-d))):(a.sortIndex=c,J(N,a),T||S||(T=!0,f(X)));return a};
 exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=L(N);return b!==Q&&null!==Q&&null!==b&&null!==b.callback&&b.startTime<=a&&b.expirationTime<Q.expirationTime||k()};exports.unstable_wrapCallback=function(a){var b=R;return function(){var c=R;R=b;try{return a.apply(this,arguments)}finally{R=c}}};
 
-},{}],30:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -32527,7 +32730,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler.development.js":28,"./cjs/scheduler.production.min.js":29,"_process":10}],31:[function(require,module,exports){
+},{"./cjs/scheduler.development.js":39,"./cjs/scheduler.production.min.js":40,"_process":21}],42:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -32538,7 +32741,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler-tracing.development.js":26,"./cjs/scheduler-tracing.production.min.js":27,"_process":10}],32:[function(require,module,exports){
+},{"./cjs/scheduler-tracing.development.js":37,"./cjs/scheduler-tracing.production.min.js":38,"_process":21}],43:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -32604,4 +32807,4 @@ if (__DEV__) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":10}]},{},[1]);
+},{"_process":21}]},{},[12]);
