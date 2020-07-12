@@ -63,6 +63,7 @@ const Loading = ({ loading }) =>
         border: "5px solid",
         borderColor: "white rgb(141,135,130) rgb(141,135,130) rgb(141,135,130)",
         borderRadius: "50%",
+        margin: "0 auto",
         animation: "spin 1s linear infinite",
       }}
     >
@@ -460,7 +461,6 @@ const imageStyle = {
   height: "auto",
 };
 const titleStyle = {
-  textAlign: "left",
   fontSize: "23px",
   marginBottom: "2px",
 };
@@ -644,7 +644,7 @@ const UserMovieSymbolContainer = ({ handleClickRefresh, handleClickClose }) => {
 
 const UserMovieDisplayAppComponent = ({ children, handleClickRefresh, handleClickClose, ...rest }) => {
   return (
-    <div style={{ width: "300px" }}>
+    <div style={MovieAppComponentStyles}>
       { children }
       <UserMovieSymbolContainer
         handleClickRefresh={handleClickRefresh}
@@ -672,7 +672,7 @@ const MovieDisplayAppComponent = (MovieDisplayType) => {
     return ({ handleClick, ...rest }) => {
       return (
         <div 
-          style={{ width: "300px" }}
+          style={MovieAppComponentStyles}
         >
           <SingleMovieSymbolContainer symbol={symbol} handleClick={handleClick} />
           <MovieDisplayType {...rest} />
@@ -682,6 +682,12 @@ const MovieDisplayAppComponent = (MovieDisplayType) => {
   }
 }
 
+const MovieAppComponentStyles = { 
+  maxWidth: "300px", 
+  textAlign: 'center', 
+  margin: '15px 0' 
+}
+
 const MovieDisplayApp = MovieDisplayAppComponent(MovieDisplay)
 const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay)
 
@@ -689,6 +695,29 @@ const MovieDisplayAppHome = MovieDisplayApp('✓')
 const MovieDisplayPreviewAppHome = MovieDisplayPreviewApp('✓')
 
 const MovieDisplayAppUser = MovieDisplayApp('✗')
+
+
+const HomePageContainerStyle = {
+  maxWidth: '300px',
+  margin: '0 auto'
+}
+
+const HomePageHeaderStyle = {
+  textAlign: 'center',
+  color: 'rgb(88,79,79)',
+  fontFamily: 'monospace'
+}
+
+const HomePageLinkStyle = {
+  textDecoration: 'none',
+  color: 'rgb(129,105,85)',
+  backgroundColor: '#ffe4c4',
+  position: 'sticky',
+  top: '0',
+  margin: '30px 0',
+  display: 'block',
+  textAlign: 'center'
+}
 
 // movieFunction parameter
 const Home = ({ moviesAdded, addToMyMovies }) => {
@@ -725,8 +754,9 @@ const Home = ({ moviesAdded, addToMyMovies }) => {
   }
 
   return (
-    <>
-      <Link to="/my-movies">My Movies ({moviesAdded})</Link>
+    <div style={HomePageContainerStyle}>
+      <h1 style={HomePageHeaderStyle}>Movies To Watch</h1>
+      <Link to="/my-movies" style={HomePageLinkStyle}>My Movies ({moviesAdded})</Link>
       <RadioButton
         id="specMovieForm"
         name="movieForm"
@@ -760,7 +790,7 @@ const Home = ({ moviesAdded, addToMyMovies }) => {
 
       {movieData && displayMovieType()}
 
-    </>
+    </div>
   );
 }
 
@@ -856,10 +886,9 @@ const User = ({ myMovies, removeFromMyMovies, makeIntoFullMovie }) => {
   }
 
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <h2>My Movies:</h2>
-      
+    <div style={HomePageContainerStyle}>
+      <h1 style={HomePageHeaderStyle}>My Movies</h1>
+      <Link to="/" style={HomePageLinkStyle}>Home</Link>
       {myMovies.length > 0 &&
         myMovies.map((movieData, index) =>
           movieData.myMovieType === "full" ? (

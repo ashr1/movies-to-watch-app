@@ -84,6 +84,7 @@ const Loading = (_ref) => {
       border: "5px solid",
       borderColor: "white rgb(141,135,130) rgb(141,135,130) rgb(141,135,130)",
       borderRadius: "50%",
+      margin: "0 auto",
       animation: "spin 1s linear infinite"
     }
   }, /*#__PURE__*/_react.default.createElement("style", null, "\n          @keyframes spin{\n            0%{\n              transform: rotate(0deg);\n            }\n            100%{\n              transform: rotate(360deg);\n            }\n          }\n        ")) : null;
@@ -491,7 +492,6 @@ const imageStyle = {
   height: "auto"
 };
 const titleStyle = {
-  textAlign: "left",
   fontSize: "23px",
   marginBottom: "2px"
 };
@@ -700,9 +700,7 @@ const UserMovieDisplayAppComponent = (_ref16) => {
       rest = _objectWithoutProperties(_ref16, ["children", "handleClickRefresh", "handleClickClose"]);
 
   return /*#__PURE__*/_react.default.createElement("div", {
-    style: {
-      width: "300px"
-    }
+    style: MovieAppComponentStyles
   }, children, /*#__PURE__*/_react.default.createElement(UserMovieSymbolContainer, {
     handleClickRefresh: handleClickRefresh,
     handleClickClose: handleClickClose
@@ -732,9 +730,7 @@ const MovieDisplayAppComponent = MovieDisplayType => {
           rest = _objectWithoutProperties(_ref18, ["handleClick"]);
 
       return /*#__PURE__*/_react.default.createElement("div", {
-        style: {
-          width: "300px"
-        }
+        style: MovieAppComponentStyles
       }, /*#__PURE__*/_react.default.createElement(SingleMovieSymbolContainer, {
         symbol: symbol,
         handleClick: handleClick
@@ -743,11 +739,35 @@ const MovieDisplayAppComponent = MovieDisplayType => {
   };
 };
 
+const MovieAppComponentStyles = {
+  maxWidth: "300px",
+  textAlign: 'center',
+  margin: '15px 0'
+};
 const MovieDisplayApp = MovieDisplayAppComponent(MovieDisplay);
 const MovieDisplayPreviewApp = MovieDisplayAppComponent(MoviePreviewDisplay);
 const MovieDisplayAppHome = MovieDisplayApp('✓');
 const MovieDisplayPreviewAppHome = MovieDisplayPreviewApp('✓');
-const MovieDisplayAppUser = MovieDisplayApp('✗'); // movieFunction parameter
+const MovieDisplayAppUser = MovieDisplayApp('✗');
+const HomePageContainerStyle = {
+  maxWidth: '300px',
+  margin: '0 auto'
+};
+const HomePageHeaderStyle = {
+  textAlign: 'center',
+  color: 'rgb(88,79,79)',
+  fontFamily: 'monospace'
+};
+const HomePageLinkStyle = {
+  textDecoration: 'none',
+  color: 'rgb(129,105,85)',
+  backgroundColor: '#ffe4c4',
+  position: 'sticky',
+  top: '0',
+  margin: '30px 0',
+  display: 'block',
+  textAlign: 'center'
+}; // movieFunction parameter
 
 const Home = (_ref19) => {
   let {
@@ -794,8 +814,13 @@ const Home = (_ref19) => {
     })));
   };
 
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_router.Link, {
-    to: "/my-movies"
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: HomePageContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("h1", {
+    style: HomePageHeaderStyle
+  }, "Movies To Watch"), /*#__PURE__*/_react.default.createElement(_router.Link, {
+    to: "/my-movies",
+    style: HomePageLinkStyle
   }, "My Movies (", moviesAdded, ")"), /*#__PURE__*/_react.default.createElement(RadioButton, {
     id: "specMovieForm",
     name: "movieForm",
@@ -920,9 +945,14 @@ const User = (_ref20) => {
     }
   };
 
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_router.Link, {
-    to: "/"
-  }, "Home"), /*#__PURE__*/_react.default.createElement("h2", null, "My Movies:"), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayAppUser, _extends({
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: HomePageContainerStyle
+  }, /*#__PURE__*/_react.default.createElement("h1", {
+    style: HomePageHeaderStyle
+  }, "My Movies"), /*#__PURE__*/_react.default.createElement(_router.Link, {
+    to: "/",
+    style: HomePageLinkStyle
+  }, "Home"), myMovies.length > 0 && myMovies.map((movieData, index) => movieData.myMovieType === "full" ? /*#__PURE__*/_react.default.createElement(MovieDisplayAppUser, _extends({
     key: index
   }, movieData, {
     handleClick: () => removeFromMyMovies(movieData)
