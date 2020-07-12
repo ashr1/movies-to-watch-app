@@ -12,7 +12,7 @@ Movies To Watch App
 
 
 *A live demo:*
-link goes here
+https://ashr1.github.io/movies-to-watch-app/
 
 ## To Run Locally:
 * Get an API key from http://www.omdbapi.com/
