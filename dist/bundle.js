@@ -71,7 +71,9 @@ const App = () => {
     localStorage.setItem("movies", JSON.stringify(newMyMovies));
   };
 
-  return /*#__PURE__*/_react.default.createElement(_router.Router, null, /*#__PURE__*/_react.default.createElement(_Home.default, {
+  return /*#__PURE__*/_react.default.createElement(_router.Router, {
+    basepath: "movies-to-watch-app"
+  }, /*#__PURE__*/_react.default.createElement(_Home.default, {
     path: "/",
     moviesAdded: myMovies.length,
     addToMyMovies: addToMyMovies
