@@ -131,7 +131,7 @@ const byTitleOrId = {
   v: 1
 };
 const API_KEY = "45fc49f2";
-const url = "http://www.omdbapi.com/?apikey=".concat(API_KEY, "&");
+const url = "https://www.omdbapi.com/?apikey=".concat(API_KEY, "&");
 
 const fetchMoviesFullQuery = queryParams => {
   let paramsSection = Object.keys(queryParams).map(q => queryParams[q] ? "".concat(q, "=").concat(encodeURIComponent(queryParams[q]), "&") : "").join("");

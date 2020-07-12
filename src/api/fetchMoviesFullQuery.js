@@ -39,7 +39,7 @@ const byTitleOrId = {
 };
 
 const API_KEY = "";
-const url = `http://www.omdbapi.com/?apikey=${API_KEY}&`;
+const url = `https://www.omdbapi.com/?apikey=${API_KEY}&`;
 
 const fetchMoviesFullQuery = (queryParams) => {
   let paramsSection = Object.keys(queryParams)
